@@ -567,7 +567,7 @@ a:focus {
     transition: .3s;
 }
 
-.col-md-4 {
+.food .col-md-4 {
     text-align: center;
 }
 
@@ -1168,6 +1168,80 @@ a:focus {
 .team .team-text p {
     margin: 0;
     font-size: 16px;
+}
+
+/************************************/
+/******* Menu and Product CSS *******/
+/************************************/
+
+/******* Menu *******/
+
+#left .close {
+    width: 20px;
+    height: 21px;
+    position: relative;
+    display: inline-block;
+    vertical-align: text-bottom;
+    text-align: center;
+    cursor: pointer;
+}
+
+#left .close:before, .close:after {
+    position: absolute;
+    left: 10px;
+    content: 'X';
+    height: 21px;
+    width: 3px;
+    background-color: #ffffff;
+}
+
+#left .close:before {
+    transform: rotate(45deg);
+}
+
+#left.close:after {
+    transform: rotate(-45deg);
+}
+
+.menu1 li {
+    list-style: none;
+    padding: 15px 20px;
+    border-top: 1px solid #719a0a;
+    display: block;
+    margin: 0px;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.menu2 > li {
+    list-style: none; 
+    margin: 7% 0 0 -15%;
+
+}
+.menu2 > li > a{
+    margin-left: 10%;
+}
+
+[data-pushbar-id] {
+    background: #FFFFFF;
+    color: #719a0a;
+}
+
+#name {
+    color: #fbaf32;
+    font-size: 17px;
+}
+
+#name:hover {
+    color: #719a0a;
+}
+
+.title{
+    margin: 7% 0 7% 15%;
+}
+
+.card_content {
+    margin-bottom: 7%;
+    margin-left: 7%;
 }
 
 

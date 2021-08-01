@@ -1,4 +1,4 @@
-(function ($) {
+﻿(function ($) {
     "use strict";
     
     // Back to top button
@@ -12,6 +12,21 @@
     $('.back-to-top').click(function () {
         $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
         return false;
+    });
+
+    //hide - show menu
+    $(document).ready(function () {
+        function toggleMenuMethod() {
+            if ($(window).width() >= 768) {
+                $('.card_content').hide()
+                $('.menu-show').show()
+            } else {
+                $('.card_content').show()
+                $('.menu-show').hide()
+            }
+        }
+        toggleMenuMethod();
+        $(window).resize(toggleMenuMethod);
     });
     
     
@@ -129,4 +144,5 @@
     });
     
 })(jQuery);
+
 
