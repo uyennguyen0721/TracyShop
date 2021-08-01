@@ -35,8 +35,8 @@
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav ml-auto">
-                    <a asp-page="/Index" class="nav-item nav-link active">Trang chủ</a>
-                    <a href="about.html" class="nav-item nav-link">Về chúng tôi</a>
+                    <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Trang chủ</a>
+                    <a asp-controller="About" asp-action="About" class="nav-item nav-link">Về chúng tôi</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Sản phẩm</a>
                         <div class="dropdown-menu">
@@ -127,7 +127,7 @@
                             <p>
                                 Với phương châm "Đồng hành cùng phong cách thời trang của bạn", chúng tôi luôn đặt chất lượng của sản phẩm cũng như lợi ích của khách hàng lên hàng đầu.
                             </p>
-                            <a class="btn custom-btn" href="">Truy cập</a>
+                            <a asp-controller="About" asp-action="About" class="btn custom-btn">Xem thêm</a>
                         </div>
                     </div>
                 </div>
@@ -236,7 +236,7 @@
                             <p class="card-text">
                                 Những mẫu đầm hoa thể hiện sự dịu dàng, nữ tính, thích hợp với những cô nàng bánh bèo
                             </p>
-                            <a href="" id="content">View Menu</a>
+                            <a href="" id="content">Ghé xem shop</a>
                         </div>
                     </div>
                 </div>
@@ -248,7 +248,7 @@
                             <p class="card-text">
                                 Set đồ này khá được nhiều bạn trẻ ưa chuộng bởi sự trẻ trung, năng động
                             </p>
-                            <a href="" id="content">View Menu</a>
+                            <a href="" id="content">Ghé xem shop</a>
                         </div>
                     </div>
                 </div>
@@ -260,7 +260,7 @@
                             <p class="card-text">
                                 Sự kết hợp giữa áo bra và quần jogger tạo nên phong cách quyến rũ, cá tính
                             </p>
-                            <a href="" id="content">View Menu</a>
+                            <a href="" id="content">Ghé xem shop</a>
                         </div>
                     </div>
                 </div>
@@ -273,6 +273,7 @@
         <div class="title">
             <h1>Đăng ký thành viên</h1>
             <p>Đăng ký thành viên Tracy Shop để nhận được nhiều ưu đãi giảm giá lên đến 20%, còn chần chờ gì nữa mà không nhanh tay đăng ký thôi nào!</p>
+            <a href="" id="content">Đăng ký ngay</a>
         </div>
         <div class="image container">
             <div class="row">
