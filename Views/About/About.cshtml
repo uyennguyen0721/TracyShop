@@ -26,7 +26,7 @@
     <!-- Nav Bar Start -->
     <div class="navbar navbar-expand-lg bg-light navbar-light">
         <div class="container-fluid">
-            <a asp-controller="Home" asp-action="Index">
+            <a asp-controller="Home" asp-action="Index" class="wow fadeIn" data-wow-delay="0.5s">
                 <img src="~/Client/img/logo-shop.png" style="margin: -15px 0 -15px 0" />
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -34,7 +34,7 @@
             </button>
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                <div class="navbar-nav ml-auto">
+                <div class="navbar-nav ml-auto wow fadeIn" data-wow-delay="0.5s">
                     <a asp-controller="Home" asp-action="Index" class="nav-item nav-link">Trang chủ</a>
                     <a asp-controller="About" asp-action="About" class="nav-item nav-link active">Về chúng tôi</a>
                     <a asp-controller="Product" asp-action="Product" class="nav-item nav-link">Sản phẩm</a>
@@ -51,9 +51,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h2>Về chúng tôi</h2>
+                    <h2 class="wow fadeInDown" data-wow-delay="0.5s">Về chúng tôi</h2>
                 </div>
-                <div class="col-12">
+                <div class="col-12 wow fadeInUp" data-wow-delay="0.5s">
                     <a asp-controller="Home" asp-action="Index">Home</a>
                     <a asp-controller="About" asp-action="About">About Us</a>
                 </div>
@@ -64,7 +64,7 @@
     <!-- Set Start -->
     <div class="food">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row align-items-center wow swing" data-wow-offset="100" data-wow-delay="0.5s">
                 <div class="col-md-4">
                     <div class="card rounded-sm" style="padding: 20px; margin-bottom: 20px;">
                         <img class="card-img-top" src="~/Client/img/set-1.jpg" alt="Card image cap" width="100%" />
@@ -110,7 +110,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <div class="about-img">
+                    <div class="about-img wow heartBeat" data-wow-offset="120">
                         <img src="~/Client/img/about.png" alt="Image">
                         <button type="button" class="btn-play" data-toggle="modal" data-src="https://www.youtube.com/embed/c12hV_HaA6g" data-target="#videoModal">
                             <span></span>
@@ -118,7 +118,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="about-content">
+                    <div class="about-content wow fadeInRight" data-wow-offset="120">
                         <div class="section-header">
                             <p>Về chúng tôi</p>
                             <h2>Tracy Shop - Chúng tôi luôn đồng hành cùng phong cách thời trang của bạn</h2>
@@ -234,6 +234,10 @@
     <script src="~/Client/lib/tempusdominus/js/moment.min.js"></script>
     <script src="~/Client/lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="~/Client/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="~/Client/lib/wow/wow.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
 
     <!-- Contact Javascript File -->
     <script src="~/Client/mail/jqBootstrapValidation.min.js"></script>

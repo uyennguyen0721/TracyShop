@@ -150,7 +150,7 @@ a:focus {
         background: transparent !important;
         z-index: 9;
     }
-    
+
     .navbar.nav-sticky {
         padding: 10px 60px;
         background: #ffffff !important;
@@ -1219,7 +1219,13 @@ a:focus {
 }
 .menu2 > li > a{
     margin-left: 10%;
+    font-size: 17px;
 }
+
+.menu2 > li > h4 {
+    color: #719a0a;
+}
+
 
 [data-pushbar-id] {
     background: #FFFFFF;
@@ -1235,7 +1241,7 @@ a:focus {
     color: #719a0a;
 }
 
-.title{
+#title{
     margin: 7% 0 7% 15%;
 }
 

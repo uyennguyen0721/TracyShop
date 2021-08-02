@@ -27,7 +27,7 @@
     <!-- Nav Bar Start -->
     <div class="navbar navbar-expand-lg bg-light navbar-light">
         <div class="container-fluid">
-            <a asp-controller="Home" asp-action="Index">
+            <a asp-controller="Home" asp-action="Index" class="wow fadeIn" data-wow-delay="0.5s">
                 <img src="~/Client/img/logo-shop.png" style="margin: -15px 0 -15px 0" />
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -35,7 +35,7 @@
             </button>
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                <div class="navbar-nav ml-auto">
+                <div class="navbar-nav ml-auto wow fadeIn" data-wow-delay="0.5s">
                     <a asp-controller="Home" asp-action="Index" class="nav-item nav-link">Trang chủ</a>
                     <a asp-controller="About" asp-action="About" class="nav-item nav-link">Về chúng tôi</a>
                     <a asp-controller="Product" asp-action="Product" class="nav-item nav-link active">Sản phẩm</a>
@@ -52,9 +52,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h2>Sản phẩm</h2>
+                    <h2 class="wow fadeInDown" data-wow-delay="0.5s">Sản phẩm</h2>
                 </div>
-                <div class="col-12">
+                <div class="col-12 wow fadeInUp" data-wow-delay="0.5s">
                     <a asp-controller="Home" asp-action="Index">Home</a>
                     <a asp-controller="Product" asp-action="Product">Product</a>
                 </div>
@@ -67,16 +67,15 @@
         <div class="row" style="margin-top: 5.5%">
             <div class="menu-left col-md-3">
                 <aside data-pushbar-id="left" data-pushbar-direction="left">
-                    <div class="title"><span data-pushbar-close class="close push_right"></span><b>Danh mục sản phẩm</b></div>
+                    <div class="title" id="title"><span data-pushbar-close class="close push_right"></span><b>Danh mục sản phẩm</b></div>
                     <ul class="menu1">
-                        <li><h4>Danh mục sản phẩm</h4></li>
                         <li><a href="#">Đầm</a></li>
                         <li><a href="#">Chân váy</a></li>
                         <li><a href="#">Quần dài</a></li>
                         <li><a href="#">Quần short</a></li>
                         <li><a href="#">Áo thun</a></li>
                     </ul>
-                </aside> 
+                </aside>
                 <div class="card_content">
                     <div><a data-pushbar-target="left" id="name"><< Danh mục sản phẩm</a></div>
                 </div>
@@ -93,7 +92,7 @@
             </div>
 
             <div class="product col-md-9">
-                <div class="row">
+                <div class="row wow bounceIn" data-wow-offset="100" data-wow-delay="0.5s">
                     <div class="col-lg-4 col-md-6">
                         <div class="team-item" style="margin:0 1% 5% 1%">
                             <div class="team-img">
@@ -229,6 +228,10 @@
             blur: true,
             overlay: true,
         });
+    </script>
+    <script src="~/Client/lib/wow/wow.min.js"></script>
+    <script>
+        new WOW().init();
     </script>
 
     <!-- Contact Javascript File -->
