@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DkySqpgt4CyF2ZMhAMfrFc3gwsYNyqxUHEWw5Zz0FxjpTClJoLw1XFGitoW9zuME9pG2neo1tSHezdIWUJ4U1g==",
+  "dgSpecHash": "7/rQ5TKJtnxcAgcW8exdKP1LfQyFM2SnSYroGCmWmwa+o2yJq9cCCXsdV4g9ED8q4/5eQ/2FcC/DcmS4eanWlg==",
   "success": true,
-  "projectFilePath": "D:\\.NET Core Projects\\TracyShop\\TracyShop.csproj",
+  "projectFilePath": "D:\\ASP.NET  Projects\\TracyShop\\TracyShop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\uyenn\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\uyenn\\.nuget\\packages\\microsoft.aspnet.mvc\\5.2.7\\microsoft.aspnet.mvc.5.2.7.nupkg.sha512",

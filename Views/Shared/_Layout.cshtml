@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>About Us - Tracy Shop</title>
+    <title>@ViewData["Title"] - Tracy Shop</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free Website Template" name="keywords">
     <meta content="Free Website Template" name="description">
@@ -17,6 +17,7 @@
     <link href="~/Client/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="~/Client/lib/flaticon/font/flaticon.css" rel="stylesheet">
     <link href="~/Client/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Client/css/pushbar.css">
 
     <!-- Template Stylesheet -->
     <link href="~/Client/css/style.css" rel="stylesheet">
@@ -26,7 +27,7 @@
     <!-- Nav Bar Start -->
     <div class="navbar navbar-expand-lg bg-light navbar-light">
         <div class="container-fluid">
-            <a asp-controller="Home" asp-action="Index">
+            <a asp-controller="Home" asp-action="Index" class="wow fadeIn" data-wow-delay="0.5s">
                 <img src="~/Client/img/logo-shop.png" style="margin: -15px 0 -15px 0" />
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -34,33 +35,18 @@
             </button>
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                <div class="navbar-nav ml-auto">
-                    <a asp-controller="Home" asp-action="Index" class="nav-item nav-link">Trang chủ</a>
-                    <a asp-controller="About" asp-action="About" class="nav-item nav-link active">Về chúng tôi</a>
+                <div class="navbar-nav ml-auto wow fadeIn" data-wow-delay="0.5s">
+                    <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Trang chủ</a>
+                    <a asp-controller="About" asp-action="About" class="nav-item nav-link">Về chúng tôi</a>
                     <a asp-controller="Product" asp-action="Product" class="nav-item nav-link">Sản phẩm</a>
-                    <a href="team.html" class="nav-item nav-link">Đăng nhập</a>
-                    <a href="menu.html" class="nav-item nav-link">Đăng ký</a>
+                    <a href="team.html" class="nav-item nav-link">Đăng ký</a>
+                    <a href="menu.html" class="nav-item nav-link" id="signup">Đăng nhập</a>
 
                 </div>
             </div>
         </div>
     </div>
     <!-- Nav Bar End -->
-    <!-- Page Header Start -->
-    <div class="page-header mb-0">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h2>Về chúng tôi</h2>
-                </div>
-                <div class="col-12">
-                    <a asp-controller="Home" asp-action="Index">Home</a>
-                    <a asp-controller="About" asp-action="About">About Us</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Page Header End -->
     @RenderBody()
     <!-- Footer Start -->
     <div class="footer">
@@ -141,6 +127,10 @@
     <script src="~/Client/lib/tempusdominus/js/moment.min.js"></script>
     <script src="~/Client/lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="~/Client/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="~/Client/lib/wow/wow.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
 
     <!-- Contact Javascript File -->
     <script src="~/Client/mail/jqBootstrapValidation.min.js"></script>

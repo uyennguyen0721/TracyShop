@@ -142,6 +142,16 @@ a:focus {
     background: #f8f9fa;
 }
 
+#signup {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ffffff;
+}
+
+    #signup:hover {
+        border-color: #fbaf32;
+    }
+
 @media (min-width: 992px) {
     .navbar {
         position: absolute;
@@ -1171,84 +1181,9 @@ a:focus {
 }
 
 /************************************/
-/******* Menu and Product CSS *******/
+/******* Menu of Product CSS ********/
 /************************************/
 
-/******* Menu *******/
-
-#left .close {
-    width: 20px;
-    height: 21px;
-    position: relative;
-    display: inline-block;
-    vertical-align: text-bottom;
-    text-align: center;
-    cursor: pointer;
-}
-
-#left .close:before, .close:after {
-    position: absolute;
-    left: 10px;
-    content: 'X';
-    height: 21px;
-    width: 3px;
-    background-color: #ffffff;
-}
-
-#left .close:before {
-    transform: rotate(45deg);
-}
-
-#left.close:after {
-    transform: rotate(-45deg);
-}
-
-.menu1 li {
-    list-style: none;
-    padding: 15px 20px;
-    border-top: 1px solid #719a0a;
-    display: block;
-    margin: 0px;
-    color: rgba(255, 255, 255, 0.65);
-}
-
-.menu2 > li {
-    list-style: none; 
-    margin: 7% 0 0 -15%;
-
-}
-.menu2 > li > a{
-    margin-left: 10%;
-    font-size: 17px;
-}
-
-.menu2 > li > h4 {
-    color: #719a0a;
-}
-
-
-[data-pushbar-id] {
-    background: #FFFFFF;
-    color: #719a0a;
-}
-
-#name {
-    color: #fbaf32;
-    font-size: 17px;
-}
-
-#name:hover {
-    color: #719a0a;
-}
-
-#title{
-    margin: 7% 0 7% 15%;
-}
-
-.card_content {
-    margin-bottom: 7%;
-    margin-left: 7%;
-}
 
 
 /*******************************/
@@ -1927,7 +1862,7 @@ a:focus {
     color: #719a0a;
 }
 
-.contact .contact-text p {
+.contact .contact-text > a {
     margin: 0;
     font-size: 14px;
     color: #454545;

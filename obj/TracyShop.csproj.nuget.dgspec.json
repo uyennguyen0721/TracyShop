@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\.NET Core Projects\\TracyShop\\TracyShop.csproj": {}
+    "D:\\ASP.NET  Projects\\TracyShop\\TracyShop.csproj": {}
   },
   "projects": {
-    "D:\\.NET Core Projects\\TracyShop\\TracyShop.csproj": {
+    "D:\\ASP.NET  Projects\\TracyShop\\TracyShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\.NET Core Projects\\TracyShop\\TracyShop.csproj",
+        "projectUniqueName": "D:\\ASP.NET  Projects\\TracyShop\\TracyShop.csproj",
         "projectName": "TracyShop",
-        "projectPath": "D:\\.NET Core Projects\\TracyShop\\TracyShop.csproj",
+        "projectPath": "D:\\ASP.NET  Projects\\TracyShop\\TracyShop.csproj",
         "packagesPath": "C:\\Users\\uyenn\\.nuget\\packages\\",
-        "outputPath": "D:\\.NET Core Projects\\TracyShop\\obj\\",
+        "outputPath": "D:\\ASP.NET  Projects\\TracyShop\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

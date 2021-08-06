@@ -13,21 +13,6 @@
         $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
         return false;
     });
-
-    //hide - show menu
-    $(document).ready(function () {
-        function toggleMenuMethod() {
-            if ($(window).width() >= 768) {
-                $('.card_content').hide()
-                $('.menu-show').show()
-            } else {
-                $('.card_content').show()
-                $('.menu-show').hide()
-            }
-        }
-        toggleMenuMethod();
-        $(window).resize(toggleMenuMethod);
-    });
     
     
     // Sticky Navbar
@@ -37,6 +22,12 @@
         } else {
             $('.navbar').removeClass('nav-sticky');
         }
+    });
+
+    // Active State
+    $(".nav-item").on("click", function () {
+        $('.navbar-nav .active').removeClass('active');
+        $('.nav-item').addClass('active');
     });
     
     
