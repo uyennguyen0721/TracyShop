@@ -21,25 +21,39 @@
 
     <!-- Template Stylesheet -->
     <link href="~/Client/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
     <!-- Nav Bar Start -->
     <div class="navbar navbar-expand-lg bg-light navbar-light">
         <div class="container-fluid">
-            <a asp-controller="Home" asp-action="Index" class="wow fadeIn" data-wow-delay="0.5s">
-                <img src="~/Client/img/logo-shop.png" style="margin: -15px 0 -15px 0" />
+
+            <div class="box">
+                <div class="container-2">
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                        </svg>
+                    </span>
+                    <input type="search" id="search" placeholder="Search..." />
+                </div>
+            </div>
+
+            <a asp-controller="Home" asp-action="Index">
+                <img src="~/Client/img/logo-shop.png" style="margin: -15px 0 -15px 5px" />
             </a>
+
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                <div class="navbar-nav ml-auto wow fadeIn" data-wow-delay="0.5s">
+                <div class="navbar-nav ml-auto">
                     <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Trang chủ</a>
                     <a asp-controller="About" asp-action="About" class="nav-item nav-link">Về chúng tôi</a>
                     <a asp-controller="Product" asp-action="Product" class="nav-item nav-link">Sản phẩm</a>
-                    <a href="team.html" class="nav-item nav-link">Đăng ký</a>
+                    <a asp-controller="Register" asp-action="Register" class="nav-item nav-link">Đăng ký</a>
                     <a href="menu.html" class="nav-item nav-link" id="signup">Đăng nhập</a>
 
                 </div>
@@ -64,19 +78,19 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#719a0a" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
                                         <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
                                     </svg>
-                                    371 Nguyễn Kiệm, Gò Vấp, TPHCM
+                                    <a href="#">371 Nguyễn Kiệm, Gò Vấp, TPHCM</a>
                                 </p>
                                 <p>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#719a0a" class="bi bi-telephone-fill" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
                                     </svg>
-                                    0947653170
+                                    <a href="tel:+84947653170">0947653170</a>
                                 </p>
                                 <p>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#719a0a" class="bi bi-envelope-fill" viewBox="0 0 16 16">
                                         <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z" />
                                     </svg>
-                                    uyennguyen0721@gmail.com
+                                    <a href="mailto:uyennguyen0721@gmail.com">uyennguyen0721@gmail.com</a>
                                 </p>
                                 <div class="footer-social">
                                     <a href="https://www.facebook.com/nttu.dqt/">

@@ -220,6 +220,81 @@ a:focus {
     .navbar .dropdown-menu {
         box-shadow: none;
     }
+
+    .navbar .container-fluid > a > img {
+        width: 70% !important;
+    }
+}
+
+
+/**********************************/
+/*********** Search CSS ***********/
+/**********************************/
+
+.container-2 {
+    width: 300px;
+    vertical-align: middle;
+    white-space: nowrap;
+    position: relative;
+    margin-bottom: 7px;
+}
+
+.container-2 input#search {
+    width: 50px;
+    height: 50px;
+    background: #ffffff;
+    border: none;
+    font-size: 12pt;
+    color: #fbaf32;
+    padding-left: 40px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    color: #fbaf32;
+    -webkit-transition: width .55s ease;
+    -moz-transition: width .55s ease;
+    -ms-transition: width .55s ease;
+    -o-transition: width .55s ease;
+    transition: width .55s ease;
+}
+
+.container-2 input#search::-webkit-input-placeholder {
+    color: #fbaf32;
+}
+
+.container-2 input#search:-moz-placeholder { /* Firefox 18- */
+    color: #fbaf32;
+}
+
+.container-2 input#search::-moz-placeholder { /* Firefox 19+ */
+    color: #fbaf32;
+}
+
+.container-2 input#search:-ms-input-placeholder {
+    color: #fbaf32;
+}
+
+.container-2 .icon {
+    position: absolute;
+    top: 7%;
+    margin-left: 16px;
+    margin-top: 10px;
+    z-index: 1;
+    color: #fbaf32;
+}
+
+/* ANIMATION EFFECTS */
+.container-2 input#search:focus, .container-2 input#search:active {
+    outline: none;
+}
+
+.container-2:hover input#search {
+    outline: none;
+    width: 300px;
+}
+
+.container-2:hover .icon {
+    color: #fbaf32;
 }
 
 
@@ -1184,7 +1259,19 @@ a:focus {
 /******* Menu of Product CSS ********/
 /************************************/
 
+.menu1 > li {
+    list-style: none;
+    margin: 7% 0 0 -15%;
+}
 
+.menu1 > li > a {
+    margin-left: 10%;
+    font-size: 17px;
+}
+
+.menu1 > li > h4 {
+    color: #719a0a;
+}
 
 /*******************************/
 /******* Testimonial CSS *******/
@@ -1972,6 +2059,12 @@ a:focus {
 .footer .footer-contact p i {
     width: 25px;
     color: #fbaf32;
+}
+
+.footer .footer-contact > p > a {
+    margin: 0;
+    font-size: 14px;
+    color: #454545;
 }
 
 .footer .footer-social {

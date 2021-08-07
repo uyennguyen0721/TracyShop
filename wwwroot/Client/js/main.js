@@ -12,8 +12,7 @@
     $('.back-to-top').click(function () {
         $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
         return false;
-    });
-    
+    }); 
     
     // Sticky Navbar
     $(window).scroll(function () {
@@ -23,14 +22,7 @@
             $('.navbar').removeClass('nav-sticky');
         }
     });
-
-    // Active State
-    $(".nav-item").on("click", function () {
-        $('.navbar-nav .active').removeClass('active');
-        $('.nav-item').addClass('active');
-    });
-    
-    
+       
     // Dropdown on mouse hover
     $(document).ready(function () {
         function toggleNavbarMethod() {
