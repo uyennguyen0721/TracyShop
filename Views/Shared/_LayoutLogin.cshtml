@@ -1,0 +1,27 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="robots" content="noindex, follow">
+    <title>@ViewData["Title"] - Tracy Shop</title>
+
+    <link href="~/css/register-login.css" rel="stylesheet" />
+    <link href="~/Client/img/logo_150.png" rel="shortcut icon">
+</head>
+
+<body>
+    <div class="main">
+        <div class="register-content">
+            <div class="register-form wow zoomIn" data-wow-delay="0.5s">
+                <img src="~/Client/img/logo-shop.png" alt="OU" id="logo" />
+                <form method="post" class="form-login" id="form-login">
+                    @RenderBody()
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

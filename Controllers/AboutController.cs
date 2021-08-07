@@ -19,7 +19,7 @@ namespace TracyShop.Controllers
             _logger = logger;
         }
 
-        [Route("/about", Name = "cart")]
+        [Route("/about", Name = "about")]
         public IActionResult About()
         {
             return View();

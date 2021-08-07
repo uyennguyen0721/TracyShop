@@ -148,9 +148,9 @@ a:focus {
     border-color: #ffffff;
 }
 
-    #signup:hover {
-        border-color: #fbaf32;
-    }
+#signup:hover {
+    border-color: #fbaf32;
+}
 
 @media (min-width: 992px) {
     .navbar {

@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "_LayoutLogin";
+    ViewData["Title"] = "Login";
+}
+
+<div class="form-group">
+    <input type="text" name="username" id="username" placeholder="Tên đăng nhập" />
+</div>
+<div class="form-group">
+    <input type="password" name="password" id="password" placeholder="Mật khẩu" />
+</div>
+<div class="form-group forgot-password">Quên mật khẩu?</div>
+
+<div class="form-group form-button">
+    <input type="submit" name="login" id="login" class="form-submit" value="Đăng nhập" />
+</div>
+
+<p style="text-align:center">Hoặc đăng nhập bằng</p>
+<div class="form-group form-button" id="social">
+    <div id="facebook">
+        <input type="submit" class="form-submit" name="register" id="fb" value="Facebook" />
+    </div>
+    <div id="google">
+        <input type="submit" class="form-submit" name="register" id="gg" value="Google" />
+    </div>
+</div>
+
+<div class="form-group sugget-text">
+    <div class="text">Bạn chưa có tài khoản?</div>
+    <div class="link register-link">
+        <a asp-controller="Register" asp-action="Register">Đăng ký</a>
+    </div>
+</div>

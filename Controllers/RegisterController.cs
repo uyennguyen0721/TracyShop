@@ -19,6 +19,7 @@ namespace TracyShop.Controllers
             _logger = logger;
         }
 
+        [Route("/register", Name = "register")]
         public IActionResult Register()
         {
             return View();
@@ -98,6 +99,7 @@ namespace TracyShop.Controllers
                 return View();
             }
         }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

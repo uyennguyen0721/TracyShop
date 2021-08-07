@@ -5,7 +5,8 @@
     background: #f8f8f8;
     display: flex;
     width: 98vw;
-    height: 110vh;
+    max-height: 110vh;
+    min-height: 98vh;
     justify-content: center;
     align-items: center;
     background: linear-gradient(rgb(0, 0, 0, 0.7), rgb(0, 0, 0, 0.7)), url(../img/background.png) no-repeat center;
@@ -91,7 +92,15 @@ input {
     font-weight: bold;
 }
 
-#signup {
+.forgot-password {
+    text-align: right;
+    margin-top: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #d4b774;
+}
+
+#login {
     box-shadow: 0 3px 25px 0 rgb(0 0 0 / 20%);
     margin: 10px 5px;
     background: #d8b979;
