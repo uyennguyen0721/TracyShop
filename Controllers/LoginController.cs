@@ -26,6 +26,12 @@ namespace TracyShop.Controllers
             return View();
         }
 
+        [Route("/register", Name = "register")]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
         // GET: Login/Details/5
         public ActionResult Details(int id)
         {
