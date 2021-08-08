@@ -153,8 +153,9 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\TracyShop.dll
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\ref\TracyShop.dll
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\TracyShop.pdb
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\TracyShop.genruntimeconfig.cache
-D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Register\Register.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\libman.json
 D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\System.Net.WebSockets.WebSocketProtocol.dll
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Login\Login.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Shared\_LayoutLogin.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Login\Register.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Profile\Profile.cshtml.g.cs

@@ -297,6 +297,153 @@ a:focus {
     color: #fbaf32;
 }
 
+/*******************************/
+/******** Profile CSS **********/
+/*******************************/
+.profile {
+    max-height: 250vh;
+    min-height: 98vh;
+    background: linear-gradient(rgb(0, 0, 0, 0.3), rgb(0, 0, 0, 0.3)), url(../img/background.jpg) no-repeat center;
+    background-size: cover;
+    padding: 0px !important;
+    margin: 0px !important;
+    font-size: 14px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+}
+
+.profile-nav .file {
+    position: absolute;
+    overflow: hidden;
+    margin-top: 35%;
+    margin-left: -17%;
+    width: 20%;
+    border: none;
+    border-radius: 100%;
+    font-size: 15px;
+    background: #212529b8;
+    align-items: center;
+    justify-content: center;
+}
+
+    .profile-nav .file input {
+        position: absolute;
+        opacity: 0;
+        right: 0;
+        top: 0;
+    }
+
+.profile-info {
+    margin-top: 15%;
+}
+
+.profile-nav {
+    margin-top: 13%;
+    margin-bottom: 10%;
+}
+
+.profile .profile-nav .card {
+    background: transparent;
+    border : none !important;
+}
+
+.profile-nav .main-menu {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+    .profile-nav .user-heading {
+        background: transparent;
+        color: #fff;
+        border-radius: 4px 4px 0 0;
+        -webkit-border-radius: 4px 4px 0 0;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .profile-nav .user-heading .card-body {
+        padding: 0 !important;
+    }
+
+        .profile-nav .user-heading a img {
+            position: relative;
+            float: none;
+            width: 70%;
+            height: 70%;
+            -webkit-border-radius: 50% !important;
+            -moz-border-radius: 50% !important;
+            border-radius: 50% !important;
+        }
+
+        .profile-nav .user-heading h1 {
+            font-size: 27px;
+            font-weight: 300;
+            margin-bottom: 5px;
+            margin-top: 10px;
+            color: #FFBF00;
+        }
+
+        .profile-nav .user-heading p {
+            font-size: 14px;
+        }
+
+    .profile-nav ul {
+        margin-top: 1px;
+    }
+
+        .profile-nav ul > li {
+            margin-top: 0;
+            line-height: 30px;
+            list-style-type: none;
+        }
+
+            .profile-nav ul > li:last-child {
+                border-bottom: none;
+            }
+
+        .profile-nav ul .li-menu > a {
+            background: transparent !important;
+            color: #ffffff !important;
+            font-size: 16px !important;
+        }
+
+            .profile-nav ul .li-menu > a:hover, .profile-nav ul .li-menu > a:focus {
+                border-left: 5px;
+                color: #719a0a !important;
+            }
+
+        .profile-nav ul .li-menu .sub-menu > li > a {
+            background: transparent !important;
+            border-left: 5px;
+            color: #ffffff !important;
+            font-size: 16px !important;
+        }
+
+            .profile-nav ul .li-menu .sub-menu > li > a:hover, .profile-nav ul .li-menu .sub-menu > li > a:focus {
+                border-left: 5px;
+                color: #719a0a !important;
+            }
+
+            .profile-nav ul > li:last-child > a:last-child {
+                border-radius: 0 0 4px 4px;
+                -webkit-border-radius: 0 0 4px 4px;
+            }
+
+
+.bio-graph-heading {
+    background: #fbc02d;
+    color: #fff;
+    text-align: center;
+    font-style: italic;
+    padding: 40px 110px;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+
 
 /*******************************/
 /********** Hero CSS ***********/
