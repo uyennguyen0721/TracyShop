@@ -69,6 +69,16 @@
             $("#video").attr('src', $videoSrc);
         })
     });
+
+    // Hide and show submenu of Profile
+    $(document).ready(function () {
+        $('.sub-menu').hide();
+        if (jQuery('#main-menu').click) {
+            $('.sub-menu').show();
+        } else {
+            $('.sub-menu').hide();
+        }
+    });
     
     
     // Date and time picker
