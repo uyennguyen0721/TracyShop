@@ -27,6 +27,20 @@ namespace TracyShop.Controllers
             return View();
         }
 
+        [Route("/profile/reset-password", Name = "reset-password")]
+        // GET: ProfileController/ResetPassword
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [Route("/profile/address", Name = "address")]
+        // GET: ProfileController/ResetPassword
+        public ActionResult Address()
+        {
+            return View();
+        }
+
         // GET: ProfileController/Details/5
         public ActionResult Details(int id)
         {

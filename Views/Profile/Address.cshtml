@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "_LayoutProfile";
+    ViewData["title"] = "Address";
+}
+
+<div class="card-body">
+    <h1 class="card-title">Địa chỉ của tôi</h1>
+    <p class="card-title">Địa chỉ giao hàng</p>
+</div>
+<div class="card-text">
+    <div class="input">
+        <p>
+            Tỉnh/ Thành phố
+            <select name="calc_shipping_provinces" required="">
+                <option value="">Tỉnh / Thành phố</option>
+            </select>
+        </p>
+    </div>
+    <div class="input">
+        <p>
+            Quận/ Huyện
+            <select name="calc_shipping_district" required="">
+                <option value="">Quận / Huyện</option>
+            </select>
+        </p>
+    </div>
+    <div class="input">
+        <p>
+            Phường/ Xã
+            <input type="text" name="village" maxlength="255" />
+        </p>
+    </div>
+    <div class="input">
+        <p>
+            Số nhà, tên đường
+            <input type="text" name="street" maxlength="255" />
+        </p>
+    </div>
+</div>
+<div class="save">
+    <input type="submit" class="btn custom-btn" value="Lưu địa chỉ" />
+</div>
