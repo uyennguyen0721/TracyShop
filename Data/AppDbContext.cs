@@ -30,5 +30,7 @@ namespace TracyShop.Data
             }
         }
 
+        public DbSet<TracyShop.Models.Category> Category { get; set; }
+
     }
 }
