@@ -52,7 +52,7 @@
             },
             "MailKit": {
               "target": "Package",
-              "version": "[2.14.0, )"
+              "version": "[2.15.0, )"
             },
             "Microsoft.AspNetCore.Authentication": {
               "target": "Package",
@@ -138,6 +138,10 @@
               "target": "Package",
               "version": "[5.0.2, )"
             },
+            "Microsoft.Extensions.Identity.Core": {
+              "target": "Package",
+              "version": "[5.0.9, )"
+            },
             "Microsoft.Extensions.Logging": {
               "target": "Package",
               "version": "[5.0.0, )"
@@ -152,7 +156,11 @@
             },
             "MimeKit": {
               "target": "Package",
-              "version": "[2.14.0, )"
+              "version": "[2.15.0, )"
+            },
+            "NETCore.MailKit": {
+              "target": "Package",
+              "version": "[2.0.3, )"
             },
             "System.Data.SqlClient": {
               "target": "Package",

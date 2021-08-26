@@ -1,21 +1,26 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Identity.Core;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 using TracyShop.Models;
 using TracyShop.Data;
-using Microsoft.AspNetCore.Identity;
 using TracyShop.Mail;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using TracyShop.Repository;
+using TracyShop.Services;
+using TracyShop.Helpers;
 
 namespace TracyShop
 {
@@ -32,6 +37,23 @@ namespace TracyShop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDistributedMemoryCache();           // Đăng ký dịch vụ lưu cache trong bộ nhớ (Session sẽ sử dụng nó)
+            services.AddSession(cfg => {                    // Đăng ký dịch vụ Session
+                cfg.Cookie.Name = "Tracy Shop";             // Đặt tên Session - tên này sử dụng ở Browser (Cookie)
+                cfg.IdleTimeout = new TimeSpan(0, 30, 0);    // Thời gian tồn tại của Session
+            });
+
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+            {
+                options.TokenLifespan = TimeSpan.FromMinutes(5);
+            });
+
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = Configuration["Application:LoginPath"];
+            });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -39,7 +61,6 @@ namespace TracyShop
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddRazorPages();
             // Đăng ký AppDbContext
             services.AddDbContext<AppDbContext>(options => {
                 // Đọc chuỗi kết nối
@@ -52,6 +73,10 @@ namespace TracyShop
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
+#if DEBUG
+            services.AddRazorPages();
+#endif
+
             // Truy cập IdentityOptions
             services.Configure<IdentityOptions>(options => {
                 // Thiết lập về Password
@@ -59,12 +84,12 @@ namespace TracyShop
                 options.Password.RequireLowercase = false; // Không bắt phải có chữ thường
                 options.Password.RequireNonAlphanumeric = false; // Không bắt ký tự đặc biệt
                 options.Password.RequireUppercase = false; // Không bắt buộc chữ in
-                options.Password.RequiredLength = 3; // Số ký tự tối thiểu của password
+                options.Password.RequiredLength = 6; // Số ký tự tối thiểu của password
                 options.Password.RequiredUniqueChars = 1; // Số ký tự riêng biệt
 
                 // Cấu hình Lockout - khóa user
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // Khóa 5 phút
-                options.Lockout.MaxFailedAccessAttempts = 5; // Thất bại 5 lầ thì khóa
+                options.Lockout.MaxFailedAccessAttempts = 5; // Thất bại 5 lần thì khóa
                 options.Lockout.AllowedForNewUsers = true;
 
                 // Cấu hình về User.
@@ -78,12 +103,40 @@ namespace TracyShop
 
             });
 
+            // Cấu hình Cookie
+            services.ConfigureApplicationCookie(options => {
+                // options.Cookie.HttpOnly = true;  
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.LoginPath = $"/Identity/Login/"; // Url đến trang đăng nhập
+                options.LogoutPath = $"/Identity/logout/";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied"; // Trang khi User bị cấm truy cập
+            });
+
+            services.Configure<SecurityStampValidatorOptions>(options => {
+                // Trên 5 giây truy cập lại sẽ nạp lại thông tin User (Role)
+                // SecurityStamp trong bảng User đổi -> nạp lại thông tinn Security
+                options.ValidationInterval = TimeSpan.FromSeconds(5);
+            });
+
+            services.Configure<RouteOptions>(options => {
+                options.AppendTrailingSlash = false; // Thêm dấu / vào cuối URL
+                options.LowercaseUrls = true; // url chữ thường
+                options.LowercaseQueryStrings = false; // không bắt query trong url phải in thường
+            });
+
             services.AddOptions();                                        // Kích hoạt Options
             var mailsettings = Configuration.GetSection("MailSettings");  // đọc config
             services.Configure<MailSettings>(mailsettings);               // đăng ký để Inject
 
             services.AddTransient<IEmailSender, SendMailService>();        // Đăng ký dịch vụ Mail
 
+            services.AddScoped<ILoginRepository, LoginRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEmailService, EmailService>();
+
+            services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, AppUserClaimsPrincipalFactory>();
+
+            services.Configure<SMTPConfigModel>(Configuration.GetSection("SMTPConfig"));
 
             //services.AddCoreAdmin();
         }

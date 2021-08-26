@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -18,8 +19,10 @@ namespace TracyShop.Models
 
         [MaxLength(10)]
         public string Gender { set; get; }
-        public bool Is_active { set; get; }
-        public DateTime Joined_date { set; get; }
+
+        public bool Is_active { set; get; } = true;
+
+        public DateTime Joined_date { set; get; } = DateTime.Now;
 
         public virtual Address Address { set; get; }
         public virtual UserRole UserRole { set; get; }

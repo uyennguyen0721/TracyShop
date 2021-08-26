@@ -44,6 +44,7 @@ namespace TracyShop.Areas.Admin.Controllers
             return View(category);
         }
 
+
         // GET: Admin/Category/Create
         public IActionResult Create()
         {

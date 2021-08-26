@@ -1,33 +1,47 @@
-﻿@{
+﻿@model TracyShop.Models.LoginModel
+@{
     Layout = "_LayoutLogin";
     ViewData["Title"] = "Login";
 }
 
-<div class="form-group">
-    <input type="text" name="username" id="username" placeholder="Tên đăng nhập" />
-</div>
-<div class="form-group">
-    <input type="password" name="password" id="password" placeholder="Mật khẩu" />
-</div>
-<div class="form-group forgot-password">Quên mật khẩu?</div>
 
-<div class="form-group form-button">
-    <input type="submit" name="login" id="login" class="form-submit" value="Đăng nhập" />
-</div>
+<form method="post" class="form-login" id="form-login" asp-action="Login">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group form-input">
+        <input asp-for="Email" type="text" placeholder="Email đăng nhập" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group form-input">
+        <input asp-for="Password" type="password" placeholder="Mật khẩu" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" asp-for="RememberMe" /> @Html.DisplayNameFor(model => model.RememberMe)
+        </label>
+    </div>
+    <div class="form-group forgot-password">
+        <a href="#">Quên mật khẩu?</a>
+    </div>
 
-<p style="text-align:center">Hoặc đăng nhập bằng</p>
-<div class="form-group form-button" id="social">
-    <div id="facebook">
-        <input type="submit" class="form-submit" name="register" id="fb" value="Facebook" />
+    <div class="form-group form-button">
+        <input type="submit" id="login" class="form-submit" value="Đăng nhập" />
     </div>
-    <div id="google">
-        <input type="submit" class="form-submit" name="register" id="gg" value="Google" />
-    </div>
-</div>
 
-<div class="form-group sugget-text">
-    <div class="text">Bạn chưa có tài khoản?</div>
-    <div class="link register-link">
-        <a asp-controller="Login" asp-action="Register">Đăng ký</a>
+    <p style="text-align:center">Hoặc đăng nhập bằng</p>
+    <div class="form-group form-button" id="social">
+        <div id="facebook">
+            <input type="submit" class="form-submit" name="register" id="fb" value="Facebook" />
+        </div>
+        <div id="google">
+            <input type="submit" class="form-submit" name="register" id="gg" value="Google" />
+        </div>
     </div>
-</div>
+
+    <div class="form-group sugget-text">
+        <div class="text">Bạn chưa có tài khoản?</div>
+        <div class="link register-link">
+            <a asp-controller="Login" asp-action="Register">Đăng ký</a>
+        </div>
+    </div>
+</form>

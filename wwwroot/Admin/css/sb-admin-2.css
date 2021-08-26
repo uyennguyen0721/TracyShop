@@ -4119,13 +4119,12 @@ input[type="button"].btn-block {
 }
 
 .navbar-brand {
-  display: inline-block;
-  padding-top: 0.3125rem;
-  padding-bottom: 0.3125rem;
-  margin-right: 1rem;
-  font-size: 1.25rem;
-  line-height: inherit;
-  white-space: nowrap;
+    display: inline-block;
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    margin-right: 1remtopbar font-size: 1.25rem;
+    line-height: inherit;
+    white-space: nowrap;
 }
 
 .navbar-brand:hover, .navbar-brand:focus {

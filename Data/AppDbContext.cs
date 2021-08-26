@@ -17,6 +17,8 @@ namespace TracyShop.Data
         {
 
             base.OnModelCreating(builder);
+
+
             // Bỏ tiền tố AspNet của các bảng: mặc định các bảng trong IdentityDbContext có
             // tên với tiền tố AspNet như: AspNetUserRoles, AspNetUser ...
             // Đoạn mã sau chạy khi khởi tạo DbContext, tạo database sẽ loại bỏ tiền tố đó

@@ -35,10 +35,10 @@
           "lib/netstandard2.0/Humanizer.dll": {}
         }
       },
-      "MailKit/2.14.0": {
+      "MailKit/2.15.0": {
         "type": "package",
         "dependencies": {
-          "MimeKit": "2.14.0"
+          "MimeKit": "2.15.0"
         },
         "compile": {
           "lib/net50/MailKit.dll": {}
@@ -1929,7 +1929,7 @@
           }
         }
       },
-      "MimeKit/2.14.0": {
+      "MimeKit/2.15.0": {
         "type": "package",
         "dependencies": {
           "Portable.BouncyCastle": "1.8.10",
@@ -1943,6 +1943,19 @@
         },
         "runtime": {
           "lib/net50/MimeKit.dll": {}
+        }
+      },
+      "NETCore.MailKit/2.0.3": {
+        "type": "package",
+        "dependencies": {
+          "MailKit": "2.6.0",
+          "Microsoft.Extensions.DependencyInjection": "3.1.4"
+        },
+        "compile": {
+          "lib/netstandard2.1/NETCore.MailKit.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/NETCore.MailKit.dll": {}
         }
       },
       "NETStandard.Library/1.6.1": {
@@ -4029,10 +4042,10 @@
         "logo.png"
       ]
     },
-    "MailKit/2.14.0": {
-      "sha512": "ekBAtzxNMECnChVD/JJSFhOvf68aDdYvzL8ldOt9yzMUF7C9peFYulPTBCL59qyGjbxoaOrbeT0puqV8agz+XA==",
+    "MailKit/2.15.0": {
+      "sha512": "9ihv6pRmjmBEAP4eXlDeo9srFQF9dVtYP1/jzj3I3BV9tBRk66NLdAF+8jkgUtauMKmns0yBvtfMFiBnNkHKDQ==",
       "type": "package",
-      "path": "mailkit/2.14.0",
+      "path": "mailkit/2.15.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4058,7 +4071,7 @@
         "lib/netstandard2.1/MailKit.dll",
         "lib/netstandard2.1/MailKit.pdb",
         "lib/netstandard2.1/MailKit.xml",
-        "mailkit.2.14.0.nupkg.sha512",
+        "mailkit.2.15.0.nupkg.sha512",
         "mailkit.nuspec"
       ]
     },
@@ -6664,10 +6677,10 @@
         "version.txt"
       ]
     },
-    "MimeKit/2.14.0": {
-      "sha512": "Z8ONAYytB/P8O7tpqMShcfL/2b+cF8Uq6UHqhcE9jiFMZsXocwu4Tg1r3Dpa2/uESJsdXtc+gvFj08PBAJ9YOg==",
+    "MimeKit/2.15.0": {
+      "sha512": "146As77LbmZezdSJ5W/2ZEQsZyqVSAM8yOjDjvsy6NpLmyqG8lgzmX6ps3P/fKzUN5Ey4hxwnAtH+KLlJW0CsQ==",
       "type": "package",
-      "path": "mimekit/2.14.0",
+      "path": "mimekit/2.15.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6693,8 +6706,20 @@
         "lib/netstandard2.1/MimeKit.dll",
         "lib/netstandard2.1/MimeKit.pdb",
         "lib/netstandard2.1/MimeKit.xml",
-        "mimekit.2.14.0.nupkg.sha512",
+        "mimekit.2.15.0.nupkg.sha512",
         "mimekit.nuspec"
+      ]
+    },
+    "NETCore.MailKit/2.0.3": {
+      "sha512": "5V4N3S9soQLBemj2+u4TvIbSfJP1Hs/iV7TCJuBc913lD9OoZ+7Lne4eA90F292OLZ2iBQJzXttAvfYgIYWnFg==",
+      "type": "package",
+      "path": "netcore.mailkit/2.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.1/NETCore.MailKit.dll",
+        "netcore.mailkit.2.0.3.nupkg.sha512",
+        "netcore.mailkit.nuspec"
       ]
     },
     "NETStandard.Library/1.6.1": {
@@ -11835,7 +11860,7 @@
   "projectFileDependencyGroups": {
     "net5.0": [
       "CoreAdmin >= 1.5.0",
-      "MailKit >= 2.14.0",
+      "MailKit >= 2.15.0",
       "Microsoft.AspNetCore.Authentication >= 2.2.0",
       "Microsoft.AspNetCore.Authentication.Cookies >= 2.2.0",
       "Microsoft.AspNetCore.Authentication.Facebook >= 5.0.9",
@@ -11856,10 +11881,12 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.9",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.9",
       "Microsoft.Extensions.DependencyInjection >= 5.0.2",
+      "Microsoft.Extensions.Identity.Core >= 5.0.9",
       "Microsoft.Extensions.Logging >= 5.0.0",
       "Microsoft.Extensions.Logging.Console >= 5.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 5.0.2",
-      "MimeKit >= 2.14.0",
+      "MimeKit >= 2.15.0",
+      "NETCore.MailKit >= 2.0.3",
       "System.Data.SqlClient >= 4.8.2"
     ]
   },
@@ -11916,7 +11943,7 @@
           },
           "MailKit": {
             "target": "Package",
-            "version": "[2.14.0, )"
+            "version": "[2.15.0, )"
           },
           "Microsoft.AspNetCore.Authentication": {
             "target": "Package",
@@ -12002,6 +12029,10 @@
             "target": "Package",
             "version": "[5.0.2, )"
           },
+          "Microsoft.Extensions.Identity.Core": {
+            "target": "Package",
+            "version": "[5.0.9, )"
+          },
           "Microsoft.Extensions.Logging": {
             "target": "Package",
             "version": "[5.0.0, )"
@@ -12016,7 +12047,11 @@
           },
           "MimeKit": {
             "target": "Package",
-            "version": "[2.14.0, )"
+            "version": "[2.15.0, )"
+          },
+          "NETCore.MailKit": {
+            "target": "Package",
+            "version": "[2.0.3, )"
           },
           "System.Data.SqlClient": {
             "target": "Package",

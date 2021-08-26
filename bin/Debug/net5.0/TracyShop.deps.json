@@ -34,7 +34,7 @@
       "TracyShop/1.0.0": {
         "dependencies": {
           "CoreAdmin": "1.5.0",
-          "MailKit": "2.14.0",
+          "MailKit": "2.15.0",
           "Microsoft.AspNetCore.Authentication": "2.2.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "2.2.0",
           "Microsoft.AspNetCore.Authentication.Facebook": "5.0.9",
@@ -55,10 +55,12 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.9",
           "Microsoft.EntityFrameworkCore.Tools": "5.0.9",
           "Microsoft.Extensions.DependencyInjection": "5.0.2",
+          "Microsoft.Extensions.Identity.Core": "5.0.9",
           "Microsoft.Extensions.Logging": "5.0.0",
           "Microsoft.Extensions.Logging.Console": "5.0.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "5.0.2",
-          "MimeKit": "2.14.0",
+          "MimeKit": "2.15.0",
+          "NETCore.MailKit": "2.0.3",
           "System.Data.SqlClient": "4.8.2",
           "Microsoft.AspNetCore.Antiforgery.Reference": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions.Reference": "5.0.0.0",
@@ -372,14 +374,14 @@
           }
         }
       },
-      "MailKit/2.14.0": {
+      "MailKit/2.15.0": {
         "dependencies": {
-          "MimeKit": "2.14.0"
+          "MimeKit": "2.15.0"
         },
         "runtime": {
           "lib/net50/MailKit.dll": {
-            "assemblyVersion": "2.14.0.0",
-            "fileVersion": "2.14.0.0"
+            "assemblyVersion": "2.15.0.0",
+            "fileVersion": "2.15.0.0"
           }
         },
         "compile": {
@@ -1807,7 +1809,7 @@
           "Microsoft.NETCore.Platforms": "3.1.0"
         }
       },
-      "MimeKit/2.14.0": {
+      "MimeKit/2.15.0": {
         "dependencies": {
           "Portable.BouncyCastle": "1.8.10",
           "System.Buffers": "4.5.1",
@@ -1817,12 +1819,27 @@
         },
         "runtime": {
           "lib/net50/MimeKit.dll": {
-            "assemblyVersion": "2.14.0.0",
-            "fileVersion": "2.14.0.0"
+            "assemblyVersion": "2.15.0.0",
+            "fileVersion": "2.15.0.0"
           }
         },
         "compile": {
           "lib/net50/MimeKit.dll": {}
+        }
+      },
+      "NETCore.MailKit/2.0.3": {
+        "dependencies": {
+          "MailKit": "2.15.0",
+          "Microsoft.Extensions.DependencyInjection": "5.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.1/NETCore.MailKit.dll": {
+            "assemblyVersion": "2.0.3.0",
+            "fileVersion": "2.0.3.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.1/NETCore.MailKit.dll": {}
         }
       },
       "NETStandard.Library/1.6.1": {
@@ -4719,12 +4736,12 @@
       "path": "humanizer.core/2.8.26",
       "hashPath": "humanizer.core.2.8.26.nupkg.sha512"
     },
-    "MailKit/2.14.0": {
+    "MailKit/2.15.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ekBAtzxNMECnChVD/JJSFhOvf68aDdYvzL8ldOt9yzMUF7C9peFYulPTBCL59qyGjbxoaOrbeT0puqV8agz+XA==",
-      "path": "mailkit/2.14.0",
-      "hashPath": "mailkit.2.14.0.nupkg.sha512"
+      "sha512": "sha512-9ihv6pRmjmBEAP4eXlDeo9srFQF9dVtYP1/jzj3I3BV9tBRk66NLdAF+8jkgUtauMKmns0yBvtfMFiBnNkHKDQ==",
+      "path": "mailkit/2.15.0",
+      "hashPath": "mailkit.2.15.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Antiforgery/1.1.3": {
       "type": "package",
@@ -5566,12 +5583,19 @@
       "path": "microsoft.win32.systemevents/4.7.0",
       "hashPath": "microsoft.win32.systemevents.4.7.0.nupkg.sha512"
     },
-    "MimeKit/2.14.0": {
+    "MimeKit/2.15.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Z8ONAYytB/P8O7tpqMShcfL/2b+cF8Uq6UHqhcE9jiFMZsXocwu4Tg1r3Dpa2/uESJsdXtc+gvFj08PBAJ9YOg==",
-      "path": "mimekit/2.14.0",
-      "hashPath": "mimekit.2.14.0.nupkg.sha512"
+      "sha512": "sha512-146As77LbmZezdSJ5W/2ZEQsZyqVSAM8yOjDjvsy6NpLmyqG8lgzmX6ps3P/fKzUN5Ey4hxwnAtH+KLlJW0CsQ==",
+      "path": "mimekit/2.15.0",
+      "hashPath": "mimekit.2.15.0.nupkg.sha512"
+    },
+    "NETCore.MailKit/2.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5V4N3S9soQLBemj2+u4TvIbSfJP1Hs/iV7TCJuBc913lD9OoZ+7Lne4eA90F292OLZ2iBQJzXttAvfYgIYWnFg==",
+      "path": "netcore.mailkit/2.0.3",
+      "hashPath": "netcore.mailkit.2.0.3.nupkg.sha512"
     },
     "NETStandard.Library/1.6.1": {
       "type": "package",

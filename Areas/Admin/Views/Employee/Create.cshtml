@@ -1,0 +1,65 @@
+﻿@model TracyShop.Models.AppUser
+
+@{
+    ViewData["Title"] = "Create Employee";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Thêm nhân viên mới</h1>
+    <a asp-area="Admin" asp-controller="Employee" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-chevron-left fa-sm text-white-50"></i> Quay lại
+    </a>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Tên nhân viên</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Birthday" class="control-label">Ngày sinh</label>
+                <input asp-for="Birthday" class="form-control" type="date" />
+                <span asp-validation-for="Birthday" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label">Tên đăng nhập</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PasswordHash" class="control-label">Mật khẩu</label>
+                <input asp-for="PasswordHash" class="form-control" type="password" />
+                <span asp-validation-for="PasswordHash" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label" style="margin-right: 10px">Giới tính</label>
+                <input asp-for="Gender" type="radio" name="gender" value="Nam" />
+                <label asp-for="Gender" for="nam" style="margin-right: 10px">Nam</label>
+                <input asp-for="Gender" type="radio" name="gender" value="Nữ" />
+                <label asp-for="Gender" for="nu" style="margin-right: 10px">Nữ</label>
+                <input asp-for="Gender" type="radio" name="gender" value="Khác" />
+                <label asp-for="Gender" for="other">Khác</label>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label">Số điện thoại</label>
+                <input asp-for="PhoneNumber" class="form-control" type="tel" />
+                <span asp-validation-for="PasswordHash" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label">Địa chỉ</label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Tạo nhân viên" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

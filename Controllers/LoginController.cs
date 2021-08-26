@@ -1,110 +1,228 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TracyShop.Models;
+using TracyShop.Repository;
 
 namespace TracyShop.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly ILogger<LoginController> _logger;
+        private readonly ILoginRepository _loginRepository;
 
-        public LoginController(ILogger<LoginController> logger)
+        public LoginController(ILoginRepository loginRepository)
         {
-            _logger = logger;
+            _loginRepository = loginRepository;
         }
 
-        [Route("/login", Name = "login")]
-        // GET: Login
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        [Route("/register", Name = "register")]
-        public ActionResult Register()
+        [Route("register")]
+        public IActionResult Register()
         {
             return View();
         }
 
-        // GET: Login/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Login/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Login/Create
+        [Route("register")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Register(RegisterModel userModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                // write your code
+                var result = await _loginRepository.CreateUserAsync(userModel);
+                if (!result.Succeeded)
+                {
+                    foreach (var errorMessage in result.Errors)
+                    {
+                        ModelState.AddModelError("", errorMessage.Description);
+                    }
+
+                    return View(userModel);
+                }
+
+                ModelState.Clear();
+                //return RedirectToAction("ConfirmEmail", new { email = userModel.Email });
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(userModel);
         }
 
-        // GET: Login/Edit/5
-        public ActionResult Edit(int id)
+
+        [Route("login")]
+        public IActionResult Login()
         {
             return View();
         }
 
-        // POST: Login/Edit/5
+        [Route("login")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Login(LoginModel signInModel, string returnUrl)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var result = await _loginRepository.PasswordSignInAsync(signInModel);
+                if (result.Succeeded)
+                {
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
+                    return RedirectToAction("Index", "Home");
+                }
+                else if (result.IsNotAllowed)
+                {
+                    ModelState.AddModelError("", "Không được phép đăng nhập");
+                }
+                else if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError("", "Tài khoản bị khóa. Hãy thử sau một thời gian.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Thông tin không hợp lệ");
+                }
+
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(signInModel);
         }
 
-        // GET: Login/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //[Route("logout")]
+        //public async Task<IActionResult> Logout()
+        //{
+        //    await _loginRepository.SignOutAsync();
+        //    return RedirectToAction("Index", "Home");
+        //}
 
-        // POST: Login/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[Route("change-password")]
+        //public IActionResult ChangePassword()
+        //{
+        //    return View();
+        //}
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //[HttpPost("change-password")]
+        //public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var result = await _loginRepository.ChangePasswordAsync(model);
+        //        if (result.Succeeded)
+        //        {
+        //            ViewBag.IsSuccess = true;
+        //            ModelState.Clear();
+        //            return View();
+        //        }
+
+        //        foreach (var error in result.Errors)
+        //        {
+        //            ModelState.AddModelError("", error.Description);
+        //        }
+
+        //    }
+        //    return View(model);
+        //}
+
+        //[HttpGet("confirm-email")]
+        //public async Task<IActionResult> ConfirmEmail(string uid, string token, string email)
+        //{
+        //    EmailConfirmModel model = new EmailConfirmModel
+        //    {
+        //        Email = email
+        //    };
+
+        //    if (!string.IsNullOrEmpty(uid) && !string.IsNullOrEmpty(token))
+        //    {
+        //        token = token.Replace(' ', '+');
+        //        var result = await _loginRepository.ConfirmEmailAsync(uid, token);
+        //        if (result.Succeeded)
+        //        {
+        //            model.EmailVerified = true;
+        //        }
+        //    }
+
+        //    return View(model);
+        //}
+
+        //[HttpPost("confirm-email")]
+        //public async Task<IActionResult> ConfirmEmail(EmailConfirmModel model)
+        //{
+        //    var user = await _loginRepository.GetUserByEmailAsync(model.Email);
+        //    if (user != null)
+        //    {
+        //        if (user.EmailConfirmed)
+        //        {
+        //            model.EmailVerified = true;
+        //            return View(model);
+        //        }
+
+        //        await _loginRepository.GenerateEmailConfirmationTokenAsync(user);
+        //        model.EmailSent = true;
+        //        ModelState.Clear();
+        //    }
+        //    else
+        //    {
+        //        ModelState.AddModelError("", "Đã xảy ra lỗi.");
+        //    }
+        //    return View(model);
+        //}
+
+        //[AllowAnonymous, HttpGet("fotgot-password")]
+        //public IActionResult ForgotPassword()
+        //{
+        //    return View();
+        //}
+
+        //[AllowAnonymous, HttpPost("fotgot-password")]
+        //public async Task<IActionResult> ForgotPassword(ForgotPasswordModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // code here
+        //        var user = await _loginRepository.GetUserByEmailAsync(model.Email);
+        //        if (user != null)
+        //        {
+        //            await _loginRepository.GenerateForgotPasswordTokenAsync(user);
+        //        }
+
+        //        ModelState.Clear();
+        //        model.EmailSent = true;
+        //    }
+        //    return View(model);
+        //}
+
+        //[AllowAnonymous, HttpGet("reset-password")]
+        //public IActionResult ResetPassword(string uid, string token)
+        //{
+        //    ResetPasswordModel resetPasswordModel = new ResetPasswordModel
+        //    {
+        //        Token = token,
+        //        UserId = uid
+        //    };
+        //    return View(resetPasswordModel);
+        //}
+
+        //[AllowAnonymous, HttpPost("reset-password")]
+        //public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        model.Token = model.Token.Replace(' ', '+');
+        //        var result = await _loginRepository.ResetPasswordAsync(model);
+        //        if (result.Succeeded)
+        //        {
+        //            ModelState.Clear();
+        //            model.IsSuccess = true;
+        //            return View(model);
+        //        }
+
+        //        foreach (var error in result.Errors)
+        //        {
+        //            ModelState.AddModelError("", error.Description);
+        //        }
+        //    }
+        //    return View(model);
+        //}
     }
 }

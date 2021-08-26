@@ -491,7 +491,7 @@ a {
 }
 
 /******* Reset Password ********/
-.profile-info .card-text .forgot-pass {
+.profile-info .card-text .forgot-pass a {
     font-weight: bold;
     text-align: right;
     margin-right: 10%;
@@ -2280,7 +2280,7 @@ a {
 
             .footer .footer-link a::before {
                 position: relative;
-                content: "\f105";
+                content: '\f105';
                 font-family: "Font Awesome 5 Free";
                 font-weight: 900;
                 margin-right: 10px;

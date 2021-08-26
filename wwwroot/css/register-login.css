@@ -59,7 +59,6 @@ input {
     padding: 10px 0;
     font-size: 14px;
     border-bottom: 1px solid #d6cdbc;
-    width: 100%;
     outline: 0 !important;
     box-shadow: none;
 }
@@ -94,10 +93,24 @@ input {
 
 .forgot-password {
     text-align: right;
-    margin-top: 16px;
+    margin-top: 7px;
     cursor: pointer;
+}
+
+    .forgot-password > a {
+        font-weight: bold;
+        color: #d4b774;
+        text-decoration: none;
+    }
+
+.form-input > input {
+    width : 100%;
+}
+
+.form-check-label {
     font-weight: bold;
     color: #d4b774;
+    margin-top: 10px;
 }
 
 #login {

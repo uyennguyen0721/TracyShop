@@ -10,7 +10,8 @@ namespace TracyShop.Models
     {
         [Key]
         public int Id { set; get; }
-        public DateTime date { set; get; }
+
+        public DateTime Date { set; get; } = DateTime.Now;
 
         public virtual AppUser User { set; get; }
 
