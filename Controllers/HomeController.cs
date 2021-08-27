@@ -6,11 +6,24 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using TracyShop.Models;
+using TracyShop.Services;
 
 namespace TracyShop.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IUserService _userService;
+        private readonly IEmailService _emailService;
+
+        public HomeController(
+            IUserService userService,
+            IEmailService emailService)
+        {
+            _userService = userService;
+            _emailService = emailService;
+        }
+
+
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,107 +8,70 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using TracyShop.Models;
+using TracyShop.Repository;
 
 namespace TracyShop.Controllers
 {
     public class ProfileController : Controller
     {
 
-        private readonly ILogger<ProfileController> _logger;
+        private readonly ILoginRepository _loginRepository;
 
-        public ProfileController(ILogger<ProfileController> logger)
+        public ProfileController(ILoginRepository loginRepository)
         {
-            _logger = logger;
+            _loginRepository = loginRepository;
         }
 
-        [Route("/profile", Name = "profile")]
-        // GET: ProfileController
+        [Authorize]
+        [Route("profile", Name = "profile")]
         public ActionResult Profile()
         {
             return View();
         }
 
-        [Route("/profile/reset-password", Name = "reset-password")]
-        // GET: ProfileController/ResetPassword
-        public ActionResult ResetPassword()
-        {
-            return View();
-        }
-
-        [Route("/profile/address", Name = "address")]
-        // GET: ProfileController/ResetPassword
+        [Authorize]
+        [Route("profile/address", Name = "address")]
         public ActionResult Address()
         {
             return View();
         }
 
-        // GET: ProfileController/Details/5
-        public ActionResult Details(int id)
+        [Authorize]
+        [Route("profile/change-password")]
+        public IActionResult ChangePassword()
         {
             return View();
         }
 
-        // GET: ProfileController/Create
-        public ActionResult Create()
+        [Authorize]
+        [HttpPost("profile/change-password")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _loginRepository.ChangePasswordAsync(model);
+                if (result.Succeeded)
+                {
+                    ViewBag.IsSuccess = true;
+                    ModelState.Clear();
+                    return View();
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+            }
+            return View(model);
+        }
+
+        [Authorize]
+        [Route("profile/reset-password", Name = "reset-password")]
+        // GET: ProfileController/ResetPassword
+        public ActionResult ResetPassword()
         {
             return View();
-        }
-
-        // POST: ProfileController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ProfileController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ProfileController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ProfileController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ProfileController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

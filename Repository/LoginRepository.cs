@@ -14,23 +14,23 @@ namespace TracyShop.Repository
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         //private readonly RoleManager<IdentityRole> _roleManager;
-        //private readonly IUserService _userService;
-        //private readonly IEmailService _emailService;
-        //private readonly IConfiguration _configuration;
+        private readonly IUserService _userService;
+        private readonly IEmailService _emailService;
+        private readonly IConfiguration _configuration;
 
         public LoginRepository(UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager)
+            SignInManager<AppUser> signInManager,
             //RoleManager<IdentityRole> roleManager,
-            //IUserService userService,
-            //IEmailService emailService,
-            //IConfiguration configuration)
+            IUserService userService,
+            IEmailService emailService,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             //_roleManager = roleManager;
-            //_userService = userService;
-            //_emailService = emailService;
-            //_configuration = configuration;
+            _userService = userService;
+            _emailService = emailService;
+            _configuration = configuration;
         }
 
         //public async Task<AppUser> GetUserByEmailAsync(string email)
@@ -49,21 +49,21 @@ namespace TracyShop.Repository
 
             };
             var result = await _userManager.CreateAsync(user, userModel.Password);
-            //if (result.Succeeded)
-            //{
-            //    await GenerateEmailConfirmationTokenAsync(user);
-            //}
+            if (result.Succeeded)
+            {
+                await GenerateEmailConfirmationTokenAsync(user);
+            }
             return result;
         }
 
-        //public async Task GenerateEmailConfirmationTokenAsync(AppUser user)
-        //{
-        //    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-        //    if (!string.IsNullOrEmpty(token))
-        //    {
-        //        await SendEmailConfirmationEmail(user, token);
-        //    }
-        //}
+        public async Task GenerateEmailConfirmationTokenAsync(AppUser user)
+        {
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            if (!string.IsNullOrEmpty(token))
+            {
+                await SendEmailConfirmationEmail(user, token);
+            }
+        }
 
         //public async Task GenerateForgotPasswordTokenAsync(AppUser user)
         //{
@@ -79,17 +79,17 @@ namespace TracyShop.Repository
             return await _signInManager.PasswordSignInAsync(signInModel.Email, signInModel.Password, signInModel.RememberMe, true);
         }
 
-        //public async Task SignOutAsync()
-        //{
-        //    await _signInManager.SignOutAsync();
-        //}
+        public async Task SignOutAsync()
+        {
+            await _signInManager.SignOutAsync();
+        }
 
-        //public async Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model)
-        //{
-        //    var userId = _userService.GetUserId();
-        //    var user = await _userManager.FindByIdAsync(userId);
-        //    return await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-        //}
+        public async Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model)
+        {
+            var userId = _userService.GetUserId();
+            var user = await _userManager.FindByIdAsync(userId);
+            return await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+        }
 
 
         //public async Task<IdentityResult> ConfirmEmailAsync(string uid, string token)
@@ -102,24 +102,24 @@ namespace TracyShop.Repository
         //    return await _userManager.ResetPasswordAsync(await _userManager.FindByIdAsync(model.UserId), model.Token, model.NewPassword);
         //}
 
-        //private async Task SendEmailConfirmationEmail(AppUser user, string token)
-        //{
-        //    string appDomain = _configuration.GetSection("Application:AppDomain").Value;
-        //    string confirmationLink = _configuration.GetSection("Application:EmailConfirmation").Value;
+        private async Task SendEmailConfirmationEmail(AppUser user, string token)
+        {
+            string appDomain = _configuration.GetSection("Application:AppDomain").Value;
+            string confirmationLink = _configuration.GetSection("Application:EmailConfirmation").Value;
 
-        //    UserEmailOptions options = new UserEmailOptions
-        //    {
-        //        ToEmails = new List<string>() { user.Email },
-        //        PlaceHolders = new List<KeyValuePair<string, string>>()
-        //        {
-        //            new KeyValuePair<string, string>("{{UserName}}", user.Name),
-        //            new KeyValuePair<string, string>("{{Link}}",
-        //                string.Format(appDomain + confirmationLink, user.Id, token))
-        //        }
-        //    };
+            UserEmailOptions options = new UserEmailOptions
+            {
+                ToEmails = new List<string>() { user.Email },
+                PlaceHolders = new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("{{UserName}}", user.Name),
+                    new KeyValuePair<string, string>("{{Link}}",
+                        string.Format(appDomain + confirmationLink, user.Id, token))
+                }
+            };
 
-        //    await _emailService.SendEmailForEmailConfirmation(options);
-        //}
+            await _emailService.SendEmailForEmailConfirmation(options);
+        }
 
         //private async Task SendForgotPasswordEmail(AppUser user, string token)
         //{

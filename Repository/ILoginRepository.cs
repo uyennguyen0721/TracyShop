@@ -15,16 +15,16 @@ namespace TracyShop.Repository
 
         Task<SignInResult> PasswordSignInAsync(LoginModel signInModel);
 
-    //    Task SignOutAsync();
+        Task SignOutAsync();
 
-    //    Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model);
+        Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model);
 
-    //    Task<IdentityResult> ConfirmEmailAsync(string uid, string token);
+        //    Task<IdentityResult> ConfirmEmailAsync(string uid, string token);
 
-    //    Task GenerateEmailConfirmationTokenAsync(AppUser user);
+        Task GenerateEmailConfirmationTokenAsync(AppUser user);
 
-    //    Task GenerateForgotPasswordTokenAsync(AppUser user);
+        //    Task GenerateForgotPasswordTokenAsync(AppUser user);
 
-    //    Task<IdentityResult> ResetPasswordAsync(ResetPasswordModel model);
+        //    Task<IdentityResult> ResetPasswordAsync(ResetPasswordModel model);
     }
 }

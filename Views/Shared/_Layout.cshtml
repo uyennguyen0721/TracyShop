@@ -43,9 +43,7 @@
                     <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Trang chủ</a>
                     <a asp-controller="About" asp-action="About" class="nav-item nav-link">Về chúng tôi</a>
                     <a asp-controller="Product" asp-action="Product" class="nav-item nav-link">Sản phẩm</a>
-                    <a asp-controller="Login" asp-action="Register" class="nav-item nav-link">Đăng ký</a>
-                    <a asp-controller="Login" asp-action="Login" class="nav-item nav-link" id="signup">Đăng nhập</a>
-
+                    <partial name="_LoginPartial" />
                 </div>
                 <form>
                     <input type="text" name="search" placeholder="Tìm kiếm ..." />

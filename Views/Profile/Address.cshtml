@@ -7,36 +7,29 @@
     <h1 class="card-title">Địa chỉ của tôi</h1>
     <p class="card-title">Địa chỉ giao hàng</p>
 </div>
-<div class="card-text">
-    <div class="input">
-        <p>
-            Tỉnh/ Thành phố
-            <select name="calc_shipping_provinces" required="">
-                <option value="">Tỉnh / Thành phố</option>
-            </select>
-        </p>
+
+<form asp-action="ChangePassword">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label class="control-label">Tỉnh / Thành phố</label>
+        <select class="form-select form-select-lg mb-3" name="calc_shipping_provinces" required="">
+            <option value="">Chọn tỉnh/thành phố</option>
+        </select>
+        <span class="text-danger"></span>
     </div>
-    <div class="input">
-        <p>
-            Quận/ Huyện
-            <select name="calc_shipping_district" required="">
-                <option value="">Quận / Huyện</option>
-            </select>
-        </p>
+    <div class="form-group">
+        <label class="control-label">Quận / Huyện</label>
+        <select class="form-select form-select-lg mb-3" name="calc_shipping_district" required="">
+            <option value="">Chọn quận / huyện</option>
+        </select>
+        <span class="text-danger"></span>
     </div>
-    <div class="input">
-        <p>
-            Phường/ Xã
-            <input type="text" name="village" maxlength="255" />
-        </p>
+    <div class="form-group">
+        <label class="control-label">Địa chỉ cụ thể</label>
+        <input class="form-control" type="text" />
+        <span class="text-danger"></span>
     </div>
-    <div class="input">
-        <p>
-            Số nhà, tên đường
-            <input type="text" name="street" maxlength="255" />
-        </p>
+    <div class="form-group save">
+        <input type="submit" value="Lưu địa chỉ" class="btn custom-btn" />
     </div>
-</div>
-<div class="save">
-    <input type="submit" class="btn custom-btn" value="Lưu địa chỉ" />
-</div>
+</form>

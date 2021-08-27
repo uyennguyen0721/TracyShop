@@ -136,10 +136,15 @@ a {
 
     .navbar .dropdown-menu {
         margin-top: 0;
+        margin-left: 35%;
         border: 0;
         border-radius: 0;
         background: #f8f9fa;
     }
+
+        .navbar .dropdown-menu a:hover {
+            background-color: #E6E6E6;
+        }
 
 #signup {
     border-style: solid;
@@ -437,6 +442,31 @@ a {
     }
 }
 
+.custom-btn {
+    vertical-align: middle;
+    margin-top: 3%;
+
+}
+
+
+.profile-info .card form .form-group {
+    display: block;
+    margin: 3%;
+    width: 95%;
+    position: relative;
+    overflow: hidden;
+}
+
+    .profile-info .card form .form-group label {
+        color: #FFBF00;
+        font-weight: bold;
+        margin-right: 5%;
+    }
+
+.profile-info .card form {
+    margin: 5% 10% 10% 10%;
+}
+
 
 /************ Profile *************/
 
@@ -460,47 +490,25 @@ a {
         font-weight: bold;
     }
 
-.profile-info .card-text {
-    justify-content: center;
-    margin-top: 5%;
-    margin-bottom: 5%;
-    margin-left: 10%;
-}
-
-.profile-info .card .save {
+.profile-info .card form .form-group.save {
     text-align: center;
     margin-bottom: 5%;
 }
 
-.profile-info .card-text > div > p {
-    color: #FFBF00;
-    font-weight: bold;
-}
-
-.profile-info .card-text > div > p > label {
-    color: #000000 !important;
-    font-weight: normal !important;
-}
-
-.profile-info .card-text > div > p > input {
-    margin-left: 5%;
-}
-
-.profile-info .card-text .input > p > input {
-    width: 70%;
-}
 
 /******* Reset Password ********/
-.profile-info .card-text .forgot-pass a {
+.profile-info .card form .forgot-pass a {
     font-weight: bold;
-    text-align: right;
+    font-size: 15px;
+    float: right;
     margin-right: 10%;
 }
 
 /******* Address ********/
-.profile-info .card-text > div > p > select {
+.profile-info .card form .form-group select {
     margin-left: 5%;
-    width: 70%;
+    width: 90%;
+    height: 30px;
 }
 
 

@@ -158,7 +158,6 @@ D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\System.Net.WebSockets.WebSocketP
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Shared\_LayoutLogin.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Profile\Profile.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Shared\_LayoutProfile.cshtml.g.cs
-D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Profile\ResetPassword.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Profile\Address.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\TracyShop.StaticWebAssets.xml
 D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\DotNetEd.CoreAdmin.Views.dll
@@ -283,3 +282,4 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Employee
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Login\Login.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Login\Register.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\NETCore.MailKit.dll
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Profile\ChangePassword.cshtml.g.cs

@@ -8,37 +8,44 @@
     <h1 class="card-title">Hồ sơ của tôi</h1>
     <p class="card-title">Quản lý hồ sơ</p>
 </div>
-<div class="card-text">
-    <div class="input">
-        <p>
-            Tên đăng nhập
-            <label style="margin-left: 5%;">uyennguyen0721</label>
-        </p>
+<form asp-action="ChangePassword">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label class="control-label">Tên đăng nhập</label>
+        <input class="form-control" type="text" value="uyennguyen0721@@" />
+        <span class="text-danger"></span>
     </div>
-    <div class="input">
-        <p>Tên<input type="text" name="name" maxlength="255" value="Uyên Nguyễn" /></p>
+    <div class="form-group">
+        <label class="control-label">Họ và tên</label>
+        <input class="form-control" type="text" value="Nguyễn Thị Thu Uyên" />
+        <span class="text-danger"></span>
     </div>
-    <div class="input">
-        <p>Email<input type="email" name="email" maxlength="255" value="uyennguyen0721@@gmail.com" /></p>
+    <div class="form-group">
+        <label class="control-label">Email</label>
+        <input class="form-control" type="email" value="uyennguyen0721@@gmail.com" />
+        <span class="text-danger"></span>
     </div>
-    <div class="input">
-        <p>Số điện thoại<input type="tel" name="phone" maxlength="255" value="0947653170" /></p>
+    <div class="form-group">
+        <label class="control-label">Số điện thoại</label>
+        <input class="form-control" type="tel" value="0947653170" />
+        <span class="text-danger"></span>
     </div>
-    <div>
-        <p>
-            Giới tính
-            <input type="radio" name="gender" />
-            <label for="nam">Nam</label>
-            <input type="radio" name="gender" />
-            <label for="nu">Nữ</label>
-            <input type="radio" name="gender" />
-            <label for="other">Khác</label>
-        </p>
+    <div class="form-group">
+        <label class="control-label">Giới tính</label>
+        <input type="radio" name="gender" />
+        <label for="nam">Nam</label>
+        <input type="radio" name="gender" />
+        <label for="nu">Nữ</label>
+        <input type="radio" name="gender" />
+        <label for="other">Khác</label>
+        <span class="text-danger"></span>
     </div>
-    <div>
-        <p>Ngày sinh<input type="date" name="date" maxlength="255" /></p>
+    <div class="form-group">
+        <label class="control-label">Ngày sinh</label>
+        <input class="form-control" type="date" maxlength="255" />
+        <span class="text-danger"></span>
     </div>
-</div>
-<div class="save">
-    <input type="submit" class="btn custom-btn" value="Lưu thay đổi" />
-</div>
+    <div class="form-group save">
+        <input type="submit" value="Lưu thay đổi" class="btn custom-btn" />
+    </div>
+</form>

@@ -17,7 +17,6 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using TracyShop.Models;
 using TracyShop.Data;
-using TracyShop.Mail;
 using TracyShop.Repository;
 using TracyShop.Services;
 using TracyShop.Helpers;
@@ -31,7 +30,7 @@ namespace TracyShop
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private readonly IConfiguration Configuration;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -47,11 +46,6 @@ namespace TracyShop
             services.Configure<DataProtectionTokenProviderOptions>(options =>
             {
                 options.TokenLifespan = TimeSpan.FromMinutes(5);
-            });
-
-            services.ConfigureApplicationCookie(config =>
-            {
-                config.LoginPath = Configuration["Application:LoginPath"];
             });
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -104,12 +98,9 @@ namespace TracyShop
             });
 
             // Cấu hình Cookie
-            services.ConfigureApplicationCookie(options => {
-                // options.Cookie.HttpOnly = true;  
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-                options.LoginPath = $"/Identity/Login/"; // Url đến trang đăng nhập
-                options.LogoutPath = $"/Identity/logout/";
-                options.AccessDeniedPath = $"/Identity/Account/AccessDenied"; // Trang khi User bị cấm truy cập
+            services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = Configuration["Application:LoginPath"];
             });
 
             services.Configure<SecurityStampValidatorOptions>(options => {
@@ -124,21 +115,17 @@ namespace TracyShop
                 options.LowercaseQueryStrings = false; // không bắt query trong url phải in thường
             });
 
-            services.AddOptions();                                        // Kích hoạt Options
-            var mailsettings = Configuration.GetSection("MailSettings");  // đọc config
-            services.Configure<MailSettings>(mailsettings);               // đăng ký để Inject
+            services.AddOptions();  // Kích hoạt Options
 
-            services.AddTransient<IEmailSender, SendMailService>();        // Đăng ký dịch vụ Mail
+            //services.AddTransient<IEmailSender, SendMailService>();        // Đăng ký dịch vụ Mail
 
             services.AddScoped<ILoginRepository, LoginRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEmailService, EmailService>();
-
             services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, AppUserClaimsPrincipalFactory>();
-
-            services.Configure<SMTPConfigModel>(Configuration.GetSection("SMTPConfig"));
-
-            //services.AddCoreAdmin();
+                                
+            services.Configure<SMTPConfigModel>(Configuration.GetSection("SMTPConfig")); // đăng ký để Inject 
+                                              // Configuration.GetSection("SMTPConfig") : đọc config 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -162,7 +149,7 @@ namespace TracyShop
             app.UseRouting();
 
             app.UseAuthentication();   // Phục hồi thông tin đăng nhập (xác thực)
-            app.UseAuthorization();   // Phục hồi thông tinn về quyền của User
+            app.UseAuthorization();   // Phục hồi thông tin về quyền của User
 
             app.UseEndpoints(endpoints =>
             {
