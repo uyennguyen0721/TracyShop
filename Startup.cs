@@ -68,7 +68,7 @@ namespace TracyShop
                 .AddDefaultTokenProviders();
 
 #if DEBUG
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
 #endif
 
             // Truy cập IdentityOptions
@@ -114,10 +114,6 @@ namespace TracyShop
                 options.LowercaseUrls = true; // url chữ thường
                 options.LowercaseQueryStrings = false; // không bắt query trong url phải in thường
             });
-
-            services.AddOptions();  // Kích hoạt Options
-
-            //services.AddTransient<IEmailSender, SendMailService>();        // Đăng ký dịch vụ Mail
 
             services.AddScoped<ILoginRepository, LoginRepository>();
             services.AddScoped<IUserService, UserService>();

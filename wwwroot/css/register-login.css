@@ -103,6 +103,12 @@ input {
         text-decoration: none;
     }
 
+        .forgot-password > a:hover {
+            font-weight: bold;
+            color: #8C7339;
+            text-decoration: none;
+        }
+
 .form-input > input {
     width : 100%;
 }
@@ -161,6 +167,13 @@ input {
     margin-left: 8px;
     cursor: pointer;
 }
+
+    .sugget-text .link > a:hover {
+        font-weight: bold;
+        color: #8C7339;
+        margin-left: 8px;
+        cursor: pointer;
+    }
 
 @media(max-width: 865px){
     div.register-content {

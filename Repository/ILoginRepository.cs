@@ -9,7 +9,7 @@ namespace TracyShop.Repository
 {
     public interface ILoginRepository
     {
-        //Task<AppUser> GetUserByEmailAsync(string email);
+        Task<AppUser> GetUserByEmailAsync(string email);
 
         Task<IdentityResult> CreateUserAsync(RegisterModel userModel);
 
@@ -19,12 +19,12 @@ namespace TracyShop.Repository
 
         Task<IdentityResult> ChangePasswordAsync(ChangePasswordModel model);
 
-        //    Task<IdentityResult> ConfirmEmailAsync(string uid, string token);
+        Task<IdentityResult> ConfirmEmailAsync(string uid, string token);
 
         Task GenerateEmailConfirmationTokenAsync(AppUser user);
 
-        //    Task GenerateForgotPasswordTokenAsync(AppUser user);
+        Task GenerateForgotPasswordTokenAsync(AppUser user);
 
-        //    Task<IdentityResult> ResetPasswordAsync(ResetPasswordModel model);
+        Task<IdentityResult> ResetPasswordAsync(ResetPasswordModel model);
     }
 }

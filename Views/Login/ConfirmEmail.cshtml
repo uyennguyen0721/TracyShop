@@ -1,0 +1,36 @@
+﻿@model EmailConfirmModel
+@{
+    ViewData["Title"] = "Confirm Email";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+@if (Model.EmailVerified == true)
+{
+    <div class="alert alert-success" role="alert">
+        <p>Email của bạn đã được xác thực thành công.</p>
+    </div>
+    <a asp-controller="Login" asp-action="Login" class="btn btn-primary">Tiến hành đăng nhập</a>
+}
+else
+{
+    if (Model.EmailSent)
+    {
+        <p>Email được gửi trên id email đã đăng ký của bạn. Kiểm tra mail ngay.</p>
+    }
+
+    else
+    {
+        <p>Chúng tôi đã gửi một email trên id email của bạn. Bấm vào liên kết để đăng nhập.</p>
+    }
+
+    <form asp-action="ConfirmEmail">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Email" />
+
+        <p>Không nhận được bất kỳ email nào hay bị xóa do nhầm lẫn?</p>
+        <div class="form-group">
+            <input type="submit" value="Gửi lại email xác thực" class="btn btn-primary" />
+        </div>
+    </form>
+}
+

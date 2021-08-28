@@ -33,10 +33,10 @@ namespace TracyShop.Repository
             _configuration = configuration;
         }
 
-        //public async Task<AppUser> GetUserByEmailAsync(string email)
-        //{
-        //    return await _userManager.FindByEmailAsync(email);
-        //}
+        public async Task<AppUser> GetUserByEmailAsync(string email)
+        {
+            return await _userManager.FindByEmailAsync(email);
+        }
 
         public async Task<IdentityResult> CreateUserAsync(RegisterModel userModel)
         {
@@ -65,14 +65,14 @@ namespace TracyShop.Repository
             }
         }
 
-        //public async Task GenerateForgotPasswordTokenAsync(AppUser user)
-        //{
-        //    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-        //    if (!string.IsNullOrEmpty(token))
-        //    {
-        //        await SendForgotPasswordEmail(user, token);
-        //    }
-        //}
+        public async Task GenerateForgotPasswordTokenAsync(AppUser user)
+        {
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            if (!string.IsNullOrEmpty(token))
+            {
+                await SendForgotPasswordEmail(user, token);
+            }
+        }
 
         public async Task<SignInResult> PasswordSignInAsync(LoginModel signInModel)
         {
@@ -92,15 +92,15 @@ namespace TracyShop.Repository
         }
 
 
-        //public async Task<IdentityResult> ConfirmEmailAsync(string uid, string token)
-        //{
-        //    return await _userManager.ConfirmEmailAsync(await _userManager.FindByIdAsync(uid), token);
-        //}
+        public async Task<IdentityResult> ConfirmEmailAsync(string uid, string token)
+        {
+            return await _userManager.ConfirmEmailAsync(await _userManager.FindByIdAsync(uid), token);
+        }
 
-        //public async Task<IdentityResult> ResetPasswordAsync(ResetPasswordModel model)
-        //{
-        //    return await _userManager.ResetPasswordAsync(await _userManager.FindByIdAsync(model.UserId), model.Token, model.NewPassword);
-        //}
+        public async Task<IdentityResult> ResetPasswordAsync(ResetPasswordModel model)
+        {
+            return await _userManager.ResetPasswordAsync(await _userManager.FindByIdAsync(model.UserId), model.Token, model.NewPassword);
+        }
 
         private async Task SendEmailConfirmationEmail(AppUser user, string token)
         {
@@ -121,23 +121,23 @@ namespace TracyShop.Repository
             await _emailService.SendEmailForEmailConfirmation(options);
         }
 
-        //private async Task SendForgotPasswordEmail(AppUser user, string token)
-        //{
-        //    string appDomain = _configuration.GetSection("Application:AppDomain").Value;
-        //    string confirmationLink = _configuration.GetSection("Application:ForgotPassword").Value;
+        private async Task SendForgotPasswordEmail(AppUser user, string token)
+        {
+            string appDomain = _configuration.GetSection("Application:AppDomain").Value;
+            string confirmationLink = _configuration.GetSection("Application:ForgotPassword").Value;
 
-        //    UserEmailOptions options = new UserEmailOptions
-        //    {
-        //        ToEmails = new List<string>() { user.Email },
-        //        PlaceHolders = new List<KeyValuePair<string, string>>()
-        //        {
-        //            new KeyValuePair<string, string>("{{UserName}}", user.Name),
-        //            new KeyValuePair<string, string>("{{Link}}",
-        //                string.Format(appDomain + confirmationLink, user.Id, token))
-        //        }
-        //    };
+            UserEmailOptions options = new UserEmailOptions
+            {
+                ToEmails = new List<string>() { user.Email },
+                PlaceHolders = new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("{{UserName}}", user.Name),
+                    new KeyValuePair<string, string>("{{Link}}",
+                        string.Format(appDomain + confirmationLink, user.Id, token))
+                }
+            };
 
-        //    await _emailService.SendEmailForForgotPassword(options);
-        //}
+            await _emailService.SendEmailForForgotPassword(options);
+        }
     }
 }

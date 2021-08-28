@@ -65,12 +65,20 @@ namespace TracyShop.Services
 
             NetworkCredential networkCredential = new NetworkCredential(_smtpConfig.UserName, _smtpConfig.Password);
 
+            //var client = new SmtpClient(_configuration["MailSettings:Server"])
+            //{
+            //    UseDefaultCredentials = false,
+            //    Port = int.Parse(_configuration["MailSettings:Port"]),
+            //    EnableSsl = bool.Parse(_configuration["MailSettings:EnableSsl"]),
+            //    Credentials = new NetworkCredential(_configuration["MailSettings:UserName"], _configuration["MailSettings:Password"])
+            //};
+
             SmtpClient smtpClient = new SmtpClient
             {
+                UseDefaultCredentials = false,
                 Host = _smtpConfig.Host,
                 Port = _smtpConfig.Port,
                 EnableSsl = _smtpConfig.EnableSSL,
-                UseDefaultCredentials = _smtpConfig.UseDefaultCredentials,
                 Credentials = networkCredential
             };
 
