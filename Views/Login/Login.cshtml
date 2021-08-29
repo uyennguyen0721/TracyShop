@@ -1,4 +1,4 @@
-﻿@model TracyShop.Models.LoginModel
+﻿@model TracyShop.ViewModels.LoginModel
 @{
     Layout = "_LayoutLogin";
     ViewData["Title"] = "Login";
@@ -28,20 +28,63 @@
         <input type="submit" id="login" class="form-submit" value="Đăng nhập" />
     </div>
 
-    <p style="text-align:center">Hoặc đăng nhập bằng</p>
-    <div class="form-group form-button" id="social">
-        <div id="facebook">
-            <input type="submit" class="form-submit" name="register" id="fb" value="Facebook" />
-        </div>
-        <div id="google">
-            <input type="submit" class="form-submit" name="register" id="gg" value="Google" />
-        </div>
-    </div>
+    @*<p style="text-align:center">Hoặc đăng nhập bằng</p>
 
-    <div class="form-group sugget-text">
-        <div class="text">Bạn chưa có tài khoản?</div>
-        <div class="link register-link">
-            <a asp-controller="Login" asp-action="Register">Đăng ký</a>
+        <div class="form-group form-button" id="social">
+            <div id="facebook">
+                <input type="submit" class="form-submit" name="register" id="fb" value="Facebook" />
+            </div>
+            <div id="google">
+                <input type="submit" class="form-submit" name="register" id="gg" value="Google" />
+            </div>
         </div>
-    </div>
+
+        <div class="form-group sugget-text">
+            <div class="text">Bạn chưa có tài khoản?</div>
+            <div class="link register-link">
+                <a asp-controller="Login" asp-action="Register">Đăng ký</a>
+            </div>
+        </div>*@
 </form>
+
+@if (Model.ExternalLogins.Count == 0)
+{
+    <div></div>
+}
+else
+{
+    <p style="text-align:center">Hoặc đăng nhập bằng</p>
+    <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+        <div class="form-group form-button" id="social">
+            @foreach (var provider in Model.ExternalLogins)
+            {
+                @if (provider.DisplayName == "Facebook")
+                {
+                    <div id="facebook">
+                        <input type="submit" class="form-submit" id="fb"
+                               name="provider" value="@provider.Name"
+                               title="Login using your @provider.DisplayName account" />
+                    </div>
+
+                }
+                else
+                {
+                    <div id="google">
+                        <input type="submit" class="form-submit" id="gg"
+                               name="provider" value="@provider.Name"
+                               title="Login using your @provider.DisplayName account" />
+                    </div>
+
+                }
+            }
+        </div>
+    </form>
+}
+
+<div class="form-group sugget-text">
+    <div class="text">Bạn chưa có tài khoản?</div>
+    <div class="link register-link">
+        <a asp-controller="Login" asp-action="Register">Đăng ký</a>
+    </div>
+</div>
+

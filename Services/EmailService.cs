@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
-using TracyShop.Models;
+using TracyShop.ViewModels;
 
 namespace TracyShop.Services
 {

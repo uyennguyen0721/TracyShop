@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authentication;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TracyShop.Models
+namespace TracyShop.ViewModels
 {
     public class RegisterModel
     {
@@ -32,5 +33,9 @@ namespace TracyShop.Models
         [Display(Name = "Nhập lại mật khẩu")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
+
+        public string ReturnUrl { get; set; }
+
+        public IList<AuthenticationScheme> ExternalLogins { get; set; }
     }
 }

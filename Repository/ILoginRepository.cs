@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TracyShop.Models;
+using TracyShop.ViewModels;
 
 namespace TracyShop.Repository
 {

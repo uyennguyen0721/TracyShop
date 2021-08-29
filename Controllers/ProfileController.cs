@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TracyShop.Models;
 using TracyShop.Repository;
+using TracyShop.ViewModels;
 
 namespace TracyShop.Controllers
 {

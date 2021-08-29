@@ -20,6 +20,8 @@ using TracyShop.Data;
 using TracyShop.Repository;
 using TracyShop.Services;
 using TracyShop.Helpers;
+using TracyShop.ViewModels;
+using Microsoft.AspNetCore.Authentication;
 
 namespace TracyShop
 {
@@ -96,6 +98,34 @@ namespace TracyShop
                 options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
 
             });
+
+            // Cấu hình đăng nhập từ facebook, google
+
+            services.AddAuthentication()
+
+                .AddGoogle(googleOptions =>
+                {
+                    // Đọc thông tin Authentication:Google từ appsettings.json
+                    IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
+
+                    // Thiết lập ClientID và ClientSecret để truy cập API google
+                    googleOptions.ClientId = googleAuthNSection["ClientId"];
+                    googleOptions.ClientSecret = googleAuthNSection["ClientSecret"];
+                    googleOptions.ClaimActions.MapJsonKey("image", "picture");
+                    // Cấu hình Url callback lại từ Google (không thiết lập thì mặc định là /signin-google)
+                    googleOptions.CallbackPath = "/dang-nhap-tu-google";
+
+                })
+                .AddFacebook(facebookOptions =>
+                {
+                    // Đọc cấu hình
+                    IConfigurationSection facebookAuthNSection = Configuration.GetSection("Authentication:Facebook");
+                    facebookOptions.AppId = facebookAuthNSection["AppId"];
+                    facebookOptions.AppSecret = facebookAuthNSection["AppSecret"];
+                    facebookOptions.ClaimActions.MapJsonKey("image", "picture");
+                    // Thiết lập đường dẫn Facebook chuyển hướng đến
+                    facebookOptions.CallbackPath = "/dang-nhap-tu-facebook";
+                });
 
             // Cấu hình Cookie
             services.ConfigureApplicationCookie(config =>

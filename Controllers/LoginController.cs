@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TracyShop.Models;
+using TracyShop.ViewModels;
 using TracyShop.Repository;
+using System.Security.Claims;
+using Microsoft.Extensions.Logging;
 
 namespace TracyShop.Controllers
 {
@@ -13,15 +17,32 @@ namespace TracyShop.Controllers
     {
         private readonly ILoginRepository _loginRepository;
 
-        public LoginController(ILoginRepository loginRepository)
+        private readonly UserManager<AppUser> userManager;
+        private readonly SignInManager<AppUser> signInManager;
+        private readonly ILogger<LoginController> logger;
+
+        public LoginController(ILoginRepository loginRepository,
+            UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager,
+            ILogger<LoginController> logger)
         {
             _loginRepository = loginRepository;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.logger = logger;
         }
 
         [Route("register")]
-        public IActionResult Register()
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(string returnUrl)
         {
-            return View();
+            RegisterModel model = new RegisterModel
+            {
+                ReturnUrl = returnUrl,
+                ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            };
+            return View(model);
         }
 
         [Route("register")]
@@ -51,9 +72,16 @@ namespace TracyShop.Controllers
 
 
         [Route("login")]
-        public IActionResult Login()
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(string returnUrl)
         {
-            return View();
+            LoginModel model = new LoginModel
+            {
+                ReturnUrl = returnUrl,
+                ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            };
+            return View(model);
         }
 
         [Route("login")]
@@ -195,6 +223,118 @@ namespace TracyShop.Controllers
                 }
             }
             return View(model);
+        }
+
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult ExternalLogin(string provider, string returnUrl = null)
+        {
+            var redirectUrl = Url.Action("ExternalLoginCallback", "Login",
+                                    new { ReturnUrl = returnUrl });
+
+            var properties =
+                signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+
+            return new ChallengeResult(provider, properties);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult>
+            ExternalLoginCallback(string returnUrl = null, string remoteError = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+
+            LoginModel loginModel = new LoginModel
+            {
+                ReturnUrl = returnUrl,
+                ExternalLogins =
+                (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            };
+
+            if (remoteError != null)
+            {
+                ModelState.AddModelError(string.Empty,
+                    $"Error from external provider: {remoteError}");
+
+                return View("Login", loginModel);
+            }
+
+            var info = await signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                ModelState.AddModelError(string.Empty,
+                    "Error loading external login information.");
+
+                return View("Login", loginModel);
+            }
+
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            AppUser user = null;
+
+            if (email != null)
+            {
+                user = await userManager.FindByEmailAsync(email);
+
+                if (user != null && !user.EmailConfirmed)
+                {
+                    ModelState.AddModelError(string.Empty, "Email not confirmed yet");
+                    return View("Login", loginModel);
+                }
+            }
+
+            var signInResult = await signInManager.ExternalLoginSignInAsync(
+                                        info.LoginProvider, info.ProviderKey,
+                                        isPersistent: false, bypassTwoFactor: true);
+
+            if (signInResult.Succeeded)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                if (email != null)
+                {
+                    if (user == null)
+                    {
+                        user = new AppUser
+                        {
+                            Name = info.Principal.FindFirstValue(ClaimTypes.Name),
+                            UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
+                            Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                            EmailConfirmed = true,
+                            Avatar = info.Principal.FindFirstValue("image")
+                        };
+
+                        await userManager.CreateAsync(user);
+
+                        var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                        var confirmationLink = Url.Action("ConfirmEmail", "Login",
+                                        new { userId = user.Id, token = token }, Request.Scheme);
+
+                        logger.Log(LogLevel.Warning, confirmationLink);
+
+                        ViewBag.ErrorTitle = "Registration successful";
+                        ViewBag.ErrorMessage = "Before you can Login, please confirm your " +
+                            "email, by clicking on the confirmation link we have emailed you";
+                        return View("Error");
+                    }
+
+                    await userManager.AddLoginAsync(user, info);
+                    await signInManager.SignInAsync(user, isPersistent: false);
+
+                    return LocalRedirect(returnUrl);
+                }
+
+                else
+                {
+                    ViewBag.ErrorTitle = $"Email claim not received from: {info.LoginProvider}";
+                    ViewBag.ErrorMessage = "Please contact support on Pragim@PragimTech.com";
+
+                    return View("Error");
+                }
+            }
         }
     }
 }
