@@ -303,7 +303,8 @@ namespace TracyShop.Controllers
                             UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
                             Email = info.Principal.FindFirstValue(ClaimTypes.Email),
                             EmailConfirmed = true,
-                            Avatar = info.Principal.FindFirstValue("image")
+                            Avatar = info.Principal.FindFirstValue("image"),
+                            Gender = info.Principal.FindFirstValue(ClaimTypes.Gender)
                         };
 
                         await userManager.CreateAsync(user);

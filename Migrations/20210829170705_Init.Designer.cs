@@ -10,7 +10,7 @@ using TracyShop.Data;
 namespace TracyShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210824141948_Init")]
+    [Migration("20210829170705_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

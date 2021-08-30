@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -17,18 +18,56 @@ namespace TracyShop.Controllers
     {
 
         private readonly ILoginRepository _loginRepository;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ProfileController(ILoginRepository loginRepository)
+        public ProfileController(ILoginRepository loginRepository, UserManager<AppUser> userManager)
         {
             _loginRepository = loginRepository;
+            _userManager = userManager;
         }
 
+        [HttpGet]
         [Authorize]
         [Route("profile", Name = "profile")]
-        public ActionResult Profile()
+        public IActionResult Profile()
         {
-            return View();
+            var userid = _userManager.GetUserId(HttpContext.User);
+
+            if(userid == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            else
+            {
+                AppUser user = _userManager.FindByIdAsync(userid).Result;
+                return View(user);
+            }
         }
+
+        [HttpPost]
+        [Authorize]
+        [Route("profile", Name = "profile")]
+        public async Task<IActionResult> Profile(AppUser userdetails)
+        {
+            var userid = _userManager.GetUserId(HttpContext.User);
+            AppUser user = _userManager.FindByIdAsync(userid).Result;
+            user.Name = userdetails.Name;
+            user.PhoneNumber = userdetails.PhoneNumber;
+            user.Gender = userdetails.Gender;
+            user.Birthday = userdetails.Birthday;
+            IdentityResult x = await _userManager.UpdateAsync(user);
+            if (x.Succeeded)
+            {
+                ViewBag.Message = $"Update user information successed";
+                return View(user);
+            }
+            else
+            {
+                ViewBag.Message = $"Update user information failed";
+                return View(user);
+            }
+        }
+
 
         [Authorize]
         [Route("profile/address", Name = "address")]
@@ -73,12 +112,6 @@ namespace TracyShop.Controllers
         public ActionResult ResetPassword()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
