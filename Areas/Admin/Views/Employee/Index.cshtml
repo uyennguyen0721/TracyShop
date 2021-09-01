@@ -25,9 +25,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Birthday)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Address)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -44,9 +44,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Birthday)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.Address)
-                </td>
+                </td>*@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
                     <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a> |

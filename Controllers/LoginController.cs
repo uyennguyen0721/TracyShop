@@ -331,7 +331,7 @@ namespace TracyShop.Controllers
                 else
                 {
                     ViewBag.ErrorTitle = $"Email claim not received from: {info.LoginProvider}";
-                    ViewBag.ErrorMessage = "Please contact support on Pragim@PragimTech.com";
+                    ViewBag.ErrorMessage = "Please contact support on TracyShop@tracyshop.com";
 
                     return View("Error");
                 }

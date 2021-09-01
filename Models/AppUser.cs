@@ -24,9 +24,9 @@ namespace TracyShop.Models
 
         public DateTime Joined_date { set; get; } = DateTime.Now;
 
-        public virtual Address Address { set; get; }
         public virtual UserRole UserRole { set; get; }
 
+        public virtual ICollection<Address> Addresses { set; get; }
         public virtual ICollection<Reviews> Reviews { set; get; }
         public virtual ICollection<StockReceived> StockReceiveds { set; get; }
         public virtual ICollection<Cart> Carts { set; get; }

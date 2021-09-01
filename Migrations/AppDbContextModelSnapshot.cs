@@ -165,15 +165,16 @@ namespace TracyShop.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
-                    b.Property<string>("Street")
+                    b.Property<string>("SpecificAddress")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Ward")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Address");
                 });
@@ -184,9 +185,6 @@ namespace TracyShop.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("Avatar")
@@ -258,8 +256,6 @@ namespace TracyShop.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AddressId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -664,17 +660,20 @@ namespace TracyShop.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TracyShop.Models.Address", b =>
+                {
+                    b.HasOne("TracyShop.Models.AppUser", "User")
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TracyShop.Models.AppUser", b =>
                 {
-                    b.HasOne("TracyShop.Models.Address", "Address")
-                        .WithMany("Users")
-                        .HasForeignKey("AddressId");
-
                     b.HasOne("TracyShop.Models.UserRole", "UserRole")
                         .WithMany("Users")
                         .HasForeignKey("UserRoleId");
-
-                    b.Navigation("Address");
 
                     b.Navigation("UserRole");
                 });
@@ -793,13 +792,10 @@ namespace TracyShop.Migrations
                     b.Navigation("StockReceived");
                 });
 
-            modelBuilder.Entity("TracyShop.Models.Address", b =>
-                {
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("TracyShop.Models.AppUser", b =>
                 {
+                    b.Navigation("Addresses");
+
                     b.Navigation("Carts");
 
                     b.Navigation("Reviews");

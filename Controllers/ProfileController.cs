@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using TracyShop.Data;
 using TracyShop.Models;
 using TracyShop.Repository;
 using TracyShop.ViewModels;
@@ -19,11 +21,13 @@ namespace TracyShop.Controllers
 
         private readonly ILoginRepository _loginRepository;
         private readonly UserManager<AppUser> _userManager;
+        private readonly AppDbContext _context;
 
-        public ProfileController(ILoginRepository loginRepository, UserManager<AppUser> userManager)
+        public ProfileController(ILoginRepository loginRepository, UserManager<AppUser> userManager, AppDbContext context)
         {
             _loginRepository = loginRepository;
             _userManager = userManager;
+            _context = context;
         }
 
         [HttpGet]
@@ -58,23 +62,47 @@ namespace TracyShop.Controllers
             IdentityResult x = await _userManager.UpdateAsync(user);
             if (x.Succeeded)
             {
-                ViewBag.Message = $"Update user information successed";
+                ViewBag.Message = $"Update user information successed.";
                 return View(user);
             }
             else
             {
-                ViewBag.Message = $"Update user information failed";
+                ViewBag.Message = $"Update user information failed.";
                 return View(user);
             }
         }
 
 
         [Authorize]
+        [HttpGet]
         [Route("profile/address", Name = "address")]
-        public ActionResult Address()
+        public IActionResult Address()
         {
+            //var userid = _userManager.GetUserId(HttpContext.User);
+
+            //if (userid == null)
+            //{
+            //    return RedirectToAction("Login", "Login");
+            //}
+            //else
+            //{
+            //    Address address = (Address)_context.Address.Where(a => a.User.Id.Contains(userid)).Take(1);
+            //    return View(address);
+            //}
+
             return View();
+
+
         }
+
+        //[HttpPost]
+        //[Authorize]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult UploadAvatar()
+        //{
+            
+        //}
+
 
         [Authorize]
         [Route("profile/change-password")]
@@ -104,14 +132,6 @@ namespace TracyShop.Controllers
 
             }
             return View(model);
-        }
-
-        [Authorize]
-        [Route("profile/reset-password", Name = "reset-password")]
-        // GET: ProfileController/ResetPassword
-        public ActionResult ResetPassword()
-        {
-            return View();
         }
     }
 }

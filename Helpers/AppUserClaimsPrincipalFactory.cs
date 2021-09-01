@@ -21,6 +21,8 @@ namespace TracyShop.Helpers
         {
             var identity = await base.GenerateClaimsAsync(user);
             identity.AddClaim(new Claim("Name", user.Name ?? ""));
+            identity.AddClaim(new Claim("UserName", user.UserName ?? ""));
+            identity.AddClaim(new Claim("Avatar", user.Avatar ?? ""));
             return identity;
         }
     }

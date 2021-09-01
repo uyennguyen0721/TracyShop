@@ -13,6 +13,10 @@ namespace TracyShop.Data
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+        public AppDbContext()
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
 
@@ -33,6 +37,7 @@ namespace TracyShop.Data
         }
 
         public DbSet<TracyShop.Models.Category> Category { get; set; }
+        public DbSet<TracyShop.Models.Address> Address { set; get; }
 
     }
 }
