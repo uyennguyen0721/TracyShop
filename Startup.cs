@@ -149,6 +149,7 @@ namespace TracyShop
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, AppUserClaimsPrincipalFactory>();
+            services.AddScoped<IAvatarSevice, AvatarService>();
                                 
             services.Configure<SMTPConfigModel>(Configuration.GetSection("SMTPConfig")); // đăng ký để Inject 
                                               // Configuration.GetSection("SMTPConfig") : đọc config 

@@ -2,32 +2,35 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using TracyShop.Data;
 using TracyShop.Models;
 using TracyShop.Repository;
 using TracyShop.ViewModels;
+using System.Net;
+using Newtonsoft.Json;
+using System.Text;
+using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using System;
 
 namespace TracyShop.Controllers
 {
     public class ProfileController : Controller
     {
-
+        private IHostingEnvironment _hostingEnvironment;
         private readonly ILoginRepository _loginRepository;
         private readonly UserManager<AppUser> _userManager;
         private readonly AppDbContext _context;
 
-        public ProfileController(ILoginRepository loginRepository, UserManager<AppUser> userManager, AppDbContext context)
+        public ProfileController(ILoginRepository loginRepository, UserManager<AppUser> userManager, AppDbContext context, IHostingEnvironment hostingEnvironment)
         {
             _loginRepository = loginRepository;
             _userManager = userManager;
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpGet]
@@ -44,39 +47,64 @@ namespace TracyShop.Controllers
             else
             {
                 AppUser user = _userManager.FindByIdAsync(userid).Result;
-                return View(user);
+                ProfileModel profile = new ProfileModel();
+                profile.Name = user.Name;
+                profile.UserName = user.UserName;
+                profile.Email = user.Email;
+                profile.Birthday = user.Birthday;
+                profile.PhoneNumber = user.PhoneNumber;
+                profile.Gender = user.Gender;
+                profile.AvatarPath = null;
+                return View(profile);
             }
         }
 
         [HttpPost]
         [Authorize]
         [Route("profile", Name = "profile")]
-        public async Task<IActionResult> Profile(AppUser userdetails)
+        public async Task<IActionResult> Profile(ProfileModel userdetails)
         {
             var userid = _userManager.GetUserId(HttpContext.User);
             AppUser user = _userManager.FindByIdAsync(userid).Result;
+
+            string wwwRootPath = _hostingEnvironment.WebRootPath;
+            string fileName = Path.GetFileNameWithoutExtension(userdetails.AvatarPath.FileName);
+            string extension = Path.GetExtension(userdetails.AvatarPath.FileName);
+            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            string filePath = Path.Combine(wwwRootPath + "/img/avatar/", fileName);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await userdetails.AvatarPath.CopyToAsync(fileStream);
+            }
+
             user.Name = userdetails.Name;
             user.PhoneNumber = userdetails.PhoneNumber;
             user.Gender = userdetails.Gender;
             user.Birthday = userdetails.Birthday;
+            user.Avatar = "/img/avatar/" + fileName;
+
+            userdetails.Email = user.Email;
+            userdetails.UserName = user.UserName;
             IdentityResult x = await _userManager.UpdateAsync(user);
             if (x.Succeeded)
             {
                 ViewBag.Message = $"Update user information successed.";
-                return View(user);
+                return View("profile", userdetails);
             }
             else
             {
                 ViewBag.Message = $"Update user information failed.";
-                return View(user);
+                return View(userdetails);
             }
         }
 
 
+
         [Authorize]
         [HttpGet]
-        [Route("profile/address", Name = "address")]
-        public IActionResult Address()
+        [Route("profile/change-address", Name = "change-address")]
+        public IActionResult ChangeAddress()
         {
             //var userid = _userManager.GetUserId(HttpContext.User);
 
@@ -86,22 +114,20 @@ namespace TracyShop.Controllers
             //}
             //else
             //{
-            //    Address address = (Address)_context.Address.Where(a => a.User.Id.Contains(userid)).Take(1);
-            //    return View(address);
+            //    ChangeAddressModel changeAddress = new ChangeAddressModel();
+            //    var address = _context.Address.Where(a => a.User.Id == userid).FirstOrDefault();
+            //    changeAddress.Id = address.Id;
+            //    changeAddress.SpecificAddress = address.SpecificAddress;
+            //    changeAddress.SelectDistrict = address.District;
+            //    changeAddress.SelectCity = address.City;
+
+            //    return View();
             //}
 
             return View();
 
 
         }
-
-        //[HttpPost]
-        //[Authorize]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult UploadAvatar()
-        //{
-            
-        //}
 
 
         [Authorize]

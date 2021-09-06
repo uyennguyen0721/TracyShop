@@ -282,7 +282,7 @@ a {
     -moz-font-smoothing: antialiased;
 }
 
-.profile-nav .file {
+.profile-nav form.file {
     position: absolute;
     overflow: hidden;
     width: 20%;
@@ -294,7 +294,7 @@ a {
     justify-content: center;
 }
 
-    .profile-nav .file input {
+    .profile-nav form.file input {
         position: absolute;
         opacity: 0;
         right: 0;

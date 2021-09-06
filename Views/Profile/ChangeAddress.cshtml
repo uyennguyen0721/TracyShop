@@ -1,4 +1,4 @@
-﻿@model TracyShop.Models.Address
+﻿@model TracyShop.ViewModels.ChangeAddressModel
 @{
     Layout = "_LayoutProfile";
     ViewData["title"] = "Address";
@@ -9,21 +9,21 @@
     <p class="card-title">Địa chỉ giao hàng</p>
 </div>
 
-<form asp-action="Address">
+<form asp-action="ChangeAddress">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="City" class="control-label">Tỉnh / Thành phố</label>
-        <select asp-for="City" class="form-select form-select-lg mb-3" name="City" required="">
+        <label asp-for="SelectCity" class="control-label">Tỉnh / Thành phố</label>
+        <select asp-for="SelectCity" class="form-select form-select-lg mb-3" name="SelectCity" required="">
             <option value="">Chọn tỉnh/thành phố</option>
         </select>
-        <span asp-validation-for="City" class="text-danger"></span>
+        <span asp-validation-for="SelectCity" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="District" class="control-label">Quận / Huyện</label>
-        <select asp-for="District" class="form-select form-select-lg mb-3" name="District" required="">
+        <label asp-for="SelectDistrict" class="control-label">Quận / Huyện</label>
+        <select asp-for="SelectDistrict" class="form-select form-select-lg mb-3" name="SelectDistrict" required="">
             <option value="">Chọn quận / huyện</option>
         </select>
-        <span asp-validation-for="District" class="text-danger"></span>
+        <span asp-validation-for="SelectDistrict" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="SpecificAddress" class="control-label">Địa chỉ cụ thể</label>
@@ -34,3 +34,4 @@
         <input type="submit" value="Lưu địa chỉ" class="btn custom-btn" />
     </div>
 </form>
+
