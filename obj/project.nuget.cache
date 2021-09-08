@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "x6/dp6nUG7qcsJ4P5I3Gd4oyt0kAQKFUaoNdYnKDZ2gwNA5MtYGpPGsmT/N2sHJ9xu7W5DfkzayY7gVgHx0jVw==",
+  "dgSpecHash": "u9BA4jT0bx9XfYPChKYJgtnKmmziYe4sO1p2dQGxxTJdamuAOgYHen0Etejj2ssIUnxDV8OirnzXHOEpLr9dMQ==",
   "success": true,
   "projectFilePath": "D:\\ASP.NET  Projects\\TracyShop\\TracyShop.csproj",
   "expectedPackageFiles": [
@@ -78,8 +78,8 @@
     "C:\\Users\\uyenn\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\5.0.9\\microsoft.entityframeworkcore.analyzers.5.0.9.nupkg.sha512",
     "C:\\Users\\uyenn\\.nuget\\packages\\microsoft.entityframeworkcore.design\\5.0.9\\microsoft.entityframeworkcore.design.5.0.9.nupkg.sha512",
     "C:\\Users\\uyenn\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\5.0.9\\microsoft.entityframeworkcore.relational.5.0.9.nupkg.sha512",
-    "C:\\Users\\uyenn\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\5.0.9\\microsoft.entityframeworkcore.sqlserver.5.0.9.nupkg.sha512",
-    "C:\\Users\\uyenn\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\5.0.9\\microsoft.entityframeworkcore.tools.5.0.9.nupkg.sha512",
+    "C:\\Users\\uyenn\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\5.0.8\\microsoft.entityframeworkcore.sqlserver.5.0.8.nupkg.sha512",
+    "C:\\Users\\uyenn\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\5.0.8\\microsoft.entityframeworkcore.tools.5.0.8.nupkg.sha512",
     "C:\\Users\\uyenn\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\5.0.0\\microsoft.extensions.caching.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\uyenn\\.nuget\\packages\\microsoft.extensions.caching.memory\\5.0.0\\microsoft.extensions.caching.memory.5.0.0.nupkg.sha512",
     "C:\\Users\\uyenn\\.nuget\\packages\\microsoft.extensions.configuration\\5.0.0\\microsoft.extensions.configuration.5.0.0.nupkg.sha512",

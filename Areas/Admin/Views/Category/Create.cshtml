@@ -4,10 +4,12 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Category</h4>
-<hr />
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Thêm danh mục sản phẩm</h1>
+    <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-clipboard-list"></i> Xem danh mục
+    </a>
+</div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -22,10 +24,6 @@
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

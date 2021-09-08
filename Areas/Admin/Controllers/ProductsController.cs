@@ -1,94 +1,95 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using TracyShop.Data;
 using TracyShop.Models;
 
 namespace TracyShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class EmployeeController : Controller
+    public class ProductsController : Controller
     {
         private readonly AppDbContext _context;
 
-        public EmployeeController(AppDbContext context)
+        public ProductsController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Admin/Employee
+        // GET: Admin/Products
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.Where(x => x.UserRole.Id == 2).ToListAsync());
+            return View(await _context.Product.ToListAsync());
         }
 
-        // GET: Admin/Employee/Details/5
-        public async Task<IActionResult> Details(string? id)
+        // GET: Admin/Products/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(m => m.Id.Contains(id));
-            if (user == null)
+            var product = await _context.Product
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(product);
         }
 
-
-        // GET: Admin/Employee/Create
+        // GET: Admin/Products/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Employee/Create
+        // POST: Admin/Products/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create (AppUser user)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,Year_SX,Quantity,Active")] Product product)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(product);
         }
 
-        // GET: Admin/Employee/Edit/5
-        public async Task<IActionResult> Edit(string? id)
+        // GET: Admin/Products/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var employee = await _context.Users.FindAsync(id);
-            if (employee == null)
+            var product = await _context.Product.FindAsync(id);
+            if (product == null)
             {
                 return NotFound();
             }
-            return View(employee);
+            return View(product);
         }
 
-        // POST: Admin/Employee/Edit/5
+        // POST: Admin/Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name")] AppUser user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,Year_SX,Quantity,Active")] Product product)
         {
-            if (id != user.Id)
+            if (id != product.Id)
             {
                 return NotFound();
             }
@@ -97,12 +98,12 @@ namespace TracyShop.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(user.Id))
+                    if (!ProductExists(product.Id))
                     {
                         return NotFound();
                     }
@@ -113,41 +114,41 @@ namespace TracyShop.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(product);
         }
 
-        // GET: Admin/Employee/Delete/5
-        public async Task<IActionResult> Delete(string? id)
+        // GET: Admin/Products/Delete/5
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var employee = await _context.Users
+            var product = await _context.Product
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
+            if (product == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(product);
         }
 
-        // POST: Admin/Employee/Delete/5
+        // POST: Admin/Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Users.FindAsync(id);
-            _context.Users.Remove(employee);
+            var product = await _context.Product.FindAsync(id);
+            _context.Product.Remove(product);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmployeeExists(string id)
+        private bool ProductExists(int id)
         {
-            return _context.Users.Any(u => u.Id == id);
+            return _context.Product.Any(e => e.Id == id);
         }
     }
 }

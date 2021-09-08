@@ -38,6 +38,7 @@ namespace TracyShop.Data
 
         public DbSet<TracyShop.Models.Category> Category { get; set; }
         public DbSet<TracyShop.Models.Address> Address { set; get; }
+        public DbSet<TracyShop.Models.Product> Product { get; set; }
 
     }
 }

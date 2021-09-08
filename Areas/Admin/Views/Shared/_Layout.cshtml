@@ -83,8 +83,8 @@
                 <div id="collapseEmployees" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản lý nhân viên:</h6>
-                        <a class="collapse-item" href="buttons.html">Danh sách nhân viên</a>
-                        <a class="collapse-item" href="cards.html">Thêm nhân viên</a>
+                        <a class="collapse-item" asp-area="Admin" asp-controller="Employee" asp-action="Index">Danh sách nhân viên</a>
+                        <a class="collapse-item" asp-area="Admin" asp-controller="Employee" asp-action="Create">Thêm nhân viên</a>
                     </div>
                 </div>
             </li>
@@ -100,9 +100,8 @@
                      data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản lý sản phẩm:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Danh sách sản phẩm</a>
-                        <a class="collapse-item" href="utilities-border.html">Thêm sản phẩm mới</a>
-                        <a class="collapse-item" href="utilities-animation.html">Thêm danh mục sản phẩm</a>
+                        <a class="collapse-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Danh mục sản phẩm</a>
+                        <a class="collapse-item" asp-area="Admin" asp-controller="Products" asp-action="Index">Sản phẩm</a>
                         <a class="collapse-item" href="utilities-animation.html">Áp dụng khuyến mãi</a>
                     </div>
                 </div>
