@@ -18,6 +18,8 @@ namespace TracyShop.Models
         [MaxLength(100)]
         public string Image { set; get; }
 
+        public int ProductId { set; get; }
+
         public virtual Product Product { set; get; }
         public virtual AppUser User { set; get; }
     }

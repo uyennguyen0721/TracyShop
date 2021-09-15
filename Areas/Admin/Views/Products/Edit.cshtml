@@ -1,43 +1,76 @@
-﻿@model TracyShop.Models.Product
+﻿@model TracyShop.ViewModels.ProductManageModel
 
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
-
-<h4>Product</h4>
-<hr />
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Chỉnh sửa thông tin sản phẩm</h1>
+    <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-arrow-alt-circle-left text-white-50"></i> Quay lại
+    </a>
+</div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Tên sản phẩm</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <label asp-for="SelectedCate" class="control-label">Chọn danh mục</label>
+                <select asp-for="SelectedCate" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))" class="form-control">
+                    <option value="0">Chọn danh mục</option>
+                </select>
+                <span asp-validation-for="SelectedCate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Mô tả</label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
+                <label asp-for="Price" class="control-label">Giá</label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Year_SX" class="control-label"></label>
+                <label asp-for="SelectedPromo" class="control-label">Chọn khuyến mãi</label>
+                <select asp-for="SelectedPromo" asp-items="@(new SelectList(Model.Promotions, "Id", "percent"))" class="form-control">
+                    <option value="0">Chọn khuyến mãi</option>
+                </select>
+                <span asp-validation-for="SelectedPromo" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+            <label asp-for="Sizes" class="control-label">Chọn kích thước</label>
+            <select asp-for="Sizes" asp-items="@ViewBag.sizes" class="form-control">
+                <option value="0">Chọn kích thước</option>
+            </select>
+            <span asp-validation-for="Sizes" class="text-danger"></span>
+        </div>*@
+            <div class="form-group">
+                <label asp-for="Year_SX" class="control-label">Năm sản xuất</label>
                 <input asp-for="Year_SX" class="form-control" />
                 <span asp-validation-for="Year_SX" class="text-danger"></span>
             </div>
+            @*<div class="form-group">
+            <label asp-for="Quantity" class="control-label">Số lượng</label>
+            <input asp-for="Quantity" class="form-control" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
+                <label asp-for="Trandemark" class="control-label">Thương hiệu</label>
+                <input asp-for="Trandemark" class="form-control" />
+                <span asp-validation-for="Trandemark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Origin" class="control-label">Xuất xứ</label>
+                <input asp-for="Origin" class="form-control" />
+                <span asp-validation-for="Origin" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
@@ -49,9 +82,5 @@
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 

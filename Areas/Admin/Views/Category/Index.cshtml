@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<TracyShop.Models.Category>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Category";
 }
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -14,10 +14,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Tên danh mục
             </th>
             <th></th>
         </tr>
@@ -35,7 +35,7 @@
                 <td>
                     <a asp-area="Admin" asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
                     <a asp-area="Admin" asp-controller="Category" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a> |
-                    <a asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="Index" asp-route-id="@item.Id">Xem sản phẩm</a>
                 </td>
             </tr>
          }

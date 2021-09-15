@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<TracyShop.Models.Product>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Products";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Danh mục sản phẩm</h1>
-    <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fas fa-plus-circle"></i> Thêm sản phẩm mới
+    <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
+    <a asp-area="Admin" asp-controller="Products" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus-circle text-white-50"></i> Thêm sản phẩm mới
     </a>
 </div>
 <table class="table">
@@ -17,9 +17,7 @@
             <th>STT</th>
             <th>Tên sản phẩm</th>
             <th>Giá</th>
-            <th>Năm sản xuất</th>
-            <th>Số lượng</th>
-            <th>Kinh doanh</th>
+            <th>Đang kinh doanh</th>
             <th></th>
         </tr>
     </thead>
@@ -36,18 +34,14 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Year_SX)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Active)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-area="Admin" asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
+                    <a asp-area="Admin" asp-controller="Products" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a> |
+                    <a asp-area="Admin" asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a> |
+                    <a asp-area="Admin" asp-controller="ProductSizes" asp-action="Index" asp-route-id="@item.Id">Xem số lượng</a> |
+                    <a asp-area="Admin" asp-controller="Images" asp-action="Index" asp-route-id="@item.Id">Xem ảnh</a> |
                 </td>
             </tr>
         }

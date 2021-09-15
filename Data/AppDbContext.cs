@@ -21,6 +21,68 @@ namespace TracyShop.Data
         {
 
             base.OnModelCreating(builder);
+            builder.Entity<ProductSize>().HasKey(ps => new { ps.ProductId, ps.SizeId });
+
+            builder.Entity<ProductSize>()
+                        .HasOne<Product>(ps => ps.Product)
+                        .WithMany(p => p.ProductSizes)
+                        .HasForeignKey(ps => ps.ProductId);
+
+
+            builder.Entity<ProductSize>()
+                        .HasOne<Size>(ps => ps.Size)
+                        .WithMany(s => s.ProductSizes)
+                        .HasForeignKey(ps => ps.SizeId);
+
+            builder.Entity<Product>()
+                        .HasOne<Category>(p => p.Category)
+                        .WithMany(c => c.Products)
+                        .HasForeignKey(p => p.CategoryId);
+
+            builder.Entity<Product>()
+                        .HasOne<Promotion>(p => p.Promotion)
+                        .WithMany(pm => pm.Products)
+                        .HasForeignKey(p => p.PromotionId);
+
+            builder.Entity<Image>()
+                        .HasOne<Product>(p => p.Product)
+                        .WithMany(i => i.Images)
+                        .HasForeignKey(p => p.ProductId);
+
+            builder.Entity<Cart>()
+                        .HasOne<Product>(p => p.Product)
+                        .WithMany(c => c.Carts)
+                        .HasForeignKey(p => p.ProductId);
+
+            builder.Entity<Order>()
+                        .HasOne<PaymentMenthod>(p => p.PaymentMenthod)
+                        .WithMany(o => o.Orders)
+                        .HasForeignKey(p => p.PaymentMenthodId);
+
+            builder.Entity<OrderDetail>()
+                        .HasOne<Product>(p => p.Product)
+                        .WithMany(od => od.OrderDetails)
+                        .HasForeignKey(p => p.ProductId);
+
+            builder.Entity<OrderDetail>()
+                        .HasOne<Order>(od => od.Order)
+                        .WithMany(o => o.OrderDetails)
+                        .HasForeignKey(od => od.OrderId);
+
+            builder.Entity<Reviews>()
+                        .HasOne<Product>(p => p.Product)
+                        .WithMany(r => r.Reviews)
+                        .HasForeignKey(p => p.ProductId);
+
+            builder.Entity<StockReceivedDetail>()
+                        .HasOne<Product>(p => p.Product)
+                        .WithMany(s => s.StockReceivedDetails)
+                        .HasForeignKey(p => p.ProductId);
+
+            builder.Entity<StockReceivedDetail>()
+                        .HasOne<StockReceived>(s => s.StockReceived)
+                        .WithMany(r => r.StockReceivedDetails)
+                        .HasForeignKey(s => s.StockReceivedId);
 
 
             // Bỏ tiền tố AspNet của các bảng: mặc định các bảng trong IdentityDbContext có
@@ -39,6 +101,10 @@ namespace TracyShop.Data
         public DbSet<TracyShop.Models.Category> Category { get; set; }
         public DbSet<TracyShop.Models.Address> Address { set; get; }
         public DbSet<TracyShop.Models.Product> Product { get; set; }
+        public DbSet<TracyShop.Models.Image> Image { get; set; }
+        public DbSet<TracyShop.Models.Size> Sizes { set; get; }
+        public DbSet<ProductSize> ProductSize { set; get; }
+        public DbSet<TracyShop.Models.Promotion> Promotion { get; set; }
 
     }
 }

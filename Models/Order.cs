@@ -14,6 +14,9 @@ namespace TracyShop.Models
         public bool Is_check { set; get; }
         public bool Is_pay { set; get; }
 
+        public double ShoppingFee { set; get; }
+        public int PaymentMenthodId { set; get; }
+
         public virtual PaymentMenthod PaymentMenthod { set; get; }
 
         public virtual ICollection<OrderDetail> OrderDetails { set; get; }

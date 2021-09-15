@@ -17,6 +17,6 @@ namespace TracyShop.Models
         [MaxLength(255)]
         public string Description { set; get; }
 
-        public virtual ICollection<Product> Products { set; get; }
+        public virtual ICollection<ProductSize> ProductSizes { set; get; }
     }
 }

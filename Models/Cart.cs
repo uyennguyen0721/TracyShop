@@ -13,6 +13,7 @@ namespace TracyShop.Models
 
         public int Quantity { set; get; }
         public float UnitPrice { set; get; }
+        public int ProductId { set; get; }
 
         public virtual AppUser User { set; get; }
         public virtual Product Product { set; get; }

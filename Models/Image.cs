@@ -13,6 +13,7 @@ namespace TracyShop.Models
 
         [MaxLength(100)]
         public string Path { set; get; }
+        public int ProductId { set; get; }
 
         public virtual Product Product { set; get; }
     }

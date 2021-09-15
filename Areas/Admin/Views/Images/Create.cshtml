@@ -1,0 +1,40 @@
+﻿@model TracyShop.ViewModels.UploadImagesOfProduct
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Thêm ảnh minh họa cho sản phẩm</h1>
+    <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-arrow-alt-circle-left text-white-50"></i> Quay lại
+    </a>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Selected" class="control-label">Chọn sản phẩm</label>
+                <select asp-for="Selected" asp-items="@(new SelectList(Model.Product, "Id", "Name"))" class="form-control">
+                    <option value="0">Chọn sản phẩm</option>
+                </select>
+                <span asp-validation-for="Selected" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Images" class="control-label">Chọn ảnh</label>
+                <input asp-for="Images" />
+                <span asp-validation-for="Images" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm ảnh" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+

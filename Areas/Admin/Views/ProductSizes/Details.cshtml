@@ -1,0 +1,43 @@
+﻿@model TracyShop.Models.ProductSize
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Thông tin số lượng sản phẩm theo size</h1>
+    <a asp-area="Admin" asp-controller="ProductSize" asp-action="Edit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-edit text-white-50"></i> Chỉnh sửa
+    </a>
+    <a asp-area="Admin" asp-controller="ProductSize" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-arrow-alt-circle-left text-white-50"></i> Quay lại
+    </a>
+</div>
+
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Tên sản phẩm
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Product.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Size
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Size.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            Số lượng
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
