@@ -19,9 +19,7 @@
             <th>Họ và tên</th>
             <th>Giới tính</th>
             <th>Ngày sinh</th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>*@
+            <th>Đang làm việc</th>
             <th></th>
         </tr>
     </thead>
@@ -38,13 +36,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Birthday)
                 </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Is_active)
                 <td>
                     <a asp-area="Admin" asp-controller="Employee" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
                     <a asp-area="Admin" asp-controller="Employee" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a> |
-                    <a asp-area="Admin" asp-controller="Employee" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+                    @if(item.Is_active != false)
+                    {
+                        <a asp-area="Admin" asp-controller="Employee" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+                    }
                 </td>
             </tr>
         }

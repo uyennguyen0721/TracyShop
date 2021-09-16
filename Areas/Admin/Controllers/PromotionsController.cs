@@ -26,23 +26,6 @@ namespace TracyShop.Areas.Admin.Controllers
             return View(await _context.Promotion.ToListAsync());
         }
 
-        // GET: Admin/Promotions/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var promotion = await _context.Promotion
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (promotion == null)
-            {
-                return NotFound();
-            }
-
-            return View(promotion);
-        }
 
         // GET: Admin/Promotions/Create
         public IActionResult Create()

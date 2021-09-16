@@ -105,6 +105,7 @@ namespace TracyShop.Data
         public DbSet<TracyShop.Models.Size> Sizes { set; get; }
         public DbSet<ProductSize> ProductSize { set; get; }
         public DbSet<TracyShop.Models.Promotion> Promotion { get; set; }
+        public DbSet<UserRole> UserRole { set; get; }
 
     }
 }

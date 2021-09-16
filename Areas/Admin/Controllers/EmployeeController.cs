@@ -58,6 +58,8 @@ namespace TracyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userRole = _context.UserRole.Where(r => r.Id == 2).FirstOrDefault();
+                user.UserRole = userRole;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -140,7 +142,8 @@ namespace TracyShop.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var employee = await _context.Users.FindAsync(id);
-            _context.Users.Remove(employee);
+            employee.Is_active = false;
+            _context.Update(employee);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

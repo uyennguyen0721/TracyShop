@@ -5,16 +5,20 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Danh sách ưu đãi</h1>
+    <a asp-area="Admin" asp-controller="Promotions" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-plus-circle text-white-50"></i> Thêm ưu đãi
+    </a>
+</div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.percent)
+                ID
+            </th>
+            <th>
+                Mức giảm giá
             </th>
             <th></th>
         </tr>
@@ -23,12 +27,14 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Id) 
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.percent)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-area="Admin" asp-controller="Promotions" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
+                <a asp-area="Admin" asp-controller="Promotions" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a> |
             </td>
         </tr>
 }
