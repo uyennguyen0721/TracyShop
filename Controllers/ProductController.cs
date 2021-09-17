@@ -66,12 +66,40 @@ namespace TracyShop.Controllers
 
         public async Task<IActionResult> Category(int? id)
         {
+            List<ProductsListViewModel> products = new List<ProductsListViewModel>();
+            List<Image> images = new List<Image>();
+            var qr = _context.Image.ToList();
+            foreach (var img in qr)
+            {
+                images.Add(img);
+            }
             ViewBag.Categories = _context.Category.ToList();
             var query = from p in _context.Product select p;
             if (id != null)
             {
-                query = query.Where(p => p.Id == id);
+                //var query = _context.Product.Where(p => p.CategoryId == id);
+                query = query.Where(p => p.CategoryId == id);
+                foreach (var pro in query)
+                {
+                    if(pro.Active == true)
+                    {
+                        var product = new ProductsListViewModel();
+                        var img = images.Where(i => i.ProductId == pro.Id).First();
+                        if(img == null)
+                        {
+                            product.ImageDefault = "";
+                        }
+                        else
+                        {
+                            product.ImageDefault = img.Path;
+                        }
+                        product.Name = pro.Name;
+                        product.Price = pro.Price;
+                        products.Add(product);
+                    }
+                }
             }
+            ViewBag.Products = products;
             return View(await query.AsNoTracking().ToListAsync());
         }
 
