@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TracyShop.Data;
 using TracyShop.Models;
+using TracyShop.Services;
 using TracyShop.ViewModels;
 
 namespace TracyShop.Areas.Admin.Controllers
@@ -29,6 +30,22 @@ namespace TracyShop.Areas.Admin.Controllers
                 return View(await _context.Product.ToListAsync());
             }
             return View(await _context.Product.Where(p => p.CategoryId == id).ToListAsync());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index(string searchString)
+        {
+            ViewData["GetProduct"] = searchString;
+            var query = from x in _context.Product select x;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(p =>
+                p.Name.ToLower().Contains(searchString) ||
+                p.Category.Name.ToLower().Contains(searchString) ||
+                p.Trandemark.ToLower().Contains(searchString) ||
+                p.Origin.Contains(searchString));
+            }
+            return View(await query.AsNoTracking().ToListAsync());
         }
 
         // GET: Admin/Products/Details/5

@@ -138,7 +138,6 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\TracyShop.RazorCoreGenerate.cach
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\About\About.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
-D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\Product.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
@@ -584,3 +583,8 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Promotio
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Promotions\Delete.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Promotions\Edit.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Promotions\Index.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Error\Error.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\Product.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\Category.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Shared\_LayoutProduct.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\Search.cshtml.g.cs

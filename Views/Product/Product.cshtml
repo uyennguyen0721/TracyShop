@@ -1,99 +1,37 @@
 ﻿@{
-    Layout = "_Layout";
+    Layout = "_LayoutProduct";
     ViewData["Title"] = "Product";
 }
-<!-- Page Header Start -->
-<div class="page-header mb-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h2 class="wow fadeInDown" data-wow-delay="0.5s">Sản phẩm</h2>
-            </div>
-            <div class="col-12 wow fadeInUp" data-wow-delay="0.5s">
-                <a asp-controller="Home" asp-action="Index">Home</a>
-                <a asp-controller="Product" asp-action="Product">Product</a>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Page Header End -->
-<!-- Menu of Product Start -->
-<div class="subbody team container">
-    <div class="row" style="margin-top: 5.5%">
-        <div class="menu-left col-md-3">
-            <ul class="menu1">
-                <li><h4>Danh mục sản phẩm</h4></li>
-                <li><a href="#">Đầm</a></li>
-                <li><a href="#">Chân váy</a></li>
-                <li><a href="#">Quần dài</a></li>
-                <li><a href="#">Quần short</a></li>
-                <li><a href="#">Áo thun</a></li>
-            </ul>
-        </div>
-        <div class="product col-md-9">
-            <div class="row wow bounceIn" data-wow-offset="100" data-wow-delay="0.5s">
-                <div class="col-lg-4 col-md-6">
-                    <div class="team-item" style="margin:0 1% 5% 1%">
-                        <div class="team-img">
-                            <img src="~/Client/img/sanpham-1.jpg" alt="Image">
-                            <div class="team-social">
-                                <a href="">Xem</a>
-                                <a href="">Mua ngay</a>
-                            </div>
-                        </div>
-                        <div class="team-text">
-                            <h2>Đầm hoa phối cổ yếm</h2>
-                            <div class="content-product-deltals">
-                                <div class="price">
-                                    <span class="money">400000đ</span>
-                                </div>
-                                <button type="button" class="btn btn-cart">Thêm Vào Giỏ</button>
-                            </div>
-                        </div>
-                    </div>
+
+@foreach (var pro in ViewBag.Products)
+{
+    <div class="col-lg-4 col-md-6">
+        <div class="team-item" style="margin:0 1% 5% 1%">
+            <div class="team-img">
+
+                @if (pro.ImageDefault == "")
+                {
+                    <img src="~/Client/img/default-product.jpg" alt="Image">
+                }
+                else
+                {
+                    <img src="@pro.ImageDefault" alt="Image">
+                }
+
+                <div class="team-social">
+                    <a href="">Xem</a>
+                    <a href="">Mua ngay</a>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="team-item" style="margin: 0 1% 5% 1%">
-                        <div class="team-img">
-                            <img src="~/Client/img/sanpham-2.jpg" alt="Image">
-                            <div class="team-social">
-                                <a href="">Xem</a>
-                                <a href="">Mua ngay</a>
-                            </div>
-                        </div>
-                        <div class="team-text">
-                            <h2>Áo sơ mi Hàn Quốc tay dài</h2>
-                            <div class="content-product-deltals">
-                                <div class="price">
-                                    <span class="money">250000đ</span>
-                                </div>
-                                <button type="button" class="btn btn-cart">Thêm Vào Giỏ</button>
-                            </div>
-                        </div>
+            </div>
+            <div class="team-text">
+                <h2>@pro.Name</h2>
+                <div class="content-product-deltals">
+                    <div class="price">
+                        <span class="money">@pro.Price</span>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="team-item" style="margin: 0 1% 5% 1%">
-                        <div class="team-img">
-                            <img src="~/Client/img/sanpham-3.jpg" alt="Image">
-                            <div class="team-social">
-                                <a href="">Xem</a>
-                                <a href="">Mua ngay</a>
-                            </div>
-                        </div>
-                        <div class="team-text">
-                            <h2>Set áo Gile sọc ngang và sơ mi trắng</h2>
-                            <div class="content-product-deltals">
-                                <div class="price">
-                                    <span class="money">350000đ</span>
-                                </div>
-                                <button type="button" class="btn btn-cart">Thêm Vào Giỏ</button>
-                            </div>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-cart">Thêm Vào Giỏ</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!--Menu of Product End-->
+}

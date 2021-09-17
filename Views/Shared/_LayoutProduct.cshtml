@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "_Layout";
+}
+<!-- Page Header Start -->
+<div class="page-header mb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="wow fadeInDown" data-wow-delay="0.5s">Sản phẩm</h2>
+            </div>
+            <div class="col-12 wow fadeInUp" data-wow-delay="0.5s">
+                <a asp-controller="Home" asp-action="Index">Home</a>
+                <a asp-controller="Product" asp-action="Product">Product</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+<!-- Menu of Product Start -->
+<div class="subbody team container">
+    <div class="row" style="margin-top: 5.5%">
+        <div class="menu-left col-md-3">
+            <ul class="menu1">
+                <li><h4>Danh mục sản phẩm</h4></li>
+                <li><a asp-controller="Product" asp-action="Category">Tất cả</a></li>
+
+                @foreach (var cate in ViewBag.Categories)
+                {
+                    <li><a asp-controller="Product" asp-action="Category" asp-route-id="@cate.Id">@cate.Name</a></li>
+                }
+            </ul>
+        </div>
+        <div class="product col-md-9">
+            <div class="row wow bounceIn" data-wow-offset="100" data-wow-delay="0.5s">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+<!--Menu of Product End-->

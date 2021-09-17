@@ -1,28 +1,95 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using TracyShop.Data;
 using TracyShop.Models;
+using TracyShop.ViewModels;
 
 namespace TracyShop.Controllers
 {
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
+        private readonly AppDbContext _context;
 
-        public ProductController(ILogger<ProductController> logger)
+        public ProductController(ILogger<ProductController> logger, AppDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [Route("/product", Name = "product")]
         public IActionResult Product()
         {
+            List<ProductsListViewModel> products = new List<ProductsListViewModel>();
+            List<Image> images = new List<Image>();
+            var qr = _context.Image.ToList();
+            foreach(var img in qr)
+            {
+                images.Add(img);
+            }
+
+            foreach (var p in _context.Product)
+            {
+                if(p.Active == true)
+                {
+                    var pro = new ProductsListViewModel();
+                    if (images.Where(img => img.ProductId == p.Id) == null)
+                    {
+                        pro.ImageDefault = "";
+                    }
+                    else
+                    {
+                        pro.ImageDefault = images.Where(img => img.ProductId == p.Id).First().Path;
+                    }
+
+                    pro.Name = p.Name;
+                    pro.Price = p.Price;
+                    products.Add(pro);
+
+                }
+                else
+                {
+                    continue;
+                }    
+            }
+            ViewBag.Categories = _context.Category.ToList();
+            ViewBag.Products = products;
             return View();
+        }
+
+        public async Task<IActionResult> Category(int? id)
+        {
+            ViewBag.Categories = _context.Category.ToList();
+            var query = from p in _context.Product select p;
+            if (id != null)
+            {
+                query = query.Where(p => p.Id == id);
+            }
+            return View(await query.AsNoTracking().ToListAsync());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string search)
+        {
+            ViewBag.Categories = _context.Category.ToList();
+            ViewData["GetProduct"] = search;
+            var query = from x in _context.Product select x;
+            if (!String.IsNullOrEmpty(search))
+            {
+                query = query.Where(p =>
+                p.Name.ToLower().Contains(search) ||
+                p.Category.Name.ToLower().Contains(search) ||
+                p.Trandemark.ToLower().Contains(search) ||
+                p.Origin.Contains(search));
+            }
+            return View(await query.AsNoTracking().ToListAsync());
         }
 
         // GET: ProductController

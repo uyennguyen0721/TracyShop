@@ -7,9 +7,18 @@
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
-    <a asp-area="Admin" asp-controller="Products" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fas fa-plus-circle text-white-50"></i> Thêm sản phẩm mới
-    </a>
+    <form asp-controller="Products" asp-action="Index" method="get">
+        <p>
+            <input type="search" placeholder="Tìm kiếm ..." value="@ViewData["GetProduct"]" name="searchString" style="width:400px"/>
+            <input type="submit" value="Tìm kiếm" class="btn btn-primary"/>
+        </p>
+
+    </form>
+    <p>
+        <a asp-area="Admin" asp-controller="Products" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus-circle text-white-50"></i> Thêm sản phẩm mới
+        </a>
+    </p>
 </div>
 <table class="table">
     <thead>
