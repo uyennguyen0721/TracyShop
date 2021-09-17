@@ -106,6 +106,13 @@ namespace TracyShop.Controllers
         [HttpGet]
         public async Task<IActionResult> Search(string search)
         {
+            List<ProductsListViewModel> products = new List<ProductsListViewModel>();
+            List<Image> images = new List<Image>();
+            var qr = _context.Image.ToList();
+            foreach (var img in qr)
+            {
+                images.Add(img);
+            }
             ViewBag.Categories = _context.Category.ToList();
             ViewData["GetProduct"] = search;
             var query = from x in _context.Product select x;
@@ -116,7 +123,28 @@ namespace TracyShop.Controllers
                 p.Category.Name.ToLower().Contains(search) ||
                 p.Trandemark.ToLower().Contains(search) ||
                 p.Origin.Contains(search));
+
+                foreach(var pro in query)
+                {
+                    if(pro.Active == true)
+                    {
+                        var product = new ProductsListViewModel();
+                        var img = images.Where(i => i.ProductId == pro.Id).First();
+                        if (img == null)
+                        {
+                            product.ImageDefault = "";
+                        }
+                        else
+                        {
+                            product.ImageDefault = img.Path;
+                        }
+                        product.Name = pro.Name;
+                        product.Price = pro.Price;
+                        products.Add(product);
+                    }
+                }
             }
+            ViewBag.Products = products;
             return View(await query.AsNoTracking().ToListAsync());
         }
 
