@@ -21,7 +21,7 @@
                 ID sản phẩm
             </th>
             <th>
-                Đường dẫn ảnh
+                Ảnh
             </th>
             <th></th>
         </tr>
@@ -33,7 +33,7 @@
                 @Html.DisplayFor(modelItem => item.ProductId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Path)
+                <img src="@Html.DisplayFor(modelItem => item.Path)" alt="Img" style="width: 10%"/>
             </td>
             <td>
                 <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>

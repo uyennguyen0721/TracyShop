@@ -1,0 +1,95 @@
+﻿@model TracyShop.ViewModels.ProductsListViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_LayoutProduct.cshtml";
+}
+
+<div class="row wow bounceIn" data-wow-offset="100" data-wow-delay="0.5s">
+
+    <div class="col-md-7 col-xs-12">
+        <!-- Carousel Start -->
+        <div class="carousel products">
+            <div class="container-fluid">
+                <div class="owl-carousel">
+                    @{
+                        foreach (var image in Model.Images)
+                        {
+                            <div class="carousel-item">
+                                <div class="carousel-img">
+                                    <img src="@image.Path" alt="Image">
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+        <!-- Carousel End -->
+    </div>
+
+    <div class="product-info col-md-5 col-xs-12">
+        <h1>@Model.Name</h1>
+        <div class="price-product">
+            @if (Model.Promotion == 0)
+            {
+                <div class="text text-danger" style="font-size: 20px; font-weight: bold;">@Model.Price VNĐ</div>
+            }
+            else
+            {
+                <div class="prices">
+                    <div class="price-origin">@Model.Price VNĐ</div>
+                    <div class="price-discount text text-danger" style="font-size: 20px; font-weight: bold;">@Model.PriceDiscounted VNĐ</div>
+                    <div class="discount">Giảm @Model.Promotion%</div>
+                </div>
+            }
+        </div>
+        @if (Model.Promotion != 0)
+        {
+            <div class="item-product-detail">
+                <label class="item-tile">Mã giảm giá</label>
+                <label class="item-info">Giảm @Model.Promotion%</label>
+            </div>
+        }
+        <div class="item-product-detail form-group">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <label class="item-tile">Size</label>
+                </div>
+                <div class="col-md-9 col-xs-12">
+                    @foreach (var size in Model.Sizes)
+                    {
+                        <div class="item-checked">
+                            <input value="@size.Name" id="@size.Name" name="Sizes" type="radio" />
+                            <label for="@size.Name">@size.Name (Chiều cao từ @size.Description)</label>
+                        </div>
+                    }
+                </div>
+            </div>  
+        </div>
+        <div class="item-product-detail">
+            <div class="row">
+                <div class="col-md-4 col-xs-5">
+                    <label for="name">Số lượng</label>
+                </div>
+                <div class="col-md-8 col-xs-7">
+                    <input type="number" name="Quantity" id="quantity" min="0" max="50" value="0">
+                </div>
+            </div>
+        </div>
+        <div class="item-product-button">
+            <form method="post" asp-action="AddCart" asp-route="@Model">
+                <button class="btn btn-outline-success">Thêm vào giỏ hàng</button>
+            </form>
+            <button class="btn btn-success">Mua ngay</button>
+        </div>
+    </div>
+</div>
+<div class="product-detail">
+    <h3>Chi tiết sản phẩm</h3>
+    <p>- Tên sản phẩm: @Model.Name</p>
+    <p>- Xuất xứ: @Model.Origin</p>
+    <p>- Nhãn hiệu: @Model.Trandemark</p>
+    <p>- Năm sản xuất: @Model.Year_SX</p>
+    <p>- Mô tả: @Model.Description</p>
+</div>

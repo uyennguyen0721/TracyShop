@@ -573,7 +573,6 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Images\C
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Images\Delete.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Images\Details.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Images\Index.cshtml.g.cs
-D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\TracyShop.csproj.AssemblyReference.cache
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\ProductSizes\Create.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\ProductSizes\Delete.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\ProductSizes\Details.cshtml.g.cs
@@ -588,3 +587,5 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\Product.csht
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\Category.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Shared\_LayoutProduct.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\Search.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\Details.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\TracyShop.csproj.AssemblyReference.cache

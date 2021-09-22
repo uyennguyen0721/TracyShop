@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TracyShop.Data;
 using TracyShop.Models;
@@ -17,11 +18,13 @@ namespace TracyShop.Controllers
     {
         private readonly ILogger<ProductController> _logger;
         private readonly AppDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ProductController(ILogger<ProductController> logger, AppDbContext context)
+        public ProductController(ILogger<ProductController> logger, AppDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [Route("/product", Name = "product")]
@@ -48,7 +51,7 @@ namespace TracyShop.Controllers
                     {
                         pro.ImageDefault = images.Where(img => img.ProductId == p.Id).First().Path;
                     }
-
+                    pro.Id = p.Id;
                     pro.Name = p.Name;
                     pro.Price = p.Price;
                     products.Add(pro);
@@ -77,7 +80,6 @@ namespace TracyShop.Controllers
             var query = from p in _context.Product select p;
             if (id != null)
             {
-                //var query = _context.Product.Where(p => p.CategoryId == id);
                 query = query.Where(p => p.CategoryId == id);
                 foreach (var pro in query)
                 {
@@ -148,79 +150,66 @@ namespace TracyShop.Controllers
             return View(await query.AsNoTracking().ToListAsync());
         }
 
-        // GET: ProductController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            ProductsListViewModel product = new ProductsListViewModel();
+            List<Size> sizes = new List<Size>();
+            List<Image> images = new List<Image>();
+            float promotion = 0;
+            // Lấy sản phẩm
+            var query = (from x in _context.Product
+                        where x.Id == id
+                        select x).First();
+
+            // Lấy danh sách ảnh
+            var qr = _context.Image.ToList();
+            images.AddRange(qr.Where(i => i.ProductId == id).ToList());
+
+            // Lấy danh sách sizes và descriptionSize
+            var qr1 = _context.Sizes.ToList();
+            var qr3 = _context.ProductSize.Where(p => p.ProductId == id).ToList();
+            foreach (var pr in qr3)
+            {
+                sizes.Add(qr1.Where(d => d.Id == pr.SizeId).First());
+            }
+
+            // Lấy khuyến mãi
+            var qr2 = _context.Promotion.ToList();
+            promotion = qr2.Where(p => p.Id == query.PromotionId).First().percent;
+
+            //Hiển thị lên view
+            ViewBag.Categories = _context.Category.ToList();
+            ViewBag.CountImages = images.Count;
+            product.Name = query.Name;
+            product.Price = query.Price;
+            product.PriceDiscounted = query.Price * (1 - promotion);
+            product.Images = images;
+            product.Sizes = sizes;
+            product.Origin = query.Origin;
+            product.Trandemark = query.Trandemark;
+            product.Description = query.Description;
+            product.Promotion = (int)(promotion * 100);
+
+            return View(product);
         }
 
-        // GET: ProductController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ProductController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> AddCart(ProductsListViewModel model)
         {
-            try
+            var cart = new Cart();
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                cart.Quantity = model.QuantityPurchased;
+                cart.ProductId = model.Id;
+                cart.UnitPrice = model.Price;
+                cart.Promotion = model.Promotion;
+                cart.UserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                _context.Carts.Add(cart);
+                await _context.SaveChangesAsync();
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ProductController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ProductController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: ProductController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: ProductController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            ViewBag.Message = "Thêm sản phẩm vào giỏ hàng thành công!";
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

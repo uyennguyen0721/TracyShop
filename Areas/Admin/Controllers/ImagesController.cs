@@ -77,7 +77,7 @@ namespace TracyShop.Areas.Admin.Controllers
             }
 
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Products");
         }
 
         private string UploadFile(IFormFile file)

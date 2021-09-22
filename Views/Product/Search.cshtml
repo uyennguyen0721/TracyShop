@@ -3,43 +3,45 @@
     ViewData["Title"] = "Product";
 }
 
-@if (ViewBag.Products.Count != 0)
-{
-    foreach (var pro in ViewBag.Products)
+<div class="row wow bounceIn" data-wow-offset="100" data-wow-delay="0.5s">
+
+    @if (ViewBag.Products.Count != 0)
     {
-        <div class="col-lg-4 col-md-6">
-            <div class="team-item" style="margin:0 1% 5% 1%">
-                <div class="team-img">
+        foreach (var pro in ViewBag.Products)
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="team-item" style="margin:0 1% 5% 1%">
+                    <div class="team-img">
 
-                    @if (pro.ImageDefault == "")
-                    {
-                        <img src="~/Client/img/default-product.jpg" alt="Image">
-                    }
-                    else
-                    {
-                        <img src="@pro.ImageDefault" alt="Image">
-                    }
+                        @if (pro.ImageDefault == "")
+                        {
+                            <img src="~/Client/img/default-product.jpg" alt="Image">
+                        }
+                        else
+                        {
+                            <img src="@pro.ImageDefault" alt="Image">
+                        }
 
-                    <div class="team-social">
-                        <a href="">Xem</a>
-                        <a href="">Mua ngay</a>
-                    </div>
-                </div>
-                <div class="team-text">
-                    <h2>@pro.Name</h2>
-                    <div class="content-product-deltals">
-                        <div class="price">
-                            <span class="money">@pro.Price</span>
+                        <div class="team-social">
+                            <a href="">Xem</a>
+                            <a href="">Mua ngay</a>
                         </div>
-                        <button type="button" class="btn btn-cart">Thêm Vào Giỏ</button>
+                    </div>
+                    <div class="team-text">
+                        <h2>@pro.Name</h2>
+                        <div class="content-product-deltals">
+                            <div class="price">
+                                <span class="money">@pro.Price</span>
+                            </div>
+                            <button type="button" class="btn btn-cart">Thêm Vào Giỏ</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
     }
-}
-else
-{
-    <p style="text-align:center">Không tìm thấy sản phẩm</p>
-}
-
+    else
+    {
+        <p style="text-align:center">Không tìm thấy sản phẩm</p>
+    }
+</div>

@@ -54,6 +54,11 @@ namespace TracyShop.Data
                         .WithMany(c => c.Carts)
                         .HasForeignKey(p => p.ProductId);
 
+            builder.Entity<Cart>()
+                        .HasOne<AppUser>(p => p.User)
+                        .WithMany(c => c.Carts)
+                        .HasForeignKey(p => p.UserId);
+
             builder.Entity<Order>()
                         .HasOne<PaymentMenthod>(p => p.PaymentMenthod)
                         .WithMany(o => o.Orders)
@@ -105,6 +110,7 @@ namespace TracyShop.Data
         public DbSet<TracyShop.Models.Size> Sizes { set; get; }
         public DbSet<ProductSize> ProductSize { set; get; }
         public DbSet<TracyShop.Models.Promotion> Promotion { get; set; }
+        public DbSet<Cart> Carts { set; get; }
         public DbSet<UserRole> UserRole { set; get; }
 
     }

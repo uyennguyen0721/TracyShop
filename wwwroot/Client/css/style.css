@@ -515,7 +515,7 @@ a {
 /*******************************/
 /********** Hero CSS ***********/
 /*******************************/
-.carousel {
+.carousel.header {
     position: relative;
     width: 100%;
     height: 100vh;
@@ -523,11 +523,11 @@ a {
     background: #ffffff;
 }
 
-    .carousel .container-fluid {
+    .carousel.header .container-fluid {
         padding: 0;
     }
 
-    .carousel .carousel-item {
+    .carousel.header .carousel-item {
         position: relative;
         width: 100%;
         height: 100vh;
@@ -537,7 +537,7 @@ a {
         flex-direction: column;
     }
 
-    .carousel .carousel-img {
+    .carousel.header .carousel-img {
         position: relative;
         width: 100%;
         height: 100%;
@@ -545,7 +545,7 @@ a {
         overflow: hidden;
     }
 
-        .carousel .carousel-img::after {
+        .carousel.header .carousel-img::after {
             position: absolute;
             content: "";
             top: 0;
@@ -556,13 +556,13 @@ a {
             z-index: 1;
         }
 
-        .carousel .carousel-img img {
+        .carousel.header .carousel-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-    .carousel .carousel-text {
+    .carousel.header .carousel-text {
         position: absolute;
         max-width: 700px;
         height: calc(100vh - 35px);
@@ -573,7 +573,7 @@ a {
         z-index: 2;
     }
 
-        .carousel .carousel-text h1 {
+        .carousel.header .carousel-text h1 {
             text-align: center;
             color: #ffffff;
             font-size: 60px;
@@ -581,49 +581,49 @@ a {
             margin-bottom: 30px;
         }
 
-            .carousel .carousel-text h1 span {
+            .carousel.header .carousel-text h1 span {
                 color: #fbaf32;
             }
 
-        .carousel .carousel-text p {
+        .carousel.header .carousel-text p {
             color: #ffffff;
             text-align: center;
             font-size: 20px;
             margin-bottom: 35px;
         }
 
-    .carousel .carousel-btn .btn:last-child {
+    .carousel.header .carousel-btn .btn:last-child {
         margin-left: 10px;
         background: #719a0a;
         border-color: #719a0a;
     }
 
-        .carousel .carousel-btn .btn:last-child:hover {
+        .carousel.header .carousel-btn .btn:last-child:hover {
             color: #719a0a;
             background: transparent;
         }
 
-    .carousel .animated {
+    .carousel.header .animated {
         -webkit-animation-duration: 1s;
         animation-duration: 1s;
     }
 
 @media (max-width: 991.98px) {
-    .carousel,
-    .carousel .carousel-item,
-    .carousel .carousel-text {
+    .carousel.header,
+    .carousel.header .carousel-item,
+    .carousel.header .carousel-text {
         height: calc(100vh - 105px);
     }
 
-        .carousel .carousel-text h1 {
+        .carousel.header .carousel-text h1 {
             font-size: 35px;
         }
 
-        .carousel .carousel-text p {
+        .carousel.header .carousel-text p {
             font-size: 16px;
         }
 
-        .carousel .carousel-text .btn {
+        .carousel.header .carousel-text .btn {
             padding: 12px 30px;
             font-size: 15px;
             letter-spacing: 0;
@@ -631,17 +631,17 @@ a {
 }
 
 @media (max-width: 767.98px) {
-    .carousel,
-    .carousel .carousel-item,
-    .carousel .carousel-text {
+    .carousel.header,
+    .carousel.header .carousel-item,
+    .carousel.header .carousel-text {
         height: calc(100vh - 70px);
     }
 
-        .carousel .carousel-text h1 {
+        .carousel.header .carousel-text h1 {
             font-size: 30px;
         }
 
-        .carousel .carousel-text .btn {
+        .carousel.header .carousel-text .btn {
             padding: 10px 25px;
             font-size: 15px;
             letter-spacing: 0;
@@ -649,15 +649,115 @@ a {
 }
 
 @media (max-width: 575.98px) {
-    .carousel .carousel-text h1 {
+    .carousel.header .carousel-text h1 {
         font-size: 25px;
     }
 
-    .carousel .carousel-text .btn {
+    .carousel.header .carousel-text .btn {
         padding: 8px 20px;
         font-size: 14px;
         letter-spacing: 0;
     }
+}
+
+
+/*******************************/
+/******* Hero Product CSS ******/
+/*******************************/
+
+.carousel.products {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    background: #ffffff;
+    margin-bottom: 5%;
+}
+
+    .carousel.products .carousel-item {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+.carousel.products .carousel-img {
+    position: relative;
+    width: 100%;
+    text-align: right;
+    overflow: hidden;
+}
+
+    .carousel.products .carousel-img::after {
+        position: absolute;
+        content: "";
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    .carousel.products .carousel-img img {
+        width: 100%;
+        object-fit: cover;
+    }
+
+
+/*******************************/
+/***** Product Detail CSS ******/
+/*******************************/
+
+.product-info {
+    padding-bottom: 2%;
+}
+
+    .product-info .price-product .prices {
+        margin-bottom: 8%;
+        display: flex;
+    }
+
+    .product-info .price-product .price-origin {
+        text-decoration: line-through;
+        color: #929292;
+        font-size: 14px;
+    }
+
+    .product-info .price-product .price-discount {
+        float: left;
+        margin-left: 2%;
+    }
+
+.product-info .price-product .discount {
+    float: left;
+    margin-left: 2%;
+    font-size: 12px;
+    color: white;
+    background-color: #ee4d2d;
+    padding: 2%;
+}
+
+.product-info .item-product-detail .item-info {
+    margin-left: 5%;
+    color: red;
+    background-color: rgb(255 87 34 / 10%);
+    padding: 2%;
+}
+
+.product-info .item-product-button {
+    align-items: center;
+    justify-items: center;
+    margin: 0 auto;
+}
+
+.product-info .item-product-button button {
+    margin: 5% 2%;
+}
+
+.product-detail {
+    margin: 5%;
 }
 
 

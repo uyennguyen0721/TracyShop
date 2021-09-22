@@ -12,6 +12,7 @@ namespace TracyShop.ViewModels
         public string Name { set; get; }
         public string Description { set; get; }
         public float Price { set; get; }
+        public float PriceDiscounted { set; get; }
         public DateTime Year_SX { set; get; }
         public string Origin { set; get; }
         public string Trandemark { set; get; }
@@ -19,5 +20,9 @@ namespace TracyShop.ViewModels
         public int CategoryId { set; get; }
         public List<Image> Images { set; get; }
         public string ImageDefault { set; get; }
+        public List<Size> Sizes { set; get; }
+        public int Promotion { set; get; }
+        public int QuantityAvailable { set; get; } // Số lượng sẵn có
+        public int QuantityPurchased { set; get; } // Số lượng mua
     }
 }

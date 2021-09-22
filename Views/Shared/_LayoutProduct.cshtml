@@ -19,7 +19,7 @@
 <!-- Menu of Product Start -->
 <div class="subbody team container">
     <div class="row" style="margin-top: 5.5%">
-        <div class="menu-left col-md-3">
+        <div class="menu-left col-md-3 col-xs-12">
             <ul class="menu1">
                 <li><h4>Danh mục sản phẩm</h4></li>
                 <li><a asp-controller="Product" asp-action="Product">Tất cả</a></li>
@@ -30,10 +30,8 @@
                 }
             </ul>
         </div>
-        <div class="product col-md-9">
-            <div class="row wow bounceIn" data-wow-offset="100" data-wow-delay="0.5s">
-                @RenderBody()
-            </div>
+        <div class="product col-md-9 col-xs-12">
+            @RenderBody()
         </div>
     </div>
 </div>
