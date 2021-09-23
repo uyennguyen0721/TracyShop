@@ -19,6 +19,7 @@ namespace TracyShop.Models
         public string Image { set; get; }
 
         public int ProductId { set; get; }
+        public string UserId { set; get; }
 
         public virtual Product Product { set; get; }
         public virtual AppUser User { set; get; }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -174,6 +175,14 @@ namespace TracyShop.Controllers
                 sizes.Add(qr1.Where(d => d.Id == pr.SizeId).First());
             }
 
+            // Lấy tổng số lượng sản phẩm
+            var count = 0;
+            foreach (var sz in sizes)
+            {
+                var q = _context.ProductSize.Where(p => p.ProductId == query.Id && p.SizeId == sz.Id).First();
+                count += q.Quantity;
+            }
+
             // Lấy khuyến mãi
             var qr2 = _context.Promotion.ToList();
             promotion = qr2.Where(p => p.Id == query.PromotionId).First().percent;
@@ -181,6 +190,7 @@ namespace TracyShop.Controllers
             //Hiển thị lên view
             ViewBag.Categories = _context.Category.ToList();
             ViewBag.CountImages = images.Count;
+            product.Id = query.Id;
             product.Name = query.Name;
             product.Price = query.Price;
             product.PriceDiscounted = query.Price * (1 - promotion);
@@ -190,26 +200,52 @@ namespace TracyShop.Controllers
             product.Trandemark = query.Trandemark;
             product.Description = query.Description;
             product.Promotion = (int)(promotion * 100);
+            product.Count = count;
 
             return View(product);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddCart(ProductsListViewModel model)
+        [Authorize]
+        public async Task<ActionResult> AddCart(int id)
         {
-            var cart = new Cart();
-            if (ModelState.IsValid)
+            var product = _context.Product.Where(p => p.Id == id).First();
+            // Lấy khuyến mãi
+            var qr = _context.Promotion.ToList();
+            var promotion = qr.Where(p => p.Id == product.PromotionId).First();
+
+            // Lấy size
+            var qr1 = _context.Sizes.ToList();
+            var qr3 = _context.ProductSize.Where(p => p.ProductId == id).First();
+            var size = qr1.Where(s => s.Id == qr3.SizeId).First();
+
+            var details = Details(product.Id);
+            if (product != null)
             {
-                cart.Quantity = model.QuantityPurchased;
-                cart.ProductId = model.Id;
-                cart.UnitPrice = model.Price;
-                cart.Promotion = model.Promotion;
-                cart.UserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                _context.Carts.Add(cart);
-                await _context.SaveChangesAsync();
+                var cart = new Cart();
+                if (ModelState.IsValid)
+                {
+                    cart.Quantity = 1;
+                    cart.ProductId = product.Id;
+                    cart.UnitPrice = product.Price;
+                    cart.Promotion = promotion.percent * 100;
+                    cart.SelectedSize = size.Name;
+                    cart.UserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    _context.Carts.Add(cart);
+                    await _context.SaveChangesAsync();
+                }
+                ViewBag.News = true;
+                ViewBag.Class = "alert alert-success";
+                ViewBag.Message = "Thêm sản phẩm vào giỏ hàng thành công!";
+                return View();
             }
-            ViewBag.Message = "Thêm sản phẩm vào giỏ hàng thành công!";
-            return View(model);
+            else
+            {
+                ViewBag.News = false;
+                ViewBag.Class = "alert alert-danger";
+                ViewBag.Message = "Thêm sản phẩm vào giỏ hàng thất bại!";
+                return View();
+            }
+            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -33,7 +33,7 @@
                             <div class="price">
                                 <span class="money">@pro.Price</span>
                             </div>
-                            <button type="button" class="btn btn-cart">Thêm Vào Giỏ</button>
+                            <button asp-action="AddCart" asp-controller="Product" asp-route-id="@pro.Id" type="button" class="btn btn-cart">Thêm Vào Giỏ</button>
                         </div>
                     </div>
                 </div>

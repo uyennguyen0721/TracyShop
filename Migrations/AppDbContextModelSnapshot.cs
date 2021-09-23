@@ -157,13 +157,8 @@ namespace TracyShop.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("City")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<string>("District")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                    b.Property<int>("DistrictId")
+                        .HasColumnType("int");
 
                     b.Property<string>("SpecificAddress")
                         .HasMaxLength(50)
@@ -174,7 +169,11 @@ namespace TracyShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("DistrictId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Address");
                 });
@@ -277,7 +276,7 @@ namespace TracyShop.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("IsPay")
+                    b.Property<bool>("IsBuy")
                         .HasColumnType("bit");
 
                     b.Property<int>("ProductId")
@@ -321,6 +320,43 @@ namespace TracyShop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
+                });
+
+            modelBuilder.Entity("TracyShop.Models.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("TracyShop.Models.District", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("Districts");
                 });
 
             modelBuilder.Entity("TracyShop.Models.Image", b =>
@@ -472,7 +508,7 @@ namespace TracyShop.Migrations
                     b.Property<int>("SizeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Quantity")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("ProductId", "SizeId");
@@ -667,9 +703,17 @@ namespace TracyShop.Migrations
 
             modelBuilder.Entity("TracyShop.Models.Address", b =>
                 {
+                    b.HasOne("TracyShop.Models.District", "District")
+                        .WithMany("Addresses")
+                        .HasForeignKey("DistrictId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TracyShop.Models.AppUser", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("District");
 
                     b.Navigation("User");
                 });
@@ -698,6 +742,17 @@ namespace TracyShop.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TracyShop.Models.District", b =>
+                {
+                    b.HasOne("TracyShop.Models.City", "City")
+                        .WithMany("Districts")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("TracyShop.Models.Image", b =>
@@ -838,6 +893,16 @@ namespace TracyShop.Migrations
             modelBuilder.Entity("TracyShop.Models.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("TracyShop.Models.City", b =>
+                {
+                    b.Navigation("Districts");
+                });
+
+            modelBuilder.Entity("TracyShop.Models.District", b =>
+                {
+                    b.Navigation("Addresses");
                 });
 
             modelBuilder.Entity("TracyShop.Models.Order", b =>

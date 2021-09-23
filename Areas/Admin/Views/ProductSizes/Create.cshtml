@@ -22,7 +22,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="SelectedSize" class="control-label">Chịn size</label>
+                <label asp-for="SelectedSize" class="control-label">Chọn size</label>
                 <select asp-for="SelectedSize" class="form-control" asp-items="@(new SelectList(Model.Sizes, "Id", "Name"))">
                     <option value="0">Chọn size</option>
                 </select>

@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "Message";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="@ViewBag.Class" role="alert">
+    <p>
+        @ViewBag.Message
+    </p>
+</div>
+
+@if (ViewBag.News == true)
+{
+    <div>
+        <p>Bạn muốn <a asp-action="Product" asp-controller="Product">Tiếp tục mua sắm</a> hay muốn <a href="#">Đi đến Giỏ hàng</a> nào?</p>
+    </div>
+}
+else
+{
+    <div>
+        <p><a asp-action="Product" asp-controller="Product">Tiếp tục mua sắm</a> để thêm nhiều sản phẩm vào Giỏ hàng thôi!</p>
+    </div>
+}
+

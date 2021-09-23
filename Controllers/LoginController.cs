@@ -240,8 +240,7 @@ namespace TracyShop.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult>
-            ExternalLoginCallback(string returnUrl = null, string remoteError = null)
+        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
@@ -309,17 +308,22 @@ namespace TracyShop.Controllers
 
                         await userManager.CreateAsync(user);
 
-                        var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                        //var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                        var confirmationLink = Url.Action("ConfirmEmail", "Login",
-                                        new { userId = user.Id, token = token }, Request.Scheme);
+                        //var confirmationLink = Url.Action("ConfirmEmail", "Login",
+                        //                new { userId = user.Id, token = token }, Request.Scheme);
 
-                        logger.Log(LogLevel.Warning, confirmationLink);
+                        await userManager.AddLoginAsync(user, info);
+                        await signInManager.SignInAsync(user, isPersistent: false);
 
-                        ViewBag.ErrorTitle = "Registration successful";
-                        ViewBag.ErrorMessage = "Before you can Login, please confirm your " +
-                            "email, by clicking on the confirmation link we have emailed you";
-                        return View("Error");
+                        return LocalRedirect(returnUrl);
+
+                        //logger.Log(LogLevel.Warning, confirmationLink);
+
+                        //ViewBag.ErrorTitle = "Registration successful";
+                        //ViewBag.ErrorMessage = "Before you can Login, please confirm your " +
+                        //    "email, by clicking on the confirmation link we have emailed you";
+                        //return View("Error");
                     }
 
                     await userManager.AddLoginAsync(user, info);

@@ -12,6 +12,6 @@ namespace TracyShop.ViewModels
         public List<Size> Sizes { set; get; }
         public int SelectedPro { set; get; }
         public int SelectedSize { set; get; }
-        public int? Quantity { set; get; }
+        public int Quantity { set; get; }
     }
 }

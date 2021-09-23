@@ -72,7 +72,7 @@ namespace TracyShop.Areas.Admin.Controllers
                 product.Quantity = productSize.Quantity;
                 var pro = _context.ProductSize.Where(p => p.ProductId == product.ProductId && p.SizeId == product.SizeId).FirstOrDefault();
 
-                if(pro != null){
+                if(pro == null){
                     _context.Add(product);
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Index", "Products");

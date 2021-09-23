@@ -21,6 +21,7 @@ namespace TracyShop.Data
         {
 
             base.OnModelCreating(builder);
+            builder.Entity<Address>().HasIndex(a => a.UserId).IsUnique();
             builder.Entity<ProductSize>().HasKey(ps => new { ps.ProductId, ps.SizeId });
 
             builder.Entity<ProductSize>()
@@ -48,6 +49,21 @@ namespace TracyShop.Data
                         .HasOne<Product>(p => p.Product)
                         .WithMany(i => i.Images)
                         .HasForeignKey(p => p.ProductId);
+
+            builder.Entity<District>()
+                        .HasOne<City>(p => p.City)
+                        .WithMany(i => i.Districts)
+                        .HasForeignKey(p => p.CityId);
+
+            builder.Entity<Address>()
+                        .HasOne<District>(d => d.District)
+                        .WithMany(a => a.Addresses)
+                        .HasForeignKey(c => c.DistrictId);
+
+            builder.Entity<Address>()
+                        .HasOne<AppUser>(u => u.User)
+                        .WithMany(a => a.Addresses)
+                        .HasForeignKey(u => u.UserId);
 
             builder.Entity<Cart>()
                         .HasOne<Product>(p => p.Product)
@@ -79,6 +95,16 @@ namespace TracyShop.Data
                         .WithMany(r => r.Reviews)
                         .HasForeignKey(p => p.ProductId);
 
+            builder.Entity<Reviews>()
+                        .HasOne<AppUser>(u => u.User)
+                        .WithMany(r => r.Reviews)
+                        .HasForeignKey(u => u.UserId);
+
+            builder.Entity<StockReceived>()
+                        .HasOne<AppUser>(u => u.User)
+                        .WithMany(s => s.StockReceiveds)
+                        .HasForeignKey(u => u.UserId);
+
             builder.Entity<StockReceivedDetail>()
                         .HasOne<Product>(p => p.Product)
                         .WithMany(s => s.StockReceivedDetails)
@@ -104,6 +130,8 @@ namespace TracyShop.Data
         }
 
         public DbSet<TracyShop.Models.Category> Category { get; set; }
+        public DbSet<City> Cities { set; get; }
+        public DbSet<District> Districts { set; get; }
         public DbSet<TracyShop.Models.Address> Address { set; get; }
         public DbSet<TracyShop.Models.Product> Product { get; set; }
         public DbSet<TracyShop.Models.Image> Image { get; set; }

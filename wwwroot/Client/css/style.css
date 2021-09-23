@@ -747,13 +747,8 @@ a {
 }
 
 .product-info .item-product-button {
-    align-items: center;
-    justify-items: center;
-    margin: 0 auto;
-}
-
-.product-info .item-product-button button {
-    margin: 5% 2%;
+    margin-top: 5%;
+    margin-bottom: 5%;
 }
 
 .product-detail {

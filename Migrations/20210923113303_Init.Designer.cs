@@ -10,8 +10,8 @@ using TracyShop.Data;
 namespace TracyShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210909135322_EditProductSize")]
-    partial class EditProductSize
+    [Migration("20210923113303_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,21 +152,6 @@ namespace TracyShop.Migrations
                     b.ToTable("UserTokens");
                 });
 
-            modelBuilder.Entity("ProductSize", b =>
-                {
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SizesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductsId", "SizesId");
-
-                    b.HasIndex("SizesId");
-
-                    b.ToTable("ProductSize");
-                });
-
             modelBuilder.Entity("TracyShop.Models.Address", b =>
                 {
                     b.Property<int>("Id")
@@ -174,13 +159,8 @@ namespace TracyShop.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("City")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<string>("District")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                    b.Property<int>("DistrictId")
+                        .HasColumnType("int");
 
                     b.Property<string>("SpecificAddress")
                         .HasMaxLength(50)
@@ -191,7 +171,11 @@ namespace TracyShop.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("DistrictId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Address");
                 });
@@ -294,11 +278,20 @@ namespace TracyShop.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ProductId")
+                    b.Property<bool>("IsBuy")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<float>("Promotion")
+                        .HasColumnType("real");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<string>("SelectedSize")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("UnitPrice")
                         .HasColumnType("real");
@@ -312,7 +305,7 @@ namespace TracyShop.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Cart");
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("TracyShop.Models.Category", b =>
@@ -331,6 +324,43 @@ namespace TracyShop.Migrations
                     b.ToTable("Category");
                 });
 
+            modelBuilder.Entity("TracyShop.Models.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("TracyShop.Models.District", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("Districts");
+                });
+
             modelBuilder.Entity("TracyShop.Models.Image", b =>
                 {
                     b.Property<int>("Id")
@@ -342,7 +372,7 @@ namespace TracyShop.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -368,7 +398,7 @@ namespace TracyShop.Migrations
                     b.Property<bool>("Is_pay")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("PaymentMenthodId")
+                    b.Property<int>("PaymentMenthodId")
                         .HasColumnType("int");
 
                     b.Property<double>("ShoppingFee")
@@ -388,10 +418,10 @@ namespace TracyShop.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("OrderId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -435,7 +465,7 @@ namespace TracyShop.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -453,10 +483,7 @@ namespace TracyShop.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
-                    b.Property<int?>("PromotionId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Quantity")
+                    b.Property<int>("PromotionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Trandemark")
@@ -473,6 +500,24 @@ namespace TracyShop.Migrations
                     b.HasIndex("PromotionId");
 
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("TracyShop.Models.ProductSize", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SizeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "SizeId");
+
+                    b.HasIndex("SizeId");
+
+                    b.ToTable("ProductSize");
                 });
 
             modelBuilder.Entity("TracyShop.Models.Promotion", b =>
@@ -505,7 +550,7 @@ namespace TracyShop.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Rate")
@@ -570,13 +615,13 @@ namespace TracyShop.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StockReceivedId")
+                    b.Property<int>("StockReceivedId")
                         .HasColumnType("int");
 
                     b.Property<float>("Unit_price")
@@ -658,26 +703,19 @@ namespace TracyShop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProductSize", b =>
-                {
-                    b.HasOne("TracyShop.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TracyShop.Models.Size", null)
-                        .WithMany()
-                        .HasForeignKey("SizesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("TracyShop.Models.Address", b =>
                 {
+                    b.HasOne("TracyShop.Models.District", "District")
+                        .WithMany("Addresses")
+                        .HasForeignKey("DistrictId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TracyShop.Models.AppUser", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("District");
 
                     b.Navigation("User");
                 });
@@ -695,7 +733,9 @@ namespace TracyShop.Migrations
                 {
                     b.HasOne("TracyShop.Models.Product", "Product")
                         .WithMany("Carts")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TracyShop.Models.AppUser", "User")
                         .WithMany("Carts")
@@ -706,11 +746,24 @@ namespace TracyShop.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("TracyShop.Models.District", b =>
+                {
+                    b.HasOne("TracyShop.Models.City", "City")
+                        .WithMany("Districts")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
             modelBuilder.Entity("TracyShop.Models.Image", b =>
                 {
                     b.HasOne("TracyShop.Models.Product", "Product")
                         .WithMany("Images")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
@@ -719,7 +772,9 @@ namespace TracyShop.Migrations
                 {
                     b.HasOne("TracyShop.Models.PaymentMenthod", "PaymentMenthod")
                         .WithMany("Orders")
-                        .HasForeignKey("PaymentMenthodId");
+                        .HasForeignKey("PaymentMenthodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("PaymentMenthod");
                 });
@@ -728,11 +783,15 @@ namespace TracyShop.Migrations
                 {
                     b.HasOne("TracyShop.Models.Order", "Order")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TracyShop.Models.Product", "Product")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
 
@@ -743,22 +802,47 @@ namespace TracyShop.Migrations
                 {
                     b.HasOne("TracyShop.Models.Category", "Category")
                         .WithMany("Products")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TracyShop.Models.Promotion", "Promotion")
                         .WithMany("Products")
-                        .HasForeignKey("PromotionId");
+                        .HasForeignKey("PromotionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 
                     b.Navigation("Promotion");
                 });
 
+            modelBuilder.Entity("TracyShop.Models.ProductSize", b =>
+                {
+                    b.HasOne("TracyShop.Models.Product", "Product")
+                        .WithMany("ProductSizes")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TracyShop.Models.Size", "Size")
+                        .WithMany("ProductSizes")
+                        .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Size");
+                });
+
             modelBuilder.Entity("TracyShop.Models.Reviews", b =>
                 {
                     b.HasOne("TracyShop.Models.Product", "Product")
                         .WithMany("Reviews")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TracyShop.Models.AppUser", "User")
                         .WithMany("Reviews")
@@ -782,11 +866,15 @@ namespace TracyShop.Migrations
                 {
                     b.HasOne("TracyShop.Models.Product", "Product")
                         .WithMany("StockReceivedDetails")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TracyShop.Models.StockReceived", "StockReceived")
                         .WithMany("StockReceivedDetails")
-                        .HasForeignKey("StockReceivedId");
+                        .HasForeignKey("StockReceivedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
 
@@ -809,6 +897,16 @@ namespace TracyShop.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("TracyShop.Models.City", b =>
+                {
+                    b.Navigation("Districts");
+                });
+
+            modelBuilder.Entity("TracyShop.Models.District", b =>
+                {
+                    b.Navigation("Addresses");
+                });
+
             modelBuilder.Entity("TracyShop.Models.Order", b =>
                 {
                     b.Navigation("OrderDetails");
@@ -827,6 +925,8 @@ namespace TracyShop.Migrations
 
                     b.Navigation("OrderDetails");
 
+                    b.Navigation("ProductSizes");
+
                     b.Navigation("Reviews");
 
                     b.Navigation("StockReceivedDetails");
@@ -835,6 +935,11 @@ namespace TracyShop.Migrations
             modelBuilder.Entity("TracyShop.Models.Promotion", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("TracyShop.Models.Size", b =>
+                {
+                    b.Navigation("ProductSizes");
                 });
 
             modelBuilder.Entity("TracyShop.Models.StockReceived", b =>

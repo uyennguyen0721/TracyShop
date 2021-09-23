@@ -60,7 +60,7 @@
                     @foreach (var size in Model.Sizes)
                     {
                         <div class="item-checked">
-                            <input value="@size.Name" id="@size.Name" name="Sizes" type="radio" />
+                            @*<input value="@size.Name" id="@size.Name" name="Sizes" type="radio" />*@
                             <label for="@size.Name">@size.Name (Chiều cao từ @size.Description)</label>
                         </div>
                     }
@@ -69,19 +69,35 @@
         </div>
         <div class="item-product-detail">
             <div class="row">
-                <div class="col-md-4 col-xs-5">
-                    <label for="name">Số lượng</label>
+                <div class="col-md-6 col-xs-6">
+                    <label for="name">Số lượng sẵn có</label>
                 </div>
-                <div class="col-md-8 col-xs-7">
-                    <input type="number" name="Quantity" id="quantity" min="0" max="50" value="0">
+                <div class="col-md-6 col-xs-6">
+                    @*<input type="number" name="Quantity" id="quantity" min="1" max="50" value="1">*@
+                    @if (Model.Count != 0)
+                    {
+                        <label>@Model.Count sản phẩm</label>
+                    }
+                    else
+                    {
+                        <label><i>Hết hàng</i></label>
+                    }
                 </div>
             </div>
         </div>
         <div class="item-product-button">
-            <form method="post" asp-action="AddCart" asp-route="@Model">
-                <button class="btn btn-outline-success">Thêm vào giỏ hàng</button>
-            </form>
-            <button class="btn btn-success">Mua ngay</button>
+            <div class="row">
+                <div class="col-md-7 col-xs-12">
+                    <form method="post" asp-action="AddCart" asp-controller="Product" asp-route-id="@Model.Id">
+                        <p><button class="btn btn-outline-success">Thêm vào giỏ hàng</button></p>
+                    </form>
+                </div>
+                <div class="col-md-5 col-xs-12">
+                    <form method="post" asp-action="AddCart" asp-controller="Product" style="margin-top: 2px;">
+                        <p><button class="btn btn-success">Mua ngay</button></p>
+                    </form>
+                </div>
+            </div>  
         </div>
     </div>
 </div>

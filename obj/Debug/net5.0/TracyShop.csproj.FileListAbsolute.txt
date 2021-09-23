@@ -588,4 +588,5 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\Category.csh
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Shared\_LayoutProduct.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\Search.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\Details.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\AddCart.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\TracyShop.csproj.AssemblyReference.cache

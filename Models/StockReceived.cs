@@ -12,6 +12,7 @@ namespace TracyShop.Models
         public int Id { set; get; }
 
         public DateTime Date { set; get; } = DateTime.Now;
+        public string UserId { set; get; }
 
         public virtual AppUser User { set; get; }
 
