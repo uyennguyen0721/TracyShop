@@ -157,8 +157,11 @@ namespace TracyShop.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DistrictId")
-                        .HasColumnType("int");
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("District")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SpecificAddress")
                         .HasMaxLength(50)
@@ -168,8 +171,6 @@ namespace TracyShop.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DistrictId");
 
                     b.HasIndex("UserId")
                         .IsUnique()
@@ -320,43 +321,6 @@ namespace TracyShop.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("TracyShop.Models.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cities");
-                });
-
-            modelBuilder.Entity("TracyShop.Models.District", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.ToTable("Districts");
                 });
 
             modelBuilder.Entity("TracyShop.Models.Image", b =>
@@ -703,17 +667,9 @@ namespace TracyShop.Migrations
 
             modelBuilder.Entity("TracyShop.Models.Address", b =>
                 {
-                    b.HasOne("TracyShop.Models.District", "District")
-                        .WithMany("Addresses")
-                        .HasForeignKey("DistrictId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TracyShop.Models.AppUser", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("District");
 
                     b.Navigation("User");
                 });
@@ -742,17 +698,6 @@ namespace TracyShop.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("TracyShop.Models.District", b =>
-                {
-                    b.HasOne("TracyShop.Models.City", "City")
-                        .WithMany("Districts")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("TracyShop.Models.Image", b =>
@@ -893,16 +838,6 @@ namespace TracyShop.Migrations
             modelBuilder.Entity("TracyShop.Models.Category", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("TracyShop.Models.City", b =>
-                {
-                    b.Navigation("Districts");
-                });
-
-            modelBuilder.Entity("TracyShop.Models.District", b =>
-                {
-                    b.Navigation("Addresses");
                 });
 
             modelBuilder.Entity("TracyShop.Models.Order", b =>

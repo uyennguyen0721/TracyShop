@@ -452,7 +452,7 @@ a {
 .profile-info .card form .form-group {
     display: block;
     margin: 3%;
-    width: 95%;
+    width: 100%;
     position: relative;
     overflow: hidden;
 }

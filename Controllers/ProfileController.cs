@@ -15,6 +15,8 @@ using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace TracyShop.Controllers
 {
@@ -99,6 +101,12 @@ namespace TracyShop.Controllers
             }
         }
 
+        //public JsonResult LoadDistrict(int Id)
+        //{
+        //    List<District> districts = new List<District>();
+        //    districts = _context.Districts.Where(d => d.CityId == Id).ToList();
+        //    return Json(new SelectList(districts, "Id", "Name"));
+        //}
 
 
         [Authorize]
@@ -106,27 +114,63 @@ namespace TracyShop.Controllers
         [Route("profile/change-address", Name = "change-address")]
         public IActionResult ChangeAddress()
         {
-            //var userid = _userManager.GetUserId(HttpContext.User);
+            var qr = _context.Address.ToList();
+            var address = qr.Where(d => d.UserId == _userManager.GetUserId(HttpContext.User)).ToList();
+            //ViewBag.Cities = new SelectList(_context.Cities, "Id", "Name");
+            if (address.Count() == 0)
+            {
+                return View();
+            }
+            else
+            {
+                var model = address.First();
+                return View(model);
+            }
+        }
 
-            //if (userid == null)
-            //{
-            //    return RedirectToAction("Login", "Login");
-            //}
-            //else
-            //{
-            //    ChangeAddressModel changeAddress = new ChangeAddressModel();
-            //    var address = _context.Address.Where(a => a.User.Id == userid).FirstOrDefault();
-            //    changeAddress.Id = address.Id;
-            //    changeAddress.SpecificAddress = address.SpecificAddress;
-            //    changeAddress.SelectDistrict = address.District;
-            //    changeAddress.SelectCity = address.City;
-
-            //    return View();
-            //}
-
-            return View();
-
-
+        [Authorize]
+        [HttpPost]
+        [Route("profile/change-address")]
+        public async Task<IActionResult> ChangeAddress(Address address)
+        {
+            var qr = _context.Address.ToList();
+            var model = qr.Where(a => a.UserId == _userManager.GetUserId(HttpContext.User)).ToList();
+            if(model.Count() == 0)
+            {
+                if (ModelState.IsValid)
+                {
+                    Console.WriteLine(address);
+                    address.UserId = _userManager.GetUserId(HttpContext.User);
+                    _context.Add(address);
+                    await _context.SaveChangesAsync();
+                    ViewBag.Message = true;
+                    return View(address);
+                }
+                else
+                {
+                    ViewBag.Message = false;
+                    return View(address);
+                }
+            }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    var q = model.First();
+                    q.City = address.City;
+                    q.District = address.District;
+                    q.SpecificAddress = address.SpecificAddress;
+                    _context.Update(q);
+                    await _context.SaveChangesAsync();
+                    ViewBag.Message = true;
+                    return View(address);
+                }
+                else
+                {
+                    ViewBag.Message = false;
+                    return View(address);
+                }
+            }
         }
 
 
@@ -138,7 +182,7 @@ namespace TracyShop.Controllers
         }
 
         [Authorize]
-        [HttpPost("profile/change-password")]
+        [HttpPost("profile/change-password")]   
         public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
         {
             if (ModelState.IsValid)

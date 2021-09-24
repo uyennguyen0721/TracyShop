@@ -162,9 +162,9 @@
     <!-- Address -->
     <script src="~/js/districts.min.js"></script>
     <script>
-    //<![CDATA[
+        //<![CDATA[
         if (address_2 = localStorage.getItem('address_2_saved')) {
-            $('select[name="SelectDistrict"] option').each(function () {
+            $('select[name="District"] option').each(function () {
                 if ($(this).text() == address_2) {
                     $(this).attr('selected', '')
                 }
@@ -172,27 +172,27 @@
             $('input.billing_address_2').attr('value', address_2)
         }
         if (district = localStorage.getItem('district')) {
-            $('select[name="SelectDistrict"]').html(district)
-            $('select[name="SelectDistrict"]').on('change', function () {
+            $('select[name="District"]').html(district)
+            $('select[name="District"]').on('change', function () {
                 var target = $(this).children('option:selected')
                 target.attr('selected', '')
-                $('select[name="SelectDistrict"] option').not(target).removeAttr('selected')
+                $('select[name="District"] option').not(target).removeAttr('selected')
                 address_2 = target.text()
                 $('input.billing_address_2').attr('value', address_2)
-                district = $('select[name="SelectDistrict"]').html()
+                district = $('select[name="District"]').html()
                 localStorage.setItem('district', district)
                 localStorage.setItem('address_2_saved', address_2)
             })
         }
-        $('select[name="SelectCity"]').each(function () {
+        $('select[name="City"]').each(function () {
             var $this = $(this),
                 stc = ''
             c.forEach(function (i, e) {
                 e += +1
-                stc += '<option value=' + e + '>' + i + '</option>'
-                $this.html('<option value="">Tỉnh / Thành phố</option>' + stc)
+                stc += '<option value="' + i + '">' + i + '</option>'
+                $this.html('<option value="">Chọn tỉnh/thành phố</option>' + stc)
                 if (address_1 = localStorage.getItem('address_1_saved')) {
-                    $('select[name="SelectCity"] option').each(function () {
+                    $('select[name="City"] option').each(function () {
                         if ($(this).text() == address_1) {
                             $(this).attr('selected', '')
                         }
@@ -206,31 +206,31 @@
                     if (r != '') {
                         arr[i].forEach(function (el) {
                             str += '<option value="' + el + '">' + el + '</option>'
-                            $('select[name="SelectDistrict"]').html('<option value="">Quận / Huyện</option>' + str)
+                            $('select[name="District"]').html('<option value="">Chọn quận / huyện</option>' + str)
                         })
                         var address_1 = $this.children('option:selected').text()
-                        var district = $('select[name="SelectDistrict"]').html()
+                        var district = $('select[name="District"]').html()
                         localStorage.setItem('address_1_saved', address_1)
                         localStorage.setItem('district', district)
-                        $('select[name="SelectDistrict"]').on('change', function () {
+                        $('select[name="District"]').on('change', function () {
                             var target = $(this).children('option:selected')
                             target.attr('selected', '')
-                            $('select[name="SelectDistrict"] option').not(target).removeAttr('selected')
+                            $('select[name="District"] option').not(target).removeAttr('selected')
                             var address_2 = target.text()
                             $('input.billing_address_2').attr('value', address_2)
-                            district = $('select[name="SelectDistrict"]').html()
+                            district = $('select[name="District"]').html()
                             localStorage.setItem('district', district)
                             localStorage.setItem('address_2_saved', address_2)
                         })
                     } else {
-                        $('select[name="SelectDistrict"]').html('<option value="">Quận / Huyện</option>')
-                        district = $('select[name="SelectDistrict"]').html()
+                        $('select[name="District"]').html('<option value="">Chọn quận / huyện</option>')
+                        district = $('select[name="District"]').html()
                         localStorage.setItem('district', district)
                         localStorage.removeItem('address_1_saved', address_1)
                     }
                 })
             })
         })
-//]]></script>
+        //]]></script>
 </body>
 </html>

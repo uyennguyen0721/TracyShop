@@ -50,15 +50,15 @@ namespace TracyShop.Data
                         .WithMany(i => i.Images)
                         .HasForeignKey(p => p.ProductId);
 
-            builder.Entity<District>()
-                        .HasOne<City>(p => p.City)
-                        .WithMany(i => i.Districts)
-                        .HasForeignKey(p => p.CityId);
+            //builder.Entity<District>()
+            //            .HasOne<City>(p => p.City)
+            //            .WithMany(i => i.Districts)
+            //            .HasForeignKey(p => p.CityId);
 
-            builder.Entity<Address>()
-                        .HasOne<District>(d => d.District)
-                        .WithMany(a => a.Addresses)
-                        .HasForeignKey(c => c.DistrictId);
+            //builder.Entity<Address>()
+            //            .HasOne<District>(d => d.District)
+            //            .WithMany(a => a.Addresses)
+            //            .HasForeignKey(c => c.DistrictId);
 
             builder.Entity<Address>()
                         .HasOne<AppUser>(u => u.User)
@@ -130,8 +130,8 @@ namespace TracyShop.Data
         }
 
         public DbSet<TracyShop.Models.Category> Category { get; set; }
-        public DbSet<City> Cities { set; get; }
-        public DbSet<District> Districts { set; get; }
+        //public DbSet<City> Cities { set; get; }
+        //public DbSet<District> Districts { set; get; }
         public DbSet<TracyShop.Models.Address> Address { set; get; }
         public DbSet<TracyShop.Models.Product> Product { get; set; }
         public DbSet<TracyShop.Models.Image> Image { get; set; }

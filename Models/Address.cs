@@ -14,10 +14,10 @@ namespace TracyShop.Models
 
         [MaxLength(50)]
         public string SpecificAddress { set; get; }
-        public int DistrictId { set; get; }
+        public string City { set; get; }
+        public string District { set; get; }
         public string UserId { set; get; }
 
         public virtual AppUser User { get; set; }
-        public virtual District District { set; get; }
     }
 }

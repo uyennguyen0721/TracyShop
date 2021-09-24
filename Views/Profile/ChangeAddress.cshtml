@@ -1,4 +1,4 @@
-﻿@model TracyShop.ViewModels.ChangeAddressModel
+﻿@model TracyShop.Models.Address
 @{
     Layout = "_LayoutProfile";
     ViewData["title"] = "Address";
@@ -9,21 +9,21 @@
     <p class="card-title">Địa chỉ giao hàng</p>
 </div>
 
-<form asp-action="ChangeAddress">
+<form asp-action="ChangeAddress" asp-controller="Profile" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="SelectCity" class="control-label">Tỉnh / Thành phố</label>
-        <select asp-for="SelectCity" class="form-select form-select-lg mb-3" name="SelectCity" required="">
-            <option value="">Chọn tỉnh/thành phố</option>
+        <label asp-for="City" class="control-label">Tỉnh / Thành phố</label>
+        <select asp-for="City" name="City" class="form-select form-select-lg mb-3" required="">
+            <option value="0">Chọn tỉnh/thành phố</option>
         </select>
-        <span asp-validation-for="SelectCity" class="text-danger"></span>
+        <span asp-validation-for="City" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="SelectDistrict" class="control-label">Quận / Huyện</label>
-        <select asp-for="SelectDistrict" class="form-select form-select-lg mb-3" name="SelectDistrict" required="">
-            <option value="">Chọn quận / huyện</option>
+        <label asp-for="District" class="control-label">Quận / Huyện</label>
+        <select asp-for="District" name="District" class="form-select form-select-lg mb-3">
+            <option value="0">Chọn quận / huyện</option>
         </select>
-        <span asp-validation-for="SelectDistrict" class="text-danger"></span>
+        <span asp-validation-for="District" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="SpecificAddress" class="control-label">Địa chỉ cụ thể</label>
@@ -33,5 +33,42 @@
     <div class="form-group save">
         <input type="submit" value="Lưu địa chỉ" class="btn custom-btn" />
     </div>
+
+    @if (ViewBag.Message != null)
+    {
+        @if (ViewBag.Message == true)
+        {
+            <script type="text/javascript">
+                window.onload = function () {
+                    alert("Update User's Address successed.");
+                };
+            </script>
+        }
+        else
+        {
+            <script type="text/javascript">
+                window.onload = function () {
+                    alert("Update User's Address failed.");
+                };
+            </script>
+        }
+    }
+
 </form>
+@*<script type="text/javascript">
+        $(function () {
+            $("#CityId").change(function () {
+                var url = @Url.Content("~/") + "Profile/LoadDistrict"
+                var ddlsourrce = "#CityId";
+                $.getJSON(url, { id: $(ddlsourrce).val() }, function (data) {
+                    var items = '';
+                    $("#DistrictId").empty();
+                    $.each(data, function (i, row) {
+                        items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                    });
+                    $("#DistrictId").html(items);
+                })
+            })
+        })
+</script>*@
 
