@@ -26,8 +26,22 @@ using TracyShop.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 4 "D:\ASP.NET  Projects\TracyShop\Views\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Http;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 5 "D:\ASP.NET  Projects\TracyShop\Views\_ViewImports.cshtml"
+using Newtonsoft.Json;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"8b594882a01b6df4ed0486cac94d77c1e6f8dc8e", @"/Views/Shared/_LayoutProduct.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"16f86741a3b48e9badd7d476ed76c310aac6acc8", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7da188806fb868db264f4692419326bcf4d842f1", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared__LayoutProduct : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-controller", "Home", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -76,7 +90,7 @@ using TracyShop.Models;
             </div>
             <div class=""col-12 wow fadeInUp"" data-wow-delay=""0.5s"">
                 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b594882a01b6df4ed0486cac94d77c1e6f8dc8e5082", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b594882a01b6df4ed0486cac94d77c1e6f8dc8e5414", async() => {
                 WriteLiteral("Home");
             }
             );
@@ -94,7 +108,7 @@ using TracyShop.Models;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b594882a01b6df4ed0486cac94d77c1e6f8dc8e6457", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b594882a01b6df4ed0486cac94d77c1e6f8dc8e6789", async() => {
                 WriteLiteral("Product");
             }
             );
@@ -124,7 +138,7 @@ using TracyShop.Models;
             <ul class=""menu1"">
                 <li><h4>Danh mục sản phẩm</h4></li>
                 <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b594882a01b6df4ed0486cac94d77c1e6f8dc8e8185", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b594882a01b6df4ed0486cac94d77c1e6f8dc8e8517", async() => {
                 WriteLiteral("Tất cả");
             }
             );
@@ -151,7 +165,7 @@ using TracyShop.Models;
 #line hidden
 #nullable disable
             WriteLiteral("                    <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b594882a01b6df4ed0486cac94d77c1e6f8dc8e9835", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8b594882a01b6df4ed0486cac94d77c1e6f8dc8e10167", async() => {
 #nullable restore
 #line 29 "D:\ASP.NET  Projects\TracyShop\Views\Shared\_LayoutProduct.cshtml"
                                                                                              Write(cate.Name);

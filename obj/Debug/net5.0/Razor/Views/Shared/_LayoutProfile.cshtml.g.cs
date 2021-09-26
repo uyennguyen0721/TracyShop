@@ -26,8 +26,22 @@ using TracyShop.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 4 "D:\ASP.NET  Projects\TracyShop\Views\_ViewImports.cshtml"
+using Microsoft.AspNetCore.Http;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 5 "D:\ASP.NET  Projects\TracyShop\Views\_ViewImports.cshtml"
+using Newtonsoft.Json;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"3a6546def05d2dd6bbfeb40f5bfccc5cbd57746f", @"/Views/Shared/_LayoutProfile.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"16f86741a3b48e9badd7d476ed76c310aac6acc8", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7da188806fb868db264f4692419326bcf4d842f1", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared__LayoutProfile : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("img-responsive"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -91,7 +105,7 @@ using TracyShop.Models;
 #line hidden
 #nullable disable
             WriteLiteral("                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "3a6546def05d2dd6bbfeb40f5bfccc5cbd57746f6655", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "3a6546def05d2dd6bbfeb40f5bfccc5cbd57746f6987", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -162,7 +176,7 @@ WriteAttributeValue("", 770, User.FindFirst("Avatar").Value, 770, 31, false);
                         <ul class=""main-menu"">
                             <li class=""li-menu"">
                                 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3a6546def05d2dd6bbfeb40f5bfccc5cbd57746f10006", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3a6546def05d2dd6bbfeb40f5bfccc5cbd57746f10338", async() => {
                 WriteLiteral(@"
                                     <svg xmlns=""http://www.w3.org/2000/svg"" width=""20"" height=""20"" fill=""currentColor"" class=""bi bi-person-circle"" viewBox=""0 0 16 16"">
                                         <path d=""M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"" />
@@ -187,7 +201,7 @@ WriteAttributeValue("", 770, User.FindFirst("Avatar").Value, 770, 31, false);
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                <ul class=\"sub-menu\">\r\n                                    <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3a6546def05d2dd6bbfeb40f5bfccc5cbd57746f12154", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3a6546def05d2dd6bbfeb40f5bfccc5cbd57746f12486", async() => {
                 WriteLiteral("Hồ sơ");
             }
             );
@@ -205,7 +219,7 @@ WriteAttributeValue("", 770, User.FindFirst("Avatar").Value, 770, 31, false);
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("</li>\r\n                                    <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3a6546def05d2dd6bbfeb40f5bfccc5cbd57746f13560", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3a6546def05d2dd6bbfeb40f5bfccc5cbd57746f13892", async() => {
                 WriteLiteral("Địa chỉ");
             }
             );
@@ -223,7 +237,7 @@ WriteAttributeValue("", 770, User.FindFirst("Avatar").Value, 770, 31, false);
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("</li>\r\n                                    <li>");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3a6546def05d2dd6bbfeb40f5bfccc5cbd57746f14968", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3a6546def05d2dd6bbfeb40f5bfccc5cbd57746f15300", async() => {
                 WriteLiteral("Đổi mật khẩu");
             }
             );

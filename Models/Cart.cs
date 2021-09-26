@@ -16,6 +16,7 @@ namespace TracyShop.Models
         public float Promotion { set; get; }
         public int ProductId { set; get; }
         public string SelectedSize { set; get; }
+        public string Image { set; get; }
         public bool IsBuy { set; get; } = false;
         public string UserId { set; get; }
 

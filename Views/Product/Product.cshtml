@@ -31,9 +31,9 @@
                         <h2>@pro.Name</h2>
                         <div class="content-product-deltals">
                             <div class="price">
-                                <span class="money">@pro.Price</span>
+                                <span class="money">@pro.Price Đ</span>
                             </div>
-                            <button asp-action="AddCart" asp-controller="Product" asp-route-id="@pro.Id" type="button" class="btn btn-cart">Thêm Vào Giỏ</button>
+                            <a asp-action="AddCart" asp-controller="Product" asp-route-id="@pro.Id" type="button" class="btn btn-cart">Thêm Vào Giỏ</a>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
     }
     else
     {
-        <p style="text-align:center">Không tìm thấy sản phẩm</p>
+        <div class="text-center" style=" margin-top: 2%;">Không tìm thấy sản phẩm</div>
     }
 </div>
 

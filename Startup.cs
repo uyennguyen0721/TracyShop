@@ -57,6 +57,11 @@ namespace TracyShop
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+
+
             // Đăng ký AppDbContext
             services.AddDbContext<AppDbContext>(options => {
                 // Đọc chuỗi kết nối
@@ -177,6 +182,9 @@ namespace TracyShop
 
             app.UseAuthentication();   // Phục hồi thông tin đăng nhập (xác thực)
             app.UseAuthorization();   // Phục hồi thông tin về quyền của User
+
+            app.UseSession();
+
 
             app.UseEndpoints(endpoints =>
             {

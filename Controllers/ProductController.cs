@@ -218,7 +218,10 @@ namespace TracyShop.Controllers
             var qr3 = _context.ProductSize.Where(p => p.ProductId == id).First();
             var size = qr1.Where(s => s.Id == qr3.SizeId).First();
 
-            var details = Details(product.Id);
+            // Lấy ảnh
+            var qr2 = _context.Image.ToList();
+            var image = qr2.Where(i => i.ProductId == product.Id).First();
+
             if (product != null)
             {
                 var cart = new Cart();
@@ -227,8 +230,9 @@ namespace TracyShop.Controllers
                     cart.Quantity = 1;
                     cart.ProductId = product.Id;
                     cart.UnitPrice = product.Price;
-                    cart.Promotion = promotion.percent * 100;
+                    cart.Promotion = promotion.percent;
                     cart.SelectedSize = size.Name;
+                    cart.Image = image.Path;
                     cart.UserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                     _context.Carts.Add(cart);
                     await _context.SaveChangesAsync();

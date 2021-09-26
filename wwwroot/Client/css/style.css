@@ -146,6 +146,18 @@ a {
             background-color: #E6E6E6;
         }
 
+#sup {
+    position: relative;
+    font-size: 75%;
+    line-height: 0;
+    vertical-align: baseline;
+    top: -.5em;
+    background: #719a0a;
+    color: white !important;
+    padding: 0 4px;
+    border-radius: 10px;;
+}
+
 #signup {
     border-style: solid;
     border-width: 1px;
@@ -810,6 +822,64 @@ a {
     }
 
     .page-header a {
+        font-size: 18px;
+    }
+}
+
+/*******************************/
+/******* Cart Header CSS *******/
+/*******************************/
+.cart-header {
+    position: relative;
+    margin-bottom: 45px;
+    padding: 150px 0 100px 0;
+    text-align: center;
+    background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(../img/cart-header.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+    .cart-header h2 {
+        position: relative;
+        color: #fbaf32;
+        font-size: 60px;
+        font-weight: 700;
+    }
+
+    .cart-header a {
+        position: relative;
+        padding: 0 12px;
+        font-size: 20px;
+        text-transform: uppercase;
+        color: #ffffff;
+    }
+
+        .cart-header a:hover {
+            color: #ffffff;
+        }
+
+        .cart-header a::after {
+            position: absolute;
+            content: "/";
+            width: 8px;
+            height: 8px;
+            top: -1px;
+            right: -7px;
+            text-align: center;
+            color: #fbaf32;
+        }
+
+        .cart-header a:last-child::after {
+            display: none;
+        }
+
+@media (max-width: 767.98px) {
+    .cart-header h2 {
+        font-size: 35px;
+    }
+
+    .cart-header a {
         font-size: 18px;
     }
 }

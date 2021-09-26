@@ -13,7 +13,7 @@
 @if (ViewBag.News == true)
 {
     <div>
-        <p>Bạn muốn <a asp-action="Product" asp-controller="Product">Tiếp tục mua sắm</a> hay muốn <a href="#">Đi đến Giỏ hàng</a> nào?</p>
+        <p>Bạn muốn <a asp-action="Product" asp-controller="Product">Tiếp tục mua sắm</a> hay muốn <a asp-controller="Cart" asp-action="Cart">Đi đến Giỏ hàng</a> nào?</p>
     </div>
 }
 else
