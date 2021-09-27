@@ -70,13 +70,13 @@
                     @{
                         if (SignInManager.IsSignedIn(User))
                         {
-                            var count = _context.Carts.Where(c => c.UserId == UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Id).ToList().Count;
+                            var count = _context.Carts.Where(c => c.IsBuy == false && c.UserId == UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Id).ToList().Count;
                             if (count > 0)
                             {
                                 <sup id="sup">@count</sup>
                             }
                         }
-                     }
+                    }
                 </a>
             </div>
         </div>
@@ -246,6 +246,26 @@
                 })
             })
         })
-                        //]]></script>
+    //]]></script>
+
+    <script>
+        $('.local-datetime').each(function () {
+            var $this = $(this), utcDate = parseInt($this.attr('data - utc'), 10) || 0;
+            if (!utcDate) {
+                return;
+            }
+            var local = moment.utc(utcDate).local();
+            var formattedDate = "";
+            var days = moment().diff(local, 'days');
+            if (days > 2) {
+                formattedDate = local.locale('en').format('DD / MM / YYYY HH: mm');
+            }
+            else {
+                formattedDate = local.locale('vi').fromNow();
+            }
+            $this.text(formattedDate);
+
+        });
+    </script>
 </body>
 </html>

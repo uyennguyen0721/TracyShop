@@ -140,6 +140,7 @@ namespace TracyShop.Data
         public DbSet<TracyShop.Models.Promotion> Promotion { get; set; }
         public DbSet<Cart> Carts { set; get; }
         public DbSet<UserRole> UserRole { set; get; }
+        public DbSet<TracyShop.Models.Reviews> Reviews { get; set; }
 
     }
 }

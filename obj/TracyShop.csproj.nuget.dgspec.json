@@ -166,6 +166,10 @@
               "target": "Package",
               "version": "[2.15.0, )"
             },
+            "Moment.js": {
+              "target": "Package",
+              "version": "[2.29.1, )"
+            },
             "NETCore.MailKit": {
               "target": "Package",
               "version": "[2.0.3, )"

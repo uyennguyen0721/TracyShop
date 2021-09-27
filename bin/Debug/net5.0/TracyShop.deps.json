@@ -62,6 +62,7 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "5.0.2",
           "Microsoft.jQuery.Unobtrusive.Ajax": "3.2.6",
           "MimeKit": "2.15.0",
+          "Moment.js": "2.29.1",
           "NETCore.MailKit": "2.0.3",
           "Newtonsoft.Json": "13.0.1",
           "System.Data.SqlClient": "4.8.2",
@@ -1839,6 +1840,7 @@
           "lib/net50/MimeKit.dll": {}
         }
       },
+      "Moment.js/2.29.1": {},
       "NETCore.MailKit/2.0.3": {
         "dependencies": {
           "MailKit": "2.15.0",
@@ -5603,6 +5605,13 @@
       "sha512": "sha512-146As77LbmZezdSJ5W/2ZEQsZyqVSAM8yOjDjvsy6NpLmyqG8lgzmX6ps3P/fKzUN5Ey4hxwnAtH+KLlJW0CsQ==",
       "path": "mimekit/2.15.0",
       "hashPath": "mimekit.2.15.0.nupkg.sha512"
+    },
+    "Moment.js/2.29.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CSpZfBYACe5QBFtPRv7k6IS5TZmdcisKFIRdQee1ZINjKl05AlSCTaXn/bo25XUnD82L0vvdEJXH+uv3nKeaiA==",
+      "path": "moment.js/2.29.1",
+      "hashPath": "moment.js.2.29.1.nupkg.sha512"
     },
     "NETCore.MailKit/2.0.3": {
       "type": "package",

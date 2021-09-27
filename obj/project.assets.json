@@ -1961,6 +1961,9 @@
           "lib/net50/MimeKit.dll": {}
         }
       },
+      "Moment.js/2.29.1": {
+        "type": "package"
+      },
       "NETCore.MailKit/2.0.3": {
         "type": "package",
         "dependencies": {
@@ -6760,6 +6763,23 @@
         "lib/netstandard2.1/MimeKit.xml",
         "mimekit.2.15.0.nupkg.sha512",
         "mimekit.nuspec"
+      ]
+    },
+    "Moment.js/2.29.1": {
+      "sha512": "CSpZfBYACe5QBFtPRv7k6IS5TZmdcisKFIRdQee1ZINjKl05AlSCTaXn/bo25XUnD82L0vvdEJXH+uv3nKeaiA==",
+      "type": "package",
+      "path": "moment.js/2.29.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/Scripts/moment-with-locales.js",
+        "Content/Scripts/moment-with-locales.min.js",
+        "Content/Scripts/moment-with-locales.min.js.map",
+        "Content/Scripts/moment.js",
+        "Content/Scripts/moment.min.js",
+        "Content/Scripts/moment.min.js.map",
+        "moment.js.2.29.1.nupkg.sha512",
+        "moment.js.nuspec"
       ]
     },
     "NETCore.MailKit/2.0.3": {
@@ -11866,6 +11886,7 @@
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 5.0.2",
       "Microsoft.jQuery.Unobtrusive.Ajax >= 3.2.6",
       "MimeKit >= 2.15.0",
+      "Moment.js >= 2.29.1",
       "NETCore.MailKit >= 2.0.3",
       "Newtonsoft.Json >= 13.0.1",
       "System.Data.SqlClient >= 4.8.2"
@@ -12037,6 +12058,10 @@
           "MimeKit": {
             "target": "Package",
             "version": "[2.15.0, )"
+          },
+          "Moment.js": {
+            "target": "Package",
+            "version": "[2.29.1, )"
           },
           "NETCore.MailKit": {
             "target": "Package",

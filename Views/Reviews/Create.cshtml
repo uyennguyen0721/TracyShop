@@ -1,0 +1,168 @@
+﻿@model TracyShop.ViewModels.ReviewsViewModel
+
+@{
+    ViewData["Title"] = "Rating and Comment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Reviews Header Start -->
+<div class="reviews-header mb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="wow fadeInDown" data-wow-delay="0.5s">Đánh giá sản phẩm</h2>
+            </div>
+            <div class="col-12 wow fadeInUp" data-wow-delay="0.5s">
+                <a asp-controller="Home" asp-action="Index">Home</a>
+                <a asp-controller="Product" asp-action="Product">Product Reviews</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Reviews Header End -->
+<!-- Reviews Body Start -->
+<form enctype="multipart/form-data" asp-action="Create" asp-controller="Reviews" asp-route-id="@Model.ProductId" method="post">
+    <div class="container reviews" style="margin-top: 5%;">
+        <div class="row">
+            <div class="col-md-8 col-xa-12">
+                <h2 style="color: #fbaf32; margin-bottom: 5%;">@Model.ProductName</h2>
+                <div class="form-group row">
+                    <div class="col-md-3 col-xs-12">
+                        <label asp-for="SelectedSize" class="control-label">Phân loại hàng</label>
+                    </div>
+                    <div class="col-md-9 col-xs-12">
+                        <select asp-for="SelectedSize" asp-items="@(new SelectList(Model.Sizes, "Id", "Name", "Description"))" class="form-control">
+                            <option value="0">Chọn phân loại hàng</option>
+                        </select>
+                        <span asp-validation-for="SelectedSize" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+
+                        @if ((User.FindFirst("Avatar").Value) == "")
+                        {
+                            <img class="rounded-circle mt-2" width="70" src="~/Client/img/default-user.jpg" alt="" />
+                        }
+                        else
+                        {
+                            <img src="@Model.Avatar" width="70" class="rounded-circle mt-2" alt="" >
+                        }
+                    </div>
+                    <div class="col-md-10">
+                        <div class="comment-box ml-2">
+                            <h5>Cho chúng tôi biết ý kiến của bạn</h5>
+                            <div class="rating">
+                                <input asp-for="Rate" type="radio" value="5" id="5">
+                                <label asp-for="Rate" for="5">☆</label>
+                                <input asp-for="Rate" type="radio" value="4" id="4">
+                                <label asp-for="Rate" for="4">☆</label>
+                                <input asp-for="Rate" type="radio" value="3" id="3">
+                                <label asp-for="Rate" for="3">☆</label>
+                                <input asp-for="Rate" type="radio" value="2" id="2">
+                                <label asp-for="Rate" for="2">☆</label>
+                                <input asp-for="Rate" type="radio" value="1" id="1">
+                                <label asp-for="Rate" for="1">☆</label>
+                            </div>
+                            <div class="comment-area">
+                                <textarea asp-for="Content" class="form-control" placeholder="Bạn đang nghĩ gì?" rows="4"></textarea>
+                            </div>
+                            <div class="form-group" style="margin-top: 2%;">
+                                <label asp-for="Image" class="control-label" style="margin-right: 2%;">Thêm ảnh</label>
+                                <input asp-for="Image" type="file" />
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                            <div class="comment-btns mt-2">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="pull-left form-group"> 
+                                            <a asp-controller="Product" asp-action="Details" asp-route-id="@Model.ProductId" class="btn btn-success btn-sm">Quay lại</a> 
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="pull-right form-group">
+                                            <input class="btn btn-success send btn-sm" type="submit" value="Gửi">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <img src="@Model.ImageProduct" alt="Product" style="width: 100%;" />
+            </div>
+        </div>
+    </div>
+</form>
+<!-- Reviews Body End -->
+<style>
+    .comment-box {
+        padding: 5px
+    }
+
+    .comment-area textarea {
+        resize: none;
+        border: 1px solid #ad9f9f
+    }
+
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #ffffff;
+        outline: 0;
+        box-shadow: 0 0 0 1px rgb(255, 0, 0) !important
+    }
+
+    .send {
+        color: #fff;
+        background-color: #ff0000;
+        border-color: #ff0000
+    }
+
+        .send:hover {
+            color: #fff;
+            background-color: #f50202;
+            border-color: #f50202
+        }
+
+    .rating {
+        display: flex;
+        margin-top: -10px;
+        flex-direction: row-reverse;
+        margin-left: -4px;
+        float: left
+    }
+
+        .rating > input {
+            display: none
+        }
+
+        .rating > label {
+            position: relative;
+            width: 19px;
+            font-size: 25px;
+            color: #ff0000;
+            cursor: pointer
+        }
+
+            .rating > label::before {
+                content: "\2605";
+                position: absolute;
+                opacity: 0
+            }
+
+            .rating > label:hover:before,
+            .rating > label:hover ~ label:before {
+                opacity: 1 !important
+            }
+
+        .rating > input:checked ~ label:before {
+            opacity: 1
+        }
+
+        .rating:hover > input:checked ~ label:before {
+            opacity: 0.4
+        }
+</style>

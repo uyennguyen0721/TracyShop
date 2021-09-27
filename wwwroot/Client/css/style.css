@@ -886,6 +886,65 @@ a {
 
 
 /*******************************/
+/****** Reviews Header CSS *****/
+/*******************************/
+.reviews-header {
+    position: relative;
+    margin-bottom: 45px;
+    padding: 150px 0 90px 0;
+    text-align: center;
+    background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(../img/reviews-header.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+    .reviews-header h2 {
+        position: relative;
+        color: #fbaf32;
+        font-size: 60px;
+        font-weight: 700;
+    }
+
+    .reviews-header a {
+        position: relative;
+        padding: 0 12px;
+        font-size: 20px;
+        text-transform: uppercase;
+        color: #ffffff;
+    }
+
+        .reviews-header a:hover {
+            color: #ffffff;
+        }
+
+        .reviews-header a::after {
+            position: absolute;
+            content: "/";
+            width: 8px;
+            height: 8px;
+            top: -1px;
+            right: -7px;
+            text-align: center;
+            color: #fbaf32;
+        }
+
+        .reviews-header a:last-child::after {
+            display: none;
+        }
+
+@media (max-width: 767.98px) {
+    .reviews-header h2 {
+        font-size: 35px;
+    }
+
+    .reviews-header a {
+        font-size: 18px;
+    }
+}
+
+
+/*******************************/
 /******* Section Header ********/
 /*******************************/
 .section-header {

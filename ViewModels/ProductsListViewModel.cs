@@ -22,6 +22,7 @@ namespace TracyShop.ViewModels
         public string ImageDefault { set; get; }
         public int Count { set; get; }
         public List<Size> Sizes { set; get; }
+        public List<Reviews> Reviews { set; get; }
         public int Promotion { set; get; }
         public int QuantityAvailable { set; get; } // Số lượng sẵn có
         public int QuantityPurchased { set; get; } // Số lượng mua

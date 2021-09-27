@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/_LayoutProduct.cshtml";
 }
 
+@inject TracyShop.Data.AppDbContext _context
+
 <div class="row wow bounceIn" data-wow-offset="100" data-wow-delay="0.5s">
 
     <div class="col-md-7 col-xs-12">
@@ -60,12 +62,11 @@
                     @foreach (var size in Model.Sizes)
                     {
                         <div class="item-checked">
-                            @*<input value="@size.Name" id="@size.Name" name="Sizes" type="radio" />*@
                             <label for="@size.Name">@size.Name (@size.Description)</label>
                         </div>
                     }
                 </div>
-            </div>  
+            </div>
         </div>
         <div class="item-product-detail">
             <div class="row">
@@ -73,7 +74,6 @@
                     <label for="name">Số lượng sẵn có</label>
                 </div>
                 <div class="col-md-6 col-xs-6">
-                    @*<input type="number" name="Quantity" id="quantity" min="1" max="50" value="1">*@
                     @if (Model.Count != 0)
                     {
                         <label>@Model.Count sản phẩm</label>
@@ -97,7 +97,7 @@
                         <p><button class="btn btn-success">Mua ngay</button></p>
                     </form>
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
 </div>
@@ -106,6 +106,100 @@
     <p>- Tên sản phẩm: @Model.Name</p>
     <p>- Xuất xứ: @Model.Origin</p>
     <p>- Nhãn hiệu: @Model.Trandemark</p>
-    <p>- Năm sản xuất: @Model.Year_SX</p>
+    <p>- Năm sản xuất: @Model.Year_SX.ToString("dd-MM-yyyy HH:mm")</p>
     <p>- Mô tả: @Model.Description</p>
 </div>
+<div class="product-detail">
+    <div class="row">
+        <div class="col-md-9 col-xs-12">
+            <h3>Đánh giá sản phẩm</h3>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <a asp-controller="Reviews" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-success">Thêm đánh giá</a>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 2%;">
+        <div class="col-md-12">
+
+            @foreach (var item in Model.Reviews)
+            {
+                <div class="media mt-4">
+                    <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="@_context.Users.Where(u => u.Id == item.UserId).First().Avatar" />
+                    <div class="media-body">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12 d-flex">
+                                <h5 style="margin-right: 3%;">@_context.Users.Where(u => u.Id == item.UserId).First().Name</h5>
+                                <span class="local-datetime"
+                                      title="@(item.CreatedDate.ToString("dd-MM-yyyy HH:mm")) UTC"
+                                      data-utc="@(item.CreatedDate.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds)">
+
+                                    @(item.CreatedDate.ToString("dd-MM-yyyy HH:mm"))
+
+                                </span>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="rating">
+                                    <input asp-for="@item.Rate" type="radio" value="5" id="5">
+                                    <label asp-for="@item.Rate" for="5">☆</label>
+                                    <input asp-for="@item.Rate" type="radio" value="4" id="4">
+                                    <label asp-for="@item.Rate" for="4">☆</label>
+                                    <input asp-for="@item.Rate" type="radio" value="3" id="3">
+                                    <label asp-for="@item.Rate" for="3">☆</label>
+                                    <input asp-for="@item.Rate" type="radio" value="2" id="2">
+                                    <label asp-for="@item.Rate" for="2">☆</label>
+                                    <input asp-for="@item.Rate" type="radio" value="1" id="1">
+                                    <label asp-for="@item.Rate" for="1">☆</label>
+                                </div>
+                            </div>
+                        </div>
+                        @item.Content
+                        <div class="container row" style="margin-top: 2%;">
+                            <img src="@item.Image" alt="images" width="200" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .media img {
+        width: 60px;
+        height: 60px
+    }
+
+    .reply a {
+        text-decoration: none
+    }
+
+    .rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center
+    }
+
+        .rating > input {
+            display: none
+        }
+
+        .rating > label {
+            position: relative;
+            width: 1em;
+            font-size: 25px;
+            color: #FFD600;
+            cursor: pointer;
+        }
+
+            .rating > label::before {
+                content: "\2605";
+                position: absolute;
+                opacity: 0;
+            }
+
+        .rating > input:checked ~ label:before {
+            opacity: 1
+        }
+</style>

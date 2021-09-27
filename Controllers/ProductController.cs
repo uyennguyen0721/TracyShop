@@ -20,6 +20,12 @@ namespace TracyShop.Controllers
         private readonly ILogger<ProductController> _logger;
         private readonly AppDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+        public static double GetTicks(DateTime dateTime)
+        {
+            return dateTime.Subtract(Epoch).TotalMilliseconds;
+        }
 
         public ProductController(ILogger<ProductController> logger, AppDbContext context, IHttpContextAccessor httpContextAccessor)
         {
@@ -159,9 +165,7 @@ namespace TracyShop.Controllers
             List<Image> images = new List<Image>();
             float promotion = 0;
             // Lấy sản phẩm
-            var query = (from x in _context.Product
-                        where x.Id == id
-                        select x).First();
+            var query = _context.Product.Where(p => p.Id == id).First();
 
             // Lấy danh sách ảnh
             var qr = _context.Image.ToList();
@@ -187,12 +191,16 @@ namespace TracyShop.Controllers
             var qr2 = _context.Promotion.ToList();
             promotion = qr2.Where(p => p.Id == query.PromotionId).First().percent;
 
+            // Lấy comment và rating
+            var reviews = _context.Reviews.Where(r => r.ProductId == id).ToList();
+
             //Hiển thị lên view
             ViewBag.Categories = _context.Category.ToList();
             ViewBag.CountImages = images.Count;
             product.Id = query.Id;
             product.Name = query.Name;
             product.Price = query.Price;
+            product.Year_SX = query.Year_SX;
             product.PriceDiscounted = query.Price * (1 - promotion);
             product.Images = images;
             product.Sizes = sizes;
@@ -201,6 +209,7 @@ namespace TracyShop.Controllers
             product.Description = query.Description;
             product.Promotion = (int)(promotion * 100);
             product.Count = count;
+            product.Reviews = reviews;
 
             return View(product);
         }
