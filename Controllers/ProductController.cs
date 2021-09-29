@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -19,6 +20,7 @@ namespace TracyShop.Controllers
     {
         private readonly ILogger<ProductController> _logger;
         private readonly AppDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
@@ -27,10 +29,11 @@ namespace TracyShop.Controllers
             return dateTime.Subtract(Epoch).TotalMilliseconds;
         }
 
-        public ProductController(ILogger<ProductController> logger, AppDbContext context, IHttpContextAccessor httpContextAccessor)
+        public ProductController(ILogger<ProductController> logger, AppDbContext context, IHttpContextAccessor httpContextAccessor, UserManager<AppUser> userManager)
         {
             _logger = logger;
             _context = context;
+            _userManager = userManager;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -163,7 +166,6 @@ namespace TracyShop.Controllers
             ProductsListViewModel product = new ProductsListViewModel();
             List<Size> sizes = new List<Size>();
             List<Image> images = new List<Image>();
-            float promotion = 0;
             // Lấy sản phẩm
             var query = _context.Product.Where(p => p.Id == id).First();
 
@@ -188,8 +190,23 @@ namespace TracyShop.Controllers
             }
 
             // Lấy khuyến mãi
-            var qr2 = _context.Promotion.ToList();
-            promotion = qr2.Where(p => p.Id == query.PromotionId).First().percent;
+            var promotions = _context.Promotion.Where(p => p.StartedDate <= DateTime.Now && p.EndDate >= DateTime.Now).ToList();
+            Promotion promotion = new Promotion();
+            if (promotions.Count == 0)
+            {
+                promotion = null;
+            }
+            else
+            {
+                foreach (var item in promotions)
+                {
+                    if (query.PromotionId == item.Id)
+                    {
+                        promotion = item;
+                        break;
+                    }
+                }
+            }
 
             // Lấy comment và rating
             var reviews = _context.Reviews.Where(r => r.ProductId == id).ToList();
@@ -200,14 +217,30 @@ namespace TracyShop.Controllers
             product.Id = query.Id;
             product.Name = query.Name;
             product.Price = query.Price;
+            if (promotion != null)
+            {
+                product.Promotion = (int)(promotion.percent * 100);
+            }
+            else
+            {
+                product.Promotion = 0;
+            }
+            
             product.Year_SX = query.Year_SX;
-            product.PriceDiscounted = query.Price * (1 - promotion);
+            if (promotion != null)
+            {
+                product.PriceDiscounted = query.Price * (1 - promotion.percent);
+            }
+            else
+            {
+                product.PriceDiscounted = query.Price;
+            }
+            
             product.Images = images;
             product.Sizes = sizes;
             product.Origin = query.Origin;
             product.Trandemark = query.Trandemark;
             product.Description = query.Description;
-            product.Promotion = (int)(promotion * 100);
             product.Count = count;
             product.Reviews = reviews;
 
@@ -217,10 +250,27 @@ namespace TracyShop.Controllers
         [Authorize]
         public async Task<ActionResult> AddCart(int id)
         {
+            var userid = _userManager.GetUserId(HttpContext.User);
+            AppUser user = _userManager.FindByIdAsync(userid).Result;
             var product = _context.Product.Where(p => p.Id == id).First();
             // Lấy khuyến mãi
-            var qr = _context.Promotion.ToList();
-            var promotion = qr.Where(p => p.Id == product.PromotionId).First();
+            var promotions = _context.Promotion.Where(p => p.StartedDate <= DateTime.Now && p.EndDate >= DateTime.Now).ToList();
+            Promotion promotion = new Promotion();
+            if (promotions.Count == 0)
+            {
+                promotion = null;
+            }
+            else
+            {
+                foreach (var item in promotions)
+                {
+                    if (product.PromotionId == item.Id)
+                    {
+                        promotion = item;
+                        break;
+                    }
+                }
+            }
 
             // Lấy size
             var qr1 = _context.Sizes.ToList();
@@ -231,7 +281,9 @@ namespace TracyShop.Controllers
             var qr2 = _context.Image.ToList();
             var image = qr2.Where(i => i.ProductId == product.Id).First();
 
-            if (product != null)
+            // Kiểm tra sp đã có trong giỏ hàng chưa, nếu có thì tăng số lượng sp trong giỏ, nếu chưa thì thêm sp vào giỏ
+            var carts = _context.Carts.Where(c => c.UserId == userid && c.IsBuy == false).ToList();
+            if (carts.Where(c => c.ProductId == id).ToList().Count == 0)
             {
                 var cart = new Cart();
                 if (ModelState.IsValid)
@@ -239,27 +291,108 @@ namespace TracyShop.Controllers
                     cart.Quantity = 1;
                     cart.ProductId = product.Id;
                     cart.UnitPrice = product.Price;
-                    cart.Promotion = promotion.percent;
-                    cart.SelectedSize = size.Name;
+                    if (promotion != null)
+                    {
+                        cart.Promotion = promotion.percent;
+                    }
+                    else
+                    {
+                        cart.Promotion = 0;
+                    }
+                    cart.SelectedSize = size.Id;
                     cart.Image = image.Path;
-                    cart.UserId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                    cart.UserId = userid;
                     _context.Carts.Add(cart);
                     await _context.SaveChangesAsync();
                 }
-                ViewBag.News = true;
-                ViewBag.Class = "alert alert-success";
-                ViewBag.Message = "Thêm sản phẩm vào giỏ hàng thành công!";
-                return View();
             }
             else
             {
-                ViewBag.News = false;
-                ViewBag.Class = "alert alert-danger";
-                ViewBag.Message = "Thêm sản phẩm vào giỏ hàng thất bại!";
-                return View();
+                var query = carts.Where(c => c.ProductId == id).First();
+                query.Promotion = promotion.percent;
+                query.Quantity = query.Quantity + 1;
+                _context.Update(query);
+                await _context.SaveChangesAsync();
             }
+            ViewBag.News = true;
+            ViewBag.Class = "alert alert-success";
+            ViewBag.Message = "Thêm sản phẩm vào giỏ hàng thành công!";
+            return View();
             
         }
+
+        [Authorize]
+        public async Task<ActionResult> BuyNow(int id)
+        {
+            var userid = _userManager.GetUserId(HttpContext.User);
+            AppUser user = _userManager.FindByIdAsync(userid).Result;
+            var product = _context.Product.Where(p => p.Id == id).First();
+            // Lấy khuyến mãi
+            var promotions = _context.Promotion.Where(p => p.StartedDate <= DateTime.Now && p.EndDate >= DateTime.Now).ToList();
+            Promotion promotion = new Promotion();
+            if (promotions.Count == 0)
+            {
+                promotion = null;
+            }
+            else
+            {
+                foreach (var item in promotions)
+                {
+                    if (product.PromotionId == item.Id)
+                    {
+                        promotion = item;
+                        break;
+                    }
+                }
+            }
+
+            // Lấy size
+            var qr1 = _context.Sizes.ToList();
+            var qr3 = _context.ProductSize.Where(p => p.ProductId == id).First();
+            var size = qr1.Where(s => s.Id == qr3.SizeId).First();
+
+            // Lấy ảnh
+            var qr2 = _context.Image.ToList();
+            var image = qr2.Where(i => i.ProductId == product.Id).First();
+
+            // Kiểm tra sp đã có trong giỏ hàng chưa, nếu có thì tăng số lượng sp trong giỏ, nếu chưa thì thêm sp vào giỏ
+            var carts = _context.Carts.Where(c => c.UserId == userid && c.IsBuy == false).ToList();
+            if (carts.Where(c => c.ProductId == id).ToList().Count == 0)
+            {
+                var cart = new Cart();
+                if (ModelState.IsValid)
+                {
+                    cart.Quantity = 1;
+                    cart.ProductId = product.Id;
+                    cart.UnitPrice = product.Price;
+                    if (promotion != null)
+                    {
+                        cart.Promotion = promotion.percent;
+                    }
+                    else
+                    {
+                        cart.Promotion = 0;
+                    }
+                    cart.SelectedSize = size.Id;
+                    cart.Image = image.Path;
+                    cart.UserId = userid;
+                    _context.Carts.Add(cart);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            else
+            {
+                var query = carts.Where(c => c.ProductId == id).First();
+                query.Promotion = promotion.percent;
+                query.Quantity = query.Quantity + 1;
+                _context.Update(query);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Cart", "Cart");
+
+        }
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

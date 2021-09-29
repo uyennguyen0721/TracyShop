@@ -93,9 +93,7 @@
                     </form>
                 </div>
                 <div class="col-md-5 col-xs-12">
-                    <form method="post" asp-action="AddCart" asp-controller="Product" style="margin-top: 2px;">
-                        <p><button class="btn btn-success">Mua ngay</button></p>
-                    </form>
+                    <a asp-controller="Product" asp-action="BuyNow" asp-route-id="@Model.Id" class="btn btn-success" style="margin-top: 2px;">Mua ngay</a>
                 </div>
             </div>
         </div>

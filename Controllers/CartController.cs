@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TracyShop.Data;
+using TracyShop.Helpers;
 using TracyShop.Models;
 
 namespace TracyShop.Controllers
@@ -40,15 +42,34 @@ namespace TracyShop.Controllers
             else
             {
                 ViewBag.Message = "";
-                ViewBag.Count = cart.Count;
                 float total = 0;
+                int count = 0;
                 foreach(var item in cart)
                 {
                     total += item.UnitPrice * (1 - item.Promotion) * item.Quantity;
+                    count += item.Quantity;
                 }
+                ViewBag.Count = count;
                 ViewBag.Total = total;
                 return View(cart);
             }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult UpdateCart(int id)
+        {
+            var cart = _context.Carts.Where(c => c.Id == id).First();
+            List<Size> sizes = new List<Size>();
+            // Lấy danh sách sizes và descriptionSize
+            var qr1 = _context.Sizes.ToList();
+            var qr3 = _context.ProductSize.Where(p => p.ProductId == cart.ProductId).ToList();
+            foreach (var pr in qr3)
+            {
+                sizes.Add(qr1.Where(d => d.Id == pr.SizeId).First());
+            }
+            ViewBag.Sizes = new SelectList(sizes, "Id", "Name");
+            return View(cart);
         }
 
         [HttpPost]
@@ -64,8 +85,8 @@ namespace TracyShop.Controllers
             {
                 try
                 {
-                    cart.Quantity = ViewBag.Quantity[cart.Id];
                     carts.Quantity = cart.Quantity;
+                    carts.SelectedSize = cart.SelectedSize;
                     _context.Update(carts);
                     await _context.SaveChangesAsync();
                 }
@@ -80,9 +101,9 @@ namespace TracyShop.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Cart));
+                return RedirectToAction("Cart", "Cart");
             }
-            return View(cart);
+            return View(carts);
         }
 
         [HttpPost]

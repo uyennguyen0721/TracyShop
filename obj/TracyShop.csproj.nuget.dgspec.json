@@ -158,6 +158,10 @@
               "target": "Package",
               "version": "[5.0.2, )"
             },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Utils": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
             "Microsoft.jQuery.Unobtrusive.Ajax": {
               "target": "Package",
               "version": "[3.2.6, )"

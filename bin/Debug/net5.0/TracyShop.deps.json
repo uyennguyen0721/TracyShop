@@ -60,6 +60,7 @@
           "Microsoft.Extensions.Logging": "5.0.0",
           "Microsoft.Extensions.Logging.Console": "5.0.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "5.0.2",
+          "Microsoft.VisualStudio.Web.CodeGeneration.Utils": "5.0.2",
           "Microsoft.jQuery.Unobtrusive.Ajax": "3.2.6",
           "MimeKit": "2.15.0",
           "Moment.js": "2.29.1",

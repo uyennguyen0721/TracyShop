@@ -11,13 +11,15 @@ namespace TracyShop.Models
         [Key]
         public int Id { set; get; }
         public DateTime Created_date { set; get; } = DateTime.Now;
-        public bool Is_check { set; get; }
-        public bool Is_pay { set; get; }
+        public bool Is_check { set; get; } = false;
+        public bool Is_pay { set; get; } = false;
 
         public double ShoppingFee { set; get; }
         public int PaymentMenthodId { set; get; }
+        public string UserId { set; get; }
 
         public virtual PaymentMenthod PaymentMenthod { set; get; }
+        public virtual AppUser User { set; get; }
 
         public virtual ICollection<OrderDetail> OrderDetails { set; get; }
     }

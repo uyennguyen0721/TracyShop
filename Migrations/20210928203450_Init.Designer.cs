@@ -10,7 +10,7 @@ using TracyShop.Data;
 namespace TracyShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210924123638_Init")]
+    [Migration("20210928203450_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -279,6 +279,9 @@ namespace TracyShop.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsBuy")
                         .HasColumnType("bit");
 
@@ -291,8 +294,8 @@ namespace TracyShop.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("SelectedSize")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SelectedSize")
+                        .HasColumnType("int");
 
                     b.Property<float>("UnitPrice")
                         .HasColumnType("real");
@@ -368,11 +371,16 @@ namespace TracyShop.Migrations
                     b.Property<double>("ShoppingFee")
                         .HasColumnType("float");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PaymentMenthodId");
 
-                    b.ToTable("Order");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("TracyShop.Models.OrderDetail", b =>
@@ -385,14 +393,14 @@ namespace TracyShop.Migrations
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
-
-                    b.Property<float>("Unit_price")
-                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
@@ -491,6 +499,12 @@ namespace TracyShop.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<float>("percent")
                         .HasColumnType("real");
 
@@ -509,6 +523,9 @@ namespace TracyShop.Migrations
                     b.Property<string>("Content")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Image")
                         .HasMaxLength(100)
@@ -721,7 +738,13 @@ namespace TracyShop.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TracyShop.Models.AppUser", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId");
+
                     b.Navigation("PaymentMenthod");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("TracyShop.Models.OrderDetail", b =>
@@ -831,6 +854,8 @@ namespace TracyShop.Migrations
                     b.Navigation("Addresses");
 
                     b.Navigation("Carts");
+
+                    b.Navigation("Orders");
 
                     b.Navigation("Reviews");
 

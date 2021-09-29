@@ -50,16 +50,6 @@ namespace TracyShop.Data
                         .WithMany(i => i.Images)
                         .HasForeignKey(p => p.ProductId);
 
-            //builder.Entity<District>()
-            //            .HasOne<City>(p => p.City)
-            //            .WithMany(i => i.Districts)
-            //            .HasForeignKey(p => p.CityId);
-
-            //builder.Entity<Address>()
-            //            .HasOne<District>(d => d.District)
-            //            .WithMany(a => a.Addresses)
-            //            .HasForeignKey(c => c.DistrictId);
-
             builder.Entity<Address>()
                         .HasOne<AppUser>(u => u.User)
                         .WithMany(a => a.Addresses)
@@ -79,6 +69,11 @@ namespace TracyShop.Data
                         .HasOne<PaymentMenthod>(p => p.PaymentMenthod)
                         .WithMany(o => o.Orders)
                         .HasForeignKey(p => p.PaymentMenthodId);
+
+            builder.Entity<Order>()
+                        .HasOne<AppUser>(u => u.User)
+                        .WithMany(o => o.Orders)
+                        .HasForeignKey(u => u.UserId);
 
             builder.Entity<OrderDetail>()
                         .HasOne<Product>(p => p.Product)
@@ -129,18 +124,17 @@ namespace TracyShop.Data
             }
         }
 
-        public DbSet<TracyShop.Models.Category> Category { get; set; }
-        //public DbSet<City> Cities { set; get; }
-        //public DbSet<District> Districts { set; get; }
-        public DbSet<TracyShop.Models.Address> Address { set; get; }
-        public DbSet<TracyShop.Models.Product> Product { get; set; }
-        public DbSet<TracyShop.Models.Image> Image { get; set; }
-        public DbSet<TracyShop.Models.Size> Sizes { set; get; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<Address> Address { set; get; }
+        public DbSet<Product> Product { get; set; }
+        public DbSet<Image> Image { get; set; }
+        public DbSet<Size> Sizes { set; get; }
         public DbSet<ProductSize> ProductSize { set; get; }
-        public DbSet<TracyShop.Models.Promotion> Promotion { get; set; }
+        public DbSet<Promotion> Promotion { get; set; }
         public DbSet<Cart> Carts { set; get; }
         public DbSet<UserRole> UserRole { set; get; }
-        public DbSet<TracyShop.Models.Reviews> Reviews { get; set; }
-
+        public DbSet<Reviews> Reviews { get; set; }
+        public DbSet<PaymentMenthod> PaymentMenthod { set; get; }
+        public DbSet<Order> Orders { set; get; }
     }
 }

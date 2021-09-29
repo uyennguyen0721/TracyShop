@@ -1,0 +1,17 @@
+﻿@model TracyShop.ViewModels.PaymentModel
+@{
+    ViewData["Title"] = "Payment";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+@if (Model?.EmailSent == true)
+{
+    <div class="alert alert-success" role="alert">
+        <p>
+            Bạn đã đặt hàng thành công <br/>
+            Chúng tôi đã gửi một email thông báo đến email của bạn. <br/>
+            Kiểm tra email của bạn ngay nào!
+        </p>
+    </div>
+}
+

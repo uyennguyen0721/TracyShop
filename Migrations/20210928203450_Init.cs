@@ -39,7 +39,9 @@ namespace TracyShop.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    percent = table.Column<float>(type: "real", nullable: false)
+                    percent = table.Column<float>(type: "real", nullable: false),
+                    StartedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,29 +87,6 @@ namespace TracyShop.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserRole", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Order",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Created_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Is_check = table.Column<bool>(type: "bit", nullable: false),
-                    Is_pay = table.Column<bool>(type: "bit", nullable: false),
-                    ShoppingFee = table.Column<double>(type: "float", nullable: false),
-                    PaymentMenthodId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Order", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Order_PaymentMenthod_PaymentMenthodId",
-                        column: x => x.PaymentMenthodId,
-                        principalTable: "PaymentMenthod",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -223,34 +202,6 @@ namespace TracyShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderDetail",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Unit_price = table.Column<float>(type: "real", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderDetail", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OrderDetail_Order_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Order",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderDetail_Product_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ProductSize",
                 columns: table => new
                 {
@@ -307,7 +258,8 @@ namespace TracyShop.Migrations
                     UnitPrice = table.Column<float>(type: "real", nullable: false),
                     Promotion = table.Column<float>(type: "real", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    SelectedSize = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SelectedSize = table.Column<int>(type: "int", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsBuy = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
@@ -329,6 +281,36 @@ namespace TracyShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Created_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Is_check = table.Column<bool>(type: "bit", nullable: false),
+                    Is_pay = table.Column<bool>(type: "bit", nullable: false),
+                    ShoppingFee = table.Column<double>(type: "float", nullable: false),
+                    PaymentMenthodId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_PaymentMenthod_PaymentMenthodId",
+                        column: x => x.PaymentMenthodId,
+                        principalTable: "PaymentMenthod",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
                 {
@@ -337,6 +319,7 @@ namespace TracyShop.Migrations
                     Rate = table.Column<int>(type: "int", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Image = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
@@ -463,6 +446,34 @@ namespace TracyShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OrderDetail",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<float>(type: "real", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderDetail", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderDetail_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderDetail_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StockReceivedDetail",
                 columns: table => new
                 {
@@ -513,11 +524,6 @@ namespace TracyShop.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_PaymentMenthodId",
-                table: "Order",
-                column: "PaymentMenthodId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetail_OrderId",
                 table: "OrderDetail",
                 column: "OrderId");
@@ -526,6 +532,16 @@ namespace TracyShop.Migrations
                 name: "IX_OrderDetail_ProductId",
                 table: "OrderDetail",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_PaymentMenthodId",
+                table: "Orders",
+                column: "PaymentMenthodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Product_CategoryId",
@@ -651,7 +667,7 @@ namespace TracyShop.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Sizes");

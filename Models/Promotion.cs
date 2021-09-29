@@ -11,6 +11,8 @@ namespace TracyShop.Models
         [Key]
         public int Id { set; get; }
         public float percent { set; get; }
+        public DateTime StartedDate { set; get; }
+        public DateTime EndDate { set; get; }
 
         public virtual ICollection<Product> Products { set; get; }
     }

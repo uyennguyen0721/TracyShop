@@ -38,7 +38,7 @@ namespace TracyShop.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,percent")] Promotion promotion)
+        public async Task<IActionResult> Create([Bind("Id,percent,StartedDate,EndDate")] Promotion promotion)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +70,7 @@ namespace TracyShop.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,percent")] Promotion promotion)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,percent,StartedDate,EndDate")] Promotion promotion)
         {
             if (id != promotion.Id)
             {

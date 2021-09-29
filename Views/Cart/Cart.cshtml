@@ -5,7 +5,6 @@
 }
 
 @inject TracyShop.Data.AppDbContext _context
-
 <!-- Page Header Start -->
 <div class="cart-header mb-0">
     <div class="container">
@@ -44,6 +43,7 @@
                         Số tiền
                     </th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -61,26 +61,25 @@
                             </div>
                         </td>
                         <td>
-                            @item.SelectedSize
+                            @_context.Sizes.Where(s => s.Id == item.SelectedSize).First().Name
                         </td>
                         <td>
                             <div class="unit-price">
-                                <div class="unit-price-origin" style="font-size: 12px; text-decoration: line-through;">@item.UnitPrice</div>
+                                @if (item.Promotion != 0)
+                                {
+                                    <div class="unit-price-origin" style="font-size: 12px; text-decoration: line-through;">@item.UnitPrice</div>
+                                }
                                 <div class="unit-price-discount text text-danger" style="font-size: 15px; font-weight: bold;">@(item.UnitPrice*(1 - item.Promotion))</div>
                             </div>
                         </td>
                         <td>
-                            <form asp-action="UpdateCart" asp-controller="Cart" method="post" asp-route-id="@item.Id">
-                                <input asp-for="@item.Quantity" name="@item.Quantity" id="@item.Id" type="number" min="1" max="50" value="@item.Quantity">
-                                <button class="btn btn-success" type="submit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-                                        <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
-                                    </svg>
-                                </button>
-                            </form>
+                            <input asp-for="@item.Quantity" name="@item.Quantity" id="@item.Id" type="number" min="1" max="50" value="@item.Quantity" disabled>
                         </td>
                         <td>
                             @(item.UnitPrice * (1 - item.Promotion) * item.Quantity)
+                        </td>
+                        <td>
+                            <a asp-controller="Cart" asp-action="UpdateCart" asp-route-id="@item.Id" class="btn btn-success">Chỉnh sửa</a>
                         </td>
                         <td>
                             <form asp-action="DeleteCart" asp-controller="Cart" method="post" asp-route-id="@item.Id">
@@ -105,7 +104,7 @@
                         Tổng thanh toán: @ViewBag.Total VNĐ
                     </div>
                     <div class="col-md-6 col-xs-12">
-                        <a href="#" class="btn btn-success">Mua hàng</a>
+                        <a asp-controller="Order" asp-action="Order" asp-route-id="@Model." class="btn btn-success">Mua hàng</a>
                     </div>
                 </div>
             </div>
@@ -114,12 +113,31 @@
     else
     {
         <div class="text-center" style="margin-top: 12%; margin-bottom: 2% ">
-            <img src="~/Client/img/cart-blank.png" style="width: 10%;"/>
+            <img src="~/Client/img/cart-blank.png" style="width: 10%;" />
         </div>
         <div class="text-center" style="margin-bottom: 2%">@ViewBag.Message</div>
         <div style="margin-bottom: 12%; text-align: center;">
             <a asp-controller="Product" asp-action="Product" class="btn btn-success">Mua sắm ngay</a>
         </div>
     }
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- Table Cart End -->

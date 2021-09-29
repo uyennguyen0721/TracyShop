@@ -20,6 +20,12 @@
             <th>
                 Mức giảm giá
             </th>
+            <th>
+                Ngày bắt đầu
+            </th>
+            <th>
+                Ngày kết thúc
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -27,10 +33,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id) 
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.percent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
                 <a asp-area="Admin" asp-controller="Promotions" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
