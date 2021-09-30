@@ -282,7 +282,6 @@ a {
 /******** Profile CSS **********/
 /*******************************/
 .profile {
-    max-height: 350vh;
     min-height: 98vh;
     background: linear-gradient(rgb(0, 0, 0, 0.3), rgb(0, 0, 0, 0.3)), url(../img/background.jpg) no-repeat center;
     background-size: cover;

@@ -13,6 +13,7 @@ namespace TracyShop.ViewModels
         public bool Is_check { set; get; }
         public bool Is_pay { set; get; }
         public int ProductId { set; get; }
+        public int SelectedSize { set; get; }
         public List<Cart> Carts { set; get; }
         public string UserId { set; get; }
         public string Address { set; get; }

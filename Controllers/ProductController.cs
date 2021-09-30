@@ -309,7 +309,14 @@ namespace TracyShop.Controllers
             else
             {
                 var query = carts.Where(c => c.ProductId == id).First();
-                query.Promotion = promotion.percent;
+                if (promotion != null)
+                {
+                    query.Promotion = promotion.percent;
+                }
+                else
+                {
+                    query.Promotion = 0;
+                }
                 query.Quantity = query.Quantity + 1;
                 _context.Update(query);
                 await _context.SaveChangesAsync();

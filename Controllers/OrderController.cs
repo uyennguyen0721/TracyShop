@@ -88,6 +88,8 @@ namespace TracyShop.Controllers
             orderView.PaymentMenthods = paymentMenthods;
             orderView.ShoppingFee = 20000;
 
+            ViewBag.Content = "";
+
             return View(orderView);
         }
 
@@ -121,54 +123,38 @@ namespace TracyShop.Controllers
                     orderDetail.OrderId = _context.Orders.OrderBy(x => x.Id).Last().Id;
                     orderDetail.ProductId = item.ProductId;
                     orderDetail.Quantity = item.Quantity;
+                    orderDetail.SelectedSize = item.SelectedSize;
                     orderDetail.Price = item.UnitPrice * (1 - item.Promotion);
+                    orderDetail.Promotion = item.Promotion;
                     _context.Add(orderDetail);
+
+                    //Task.Delay(1000).Wait();
+
+                    var query = _context.ProductSize.Where(p => p.ProductId == item.ProductId && p.SizeId == item.SelectedSize).First();
+                    query.Quantity -= item.Quantity;
+                    _context.Update(query);
+
+                    //Task.Delay(1000).Wait();
                 }
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Payment", "Order");
+                Task.Delay(3000).Wait();
+
+                ViewBag.Content = "Mua hàng";
+                ViewBag.News = true;
+                ViewBag.Class = "alert alert-success";
+                ViewBag.Message = "Đặt hàng thành công!";
+
+                return View();
             }
             catch
             {
-                return View(orderView);
+                ViewBag.Content = "Mua hàng";
+                ViewBag.News = false;
+                ViewBag.Class = "alert alert-danger";
+                ViewBag.Message = "Rất tiếc, quá trình đặt hàng của bạn chưa thành công. Vui lòng thử lại!";
+                return View();
             }
-        }
-
-        [HttpGet]
-        [Authorize]
-        public IActionResult Payment()
-        {
-            return View();
-        }
-        
-
-        [HttpPost("/payment")]
-        [Authorize]
-        public async Task<IActionResult> Payment(PaymentModel model)
-        {
-            var userid = _userManager.GetUserId(HttpContext.User);
-            AppUser appUser = _userManager.FindByIdAsync(userid).Result;
-            var user = await _loginRepository.GetUserByEmailAsync(appUser.Email);
-            if (ModelState.IsValid)
-            {
-                // code here
-                if (user != null)
-                {
-                    await _loginRepository.GenerateEmailConfirmationTokenAsync(user);
-
-                    var order = _context.Orders.Where(o => o.UserId == userid && o.Created_date == DateTime.Now).First();
-                    order.Is_pay = true;
-                    _context.Update(order);
-                    await _context.SaveChangesAsync();
-
-                    model.EmailSent = true;
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Đã xảy ra lỗi.");
-                }
-            }
-            return View();
         }
     }
 }

@@ -101,13 +101,6 @@ namespace TracyShop.Controllers
             }
         }
 
-        //public JsonResult LoadDistrict(int Id)
-        //{
-        //    List<District> districts = new List<District>();
-        //    districts = _context.Districts.Where(d => d.CityId == Id).ToList();
-        //    return Json(new SelectList(districts, "Id", "Name"));
-        //}
-
 
         [Authorize]
         [HttpGet]
@@ -202,6 +195,40 @@ namespace TracyShop.Controllers
 
             }
             return View(model);
+        }
+
+        [Authorize]
+        [Route("/purchase-histrory")]
+        public IActionResult PurchaseHistory()
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var histories = new List<PurchaseHistoryViewModel>();
+            var order = _context.Orders.Where(o => o.UserId == userId).ToList();
+            if(order.Count == 0)
+            {
+                ViewBag.News = "Bạn chưa có đơn hàng nào.";
+            }
+            else
+            {
+                ViewBag.News = "";
+                foreach (var item in order)
+                {
+                    var history = new PurchaseHistoryViewModel();
+                    float total = 0;
+                    var orderDetail = _context.OrderDetail.Where(o => o.OrderId == item.Id).ToList();
+                    foreach (var detail in orderDetail)
+                    {
+                        total += detail.Price * detail.Quantity;
+                    }
+                    history.OrderId = item.Id;
+                    history.OrderDate = item.Created_date;
+                    history.OrderDetails = orderDetail;
+                    history.TotalPrice = total;
+                    histories.Add(history);
+                }
+            }
+            return View(histories);
+
         }
     }
 }

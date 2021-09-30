@@ -136,5 +136,6 @@ namespace TracyShop.Data
         public DbSet<Reviews> Reviews { get; set; }
         public DbSet<PaymentMenthod> PaymentMenthod { set; get; }
         public DbSet<Order> Orders { set; get; }
+        public DbSet<OrderDetail> OrderDetail { set; get; }
     }
 }

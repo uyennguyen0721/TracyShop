@@ -1,4 +1,5 @@
 ﻿@model TracyShop.ViewModels.OrderViewModel
+
 @{
     ViewData["Title"] = "Order";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,165 +25,192 @@
 <!-- Table Order Start-->
 <form asp-action="Order" method="post">
     <div class="container" style="margin-top: 5%; margin-bottom: 10%;">
-        <div class="address">
-            <h4 class="text text-danger">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
-                    <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
-                </svg>
-                Địa chỉ đặt hàng
-            </h4>
-            <div class="address-detail" style="margin-top: 2%; margin-bottom: 2%;">
-                <div class="row">
-                    <div class="col-md-3 col-xs-12">
-                        @if (Model.PhoneNumber != null)
+        @if (ViewBag.Content == "")
+        {
+            <div class="address">
+                <h4 class="text text-danger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+                    </svg>
+                    Địa chỉ đặt hàng
+                </h4>
+                <div class="address-detail" style="margin-top: 2%; margin-bottom: 2%;">
+                    <div class="row">
+                        <div class="col-md-3 col-xs-12">
+                            @if (Model.PhoneNumber != null)
+                            {
+                                <p><b>@Model.PhoneNumber</b></p>
+                            }
+                            else
+                            {
+                                <a asp-controller="Profile" asp-action="Profile" class="btn btn-outline-success">@ViewBag.Message</a>
+                            }
+                        </div>
+                        @if (Model.Address != null)
                         {
-                            <p><b>@Model.PhoneNumber</b></p>
+                            <div class="col-md-7 col-xs-12">
+                                <p>@Model.Address</p>
+                            </div>
+                            <div class="col-md-2 col-xs-12">
+                                <a asp-action="ChangeAddress" asp-controller="Profile" class="btn btn-outline-info">Thay đổi</a>
+                            </div>
                         }
                         else
                         {
-                            <a asp-controller="Profile" asp-action="Profile" class="btn btn-outline-success">@ViewBag.Message</a>
+                            <div class="col-md-9 col-xs-12">
+                                <a asp-controller="Profile" asp-action="ChangeAddress" class="btn btn-outline-info">Thêm địa chỉ</a>
+                            </div>
                         }
                     </div>
-                    @if (Model.Address != null)
-                    {
-                        <div class="col-md-7 col-xs-12">
-                            <p>@Model.Address</p>
-                        </div>
-                        <div class="col-md-2 col-xs-12">
-                            <a asp-action="ChangeAddress" asp-controller="Profile" class="btn btn-outline-info">Thay đổi</a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="col-md-9 col-xs-12">
-                            <a asp-controller="Profile" asp-action="ChangeAddress" class="btn btn-outline-info">Thêm địa chỉ</a>
-                        </div>
-                    }
                 </div>
             </div>
-        </div>
-        <hr/>
-        <div class="cart-products">
-            <h4>Sản phẩm</h4>
-            <table class="table" style="margin: 3% 0%">
-                <thead>
-                    <tr>
-                        <th>
-                            Sản phẩm
-                        </th>
-                        <th>
-                            Phân loại hàng
-                        </th>
-                        <th>
-                            Đơn giá
-                        </th>
-                        <th>
-                            Số lượng
-                        </th>
-                        <th>
-                            Thành tiền
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Carts)
-                    {
+            <hr />
+            <div class="cart-products">
+                <h4>Sản phẩm</h4>
+                <table class="table" style="margin: 3% 0%">
+                    <thead>
                         <tr>
-                            <td style="width: 40%">
-                                <div class="row">
-                                    <div class="col-md-4 col-xs-12">
-                                        <img src="@item.Image" style="width: 100%" />
-                                    </div>
-                                    <div class="col-md-8 col-xs-12">
-                                        @_context.Product.Where(p => p.Id == item.ProductId).First().Name
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                @_context.Sizes.Where(s => s.Id == item.SelectedSize).First().Name
-                            </td>
-                            <td>
-                                <div class="unit-price">
-                                    @if (item.Promotion != 0)
-                                    {
-                                        <div class="unit-price-origin" style="font-size: 12px; text-decoration: line-through;">@item.UnitPrice</div>
-                                    }
-                                    <div class="unit-price-discount text text-danger" style="font-size: 15px; font-weight: bold;">@(item.UnitPrice*(1 - item.Promotion))</div>
-                                </div>
-                            </td>
-                            <td>
-                                <input asp-for="@item.Quantity" name="@item.Quantity" id="@item.Id" type="number" min="1" max="50" value="@item.Quantity" disabled>
-                            </td>
-                            <td>
-                                @(item.UnitPrice * (1 - item.Promotion) * item.Quantity)
-                            </td>
-                            
+                            <th>
+                                Sản phẩm
+                            </th>
+                            <th>
+                                Phân loại hàng
+                            </th>
+                            <th>
+                                Đơn giá
+                            </th>
+                            <th>
+                                Số lượng
+                            </th>
+                            <th>
+                                Thành tiền
+                            </th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-            <hr/>
-            <div class="prices-order">
-                <div class="row">
-                    <div class="col-md-7 col-xs-12"></div>
-                    <div class="col-md-5 col-xs-12">
-                        <div class="row">
-                            <div class="col-md-6">Phí vận chuyển:</div>
-                            <div class="col-md-6">@Model.ShoppingFee</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">Tổng số tiền (@Model.CountQuantity sản phẩm):</div>
-                            <div class="col-md-6">
-                                <h5 class="text text-danger">@(Model.TotalPrice + Model.ShoppingFee) VNĐ</h5>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Carts)
+                        {
+                            <tr>
+                                <td style="width: 40%">
+                                    <div class="row">
+                                        <div class="col-md-4 col-xs-12">
+                                            <img src="@item.Image" style="width: 100%" />
+                                        </div>
+                                        <div class="col-md-8 col-xs-12">
+                                            @_context.Product.Where(p => p.Id == item.ProductId).First().Name
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    @_context.Sizes.Where(s => s.Id == item.SelectedSize).First().Name
+                                </td>
+                                <td>
+                                    <div class="unit-price">
+                                        @if (item.Promotion != 0)
+                                        {
+                                            <div class="unit-price-origin" style="font-size: 12px; text-decoration: line-through;">@item.UnitPrice</div>
+                                        }
+                                        <div class="unit-price-discount text text-danger" style="font-size: 15px; font-weight: bold;">@(item.UnitPrice*(1 - item.Promotion))</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input asp-for="@item.Quantity" name="@item.Quantity" id="@item.Id" type="number" min="1" max="50" value="@item.Quantity" disabled>
+                                </td>
+                                <td>
+                                    @(item.UnitPrice * (1 - item.Promotion) * item.Quantity)
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <hr />
+                <div class="prices-order">
+                    <div class="row">
+                        <div class="col-md-7 col-xs-12"></div>
+                        <div class="col-md-5 col-xs-12">
+                            <div class="row">
+                                <div class="col-md-6">Phí vận chuyển:</div>
+                                <div class="col-md-6">@Model.ShoppingFee</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">Tổng số tiền (@Model.CountQuantity sản phẩm):</div>
+                                <div class="col-md-6">
+                                    <h5 class="text text-danger">@(Model.TotalPrice + Model.ShoppingFee) VNĐ</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <hr/>
-            <div class="payment">
-                <div class="row">
-                    <div class="col-md-4 col-xs-12">
-                        <h4>Phương thức thanh toán</h4>
-                    </div>
-                    <div class="col-md-8" col-xs-12>
-                        <div class="form-group">
-                            @foreach (var item in Model.PaymentMenthods)
-                            {
-                                <input asp-for="PaymentMenthodId" value="@item.Id" type="radio" />
-                                <label asp-for="PaymentMenthodId" class="control-label">@item.Name</label>
-                                <br />
-                            }
-                            <span asp-validation-for="PaymentMenthodId" class="text-danger"></span>
+                <hr />
+                <div class="payment">
+                    <div class="row">
+                        <div class="col-md-4 col-xs-12">
+                            <h4>Phương thức thanh toán</h4>
+                        </div>
+                        <div class="col-md-8" col-xs-12>
+                            <div class="form-group">
+                                @foreach (var item in Model.PaymentMenthods)
+                                {
+                                    <input asp-for="PaymentMenthodId" value="@item.Id" type="radio" />
+                                    <label asp-for="PaymentMenthodId" class="control-label">@item.Name</label>
+                                    <br />
+                                }
+                                <span asp-validation-for="PaymentMenthodId" class="text-danger"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="pay-price">
-                <div class="row">
-                    <div class="col-md-7 col-xs-12"></div>
-                    <div class="col-md-5 col-xs-12">
-                        <div class="row">
-                            <div class="col-md-6">Tổng tiền hàng</div>
-                            <div class="col-md-6">@Model.TotalPrice VNĐ</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">Phí vận chuyển</div>
-                            <div class="col-md-6">@Model.ShoppingFee VNĐ</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">Tổng thanh toán</div>
-                            <div class="col-md-6"><h5 class="text text-danger">@(Model.TotalPrice + Model.ShoppingFee) VNĐ</h5></div>
+                <div class="pay-price">
+                    <div class="row">
+                        <div class="col-md-7 col-xs-12"></div>
+                        <div class="col-md-5 col-xs-12">
+                            <div class="row">
+                                <div class="col-md-6">Tổng tiền hàng</div>
+                                <div class="col-md-6">@Model.TotalPrice VNĐ</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">Phí vận chuyển</div>
+                                <div class="col-md-6">@Model.ShoppingFee VNĐ</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">Tổng thanh toán</div>
+                                <div class="col-md-6"><h5 class="text text-danger">@(Model.TotalPrice + Model.ShoppingFee) VNĐ</h5></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="button-save" style="float:right; margin: 3%;">
-                <div class="form-group">
-                    <button class="btn btn-danger" type="submit">Đặt hàng</button>
+                <div class="button-save" style="float:right; margin: 3%;">
+                    <div class="form-group">
+                        <button class="btn btn-danger" type="submit">Đặt hàng</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="@ViewBag.Class" role="alert">
+                    <p>
+                        @ViewBag.Message
+                    </p>
+
+                </div>
+                @if (ViewBag.News == true)
+                {
+                    <div class="text text-center" style="margin: 1%;">
+                        <p>Cảm ơn bạn đã tin tưởng chúng tôi. Đơn hàng của bạn sẽ được giao trong vòng 3 - 4 ngày. <a asp-action="Product" asp-controller="Product">Tiếp tục mua sắm</a> để thêm nhiều sản phẩm vào Giỏ hàng thôi!</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="text text-center" style="margin: 1%;">
+                        <p><a asp-action="Product" asp-controller="Product">Tiếp tục mua sắm</a> để thêm nhiều sản phẩm vào Giỏ hàng thôi!</p>
+                    </div>
+                }
+            </div>
+
+        }
     </div>
 </form>
 <!-- Table Order End-->
