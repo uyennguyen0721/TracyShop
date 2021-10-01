@@ -123,7 +123,14 @@
             @foreach (var item in Model.Reviews)
             {
                 <div class="media mt-4">
-                    <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="@_context.Users.Where(u => u.Id == item.UserId).First().Avatar" />
+                    @if (_context.Users.Where(u => u.Id == item.UserId).First().Avatar != null) 
+                    { 
+                        <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="@_context.Users.Where(u => u.Id == item.UserId).First().Avatar" />
+                    }
+                    else
+                    {
+                        <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="~/Client/img/default-user.jpg" />
+                    }
                     <div class="media-body">
                         <div class="row">
                             <div class="col-md-6 col-xs-12 d-flex">
@@ -149,12 +156,16 @@
                                     <input asp-for="@item.Rate" type="radio" value="1" id="1">
                                     <label asp-for="@item.Rate" for="1">☆</label>
                                 </div>
+
                             </div>
                         </div>
                         @item.Content
-                        <div class="container row" style="margin-top: 2%;">
-                            <img src="@item.Image" alt="images" width="200" />
-                        </div>
+                        @if (item.Image != null)
+                        {
+                            <div class="container row" style="margin-top: 2%;">
+                                <img src="@item.Image" alt="images" width="200" />
+                            </div>
+                        }
                     </div>
                 </div>
             }
