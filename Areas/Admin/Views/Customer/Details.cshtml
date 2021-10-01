@@ -1,0 +1,79 @@
+﻿@model TracyShop.Models.AppUser
+@inject TracyShop.Data.AppDbContext _context
+@{
+    ViewData["Title"] = "Details Customer";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Thông tin khách hàng</h1>
+</div>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Họ và tên
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Giới tính
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Ngày sinh
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Birthday)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Số điện thoại
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Địa chỉ
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var temp = "";
+                if (_context.Address.Where(a => a.UserId == Model.Id).ToList().Count != 0)
+                {
+                    var address = _context.Address.Where(a => a.UserId == Model.Id).First();
+                    temp = address.SpecificAddress + ", " + address.District + ", " + address.City;
+                }
+            }
+            @temp
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-area="Admin" asp-controller="Customer" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-arrow-alt-circle-left text-white-50"></i> Quay lại
+    </a>
+</div>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using TracyShop.Models;
 
 namespace TracyShop.ViewModels
 {
@@ -33,6 +34,7 @@ namespace TracyShop.ViewModels
         [Display(Name = "Nhập lại mật khẩu")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
+        public int UserRoleId { set; get; }
 
         public string ReturnUrl { get; set; }
 

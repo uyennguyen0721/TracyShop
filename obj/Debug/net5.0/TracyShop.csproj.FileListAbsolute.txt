@@ -596,3 +596,7 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Order\Order.cshtml.g
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Order\Payment.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Cart\UpdateCart.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Profile\PurchaseHistory.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Customer\Index.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Customer\Details.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Customer\OrderView.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Customer\OrderDetailView.cshtml.g.cs

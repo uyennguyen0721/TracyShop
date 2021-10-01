@@ -65,6 +65,11 @@ namespace TracyShop.Data
                         .WithMany(c => c.Carts)
                         .HasForeignKey(p => p.UserId);
 
+            builder.Entity<AppUser>()
+                        .HasOne<UserRole>(u => u.UserRole)
+                        .WithMany(r => r.Users)
+                        .HasForeignKey(u => u.UserRoleId);
+
             builder.Entity<Order>()
                         .HasOne<PaymentMenthod>(p => p.PaymentMenthod)
                         .WithMany(o => o.Orders)

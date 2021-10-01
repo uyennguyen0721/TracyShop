@@ -1,0 +1,50 @@
+﻿@model IEnumerable<TracyShop.Models.AppUser>
+
+@{
+    ViewData["title"] = "Customer";
+}
+
+
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Quản lý khách hàng</h1>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Họ và tên</th>
+            <th>Giới tính</th>
+            <th>Ngày sinh</th>
+            <th>Ngày đăng ký</th>
+            <th>Đang hoạt động</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Birthday)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Joined_date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Is_active)
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-controller="Customer" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a> |
+                    <a asp-area="Admin" asp-controller="Customer" asp-action="OrderView" asp-route-id="@item.Id">Lịch sử mua hàng</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

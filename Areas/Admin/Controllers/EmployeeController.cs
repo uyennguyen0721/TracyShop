@@ -58,7 +58,7 @@ namespace TracyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userRole = _context.UserRole.Where(r => r.Id == 2).FirstOrDefault();
+                var userRole = _context.UserRole.Where(r => r.Id == 2).First();
                 user.UserRole = userRole;
                 _context.Add(user);
                 await _context.SaveChangesAsync();

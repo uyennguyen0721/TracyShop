@@ -46,7 +46,8 @@ namespace TracyShop.Repository
                 Name = userModel.Name,
                 UserName = userModel.Email,
                 PhoneNumber = userModel.PhoneNumber,
-                Email = userModel.Email
+                Email = userModel.Email,
+                UserRoleId = userModel.UserRoleId
 
             };
             var result = await _userManager.CreateAsync(user, userModel.Password);

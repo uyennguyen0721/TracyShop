@@ -51,6 +51,7 @@ namespace TracyShop.Controllers
         {
             if (ModelState.IsValid)
             {
+                userModel.UserRoleId = 3;
                 // write your code
                 var result = await _loginRepository.CreateUserAsync(userModel);
                 if (!result.Succeeded)
@@ -303,7 +304,8 @@ namespace TracyShop.Controllers
                             Email = info.Principal.FindFirstValue(ClaimTypes.Email),
                             EmailConfirmed = true,
                             Avatar = info.Principal.FindFirstValue("image"),
-                            Gender = info.Principal.FindFirstValue(ClaimTypes.Gender)
+                            Gender = info.Principal.FindFirstValue(ClaimTypes.Gender),
+                            UserRoleId = 3
                         };
 
                         await userManager.CreateAsync(user);

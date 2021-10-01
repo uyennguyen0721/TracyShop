@@ -1,0 +1,67 @@
+﻿@model IEnumerable<TracyShop.Models.Order>
+@{
+    ViewData["Title"] = "OrderView";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@inject TracyShop.Data.AppDbContext _context
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Lịch sử mua hàng của khách hàng</h1>
+    <a asp-area="Admin" asp-controller="Customer" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-arrow-alt-circle-left text-white-50"></i> Quay lại
+    </a>
+</div>
+
+@if (ViewBag.Message == "")
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Ngày mua</th>
+                <th>Phương thức thanh toán</th>
+                <th>Giá trị đơn hàng</th>
+                <th>Đã duyệt</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Created_date)
+                    </td>
+                    <td>
+                        @(_context.PaymentMenthod.Where(p => p.Id == item.PaymentMenthodId).First().Name)
+                    </td>
+                    <td>
+                        @{
+                            float price = 0;
+                            var orderDetail = _context.OrderDetail.Where(o => o.OrderId == item.Id).ToList();
+                            foreach (var detail in orderDetail)
+                            {
+                                price += detail.Price;
+                            }
+                        }
+                        @price VNĐ
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Is_check)
+                    </td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Customer" asp-action="OrderDetailView" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="text text-center" style="margin-top: 2%;">@ViewBag.Message</div>
+}
+
