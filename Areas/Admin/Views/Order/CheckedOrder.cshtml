@@ -1,15 +1,12 @@
 ﻿@model IEnumerable<TracyShop.Models.Order>
+@inject TracyShop.Data.AppDbContext _context
 @{
-    ViewData["Title"] = "Order View";
+    ViewData["Title"] = "Order";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-@inject TracyShop.Data.AppDbContext _context
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Lịch sử mua hàng của khách hàng</h1>
-    <a asp-area="Admin" asp-controller="Customer" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fas fa-arrow-alt-circle-left text-white-50"></i> Quay lại
-    </a>
+    <h1 class="h3 mb-0 text-gray-800">Danh sách đơn hàng chưa duyệt</h1>
 </div>
 
 @if (ViewBag.Message == "")
@@ -17,11 +14,12 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>ID</th>
                 <th>Ngày mua</th>
-                <th>Phương thức thanh toán</th>
+                <th>Tên khách hàng</th>
                 <th>Giá trị đơn hàng</th>
-                <th>Đã duyệt</th>
+                <th>Phương thức thanh toán</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -34,6 +32,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Created_date)
+                    </td>
+                    <td>
+                        @_context.Users.Where(u => u.Id.Contains(item.UserId)).First().Name
                     </td>
                     <td>
                         @(_context.PaymentMenthod.Where(p => p.Id == item.PaymentMenthodId).First().Name)
@@ -50,10 +51,16 @@
                         @price VNĐ
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Is_check)
+                        <a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
                     </td>
                     <td>
-                        <a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
+                        <form asp-action="CheckedOrder" asp-controller="Order" asp-area="Admin" method="post" asp-route-id="@item.Id">
+                            <button type="submit" class="btn btn-outline-success">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                </svg>
+                            </button>
+                        </form>
                     </td>
                 </tr>
             }
@@ -64,4 +71,3 @@ else
 {
     <div class="text text-center" style="margin-top: 2%;">@ViewBag.Message</div>
 }
-

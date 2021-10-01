@@ -61,11 +61,5 @@ namespace TracyShop.Areas.Admin.Controllers
                 return View(order);
             }
         }
-
-        public IActionResult OrderDetailView(int id)
-        {
-            var orderDetail = _context.OrderDetail.Where(o => o.OrderId == id).ToList();
-            return View(orderDetail);
-        }
     }
 }

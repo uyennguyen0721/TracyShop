@@ -1,12 +1,14 @@
-﻿@model IEnumerable<TracyShop.Models.OrderDetail> 
+﻿@model IEnumerable<TracyShop.Models.OrderDetail>
+
 @{
-    ViewData["Title"] = "OrderDetailView";
+    ViewData["Title"] = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
 @inject TracyShop.Data.AppDbContext _context
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Chi tiết mua hàng</h1>
+    <h1 class="h3 mb-0 text-gray-800">Chi tiết đơn hàng</h1>
 </div>
 
 <table class="table">
@@ -17,7 +19,7 @@
             <th>Phân loại hàng</th>
             <th>Số lượng</th>
             <th>Khuyến mãi</th>
-            <th>Giá (đã trừ khuyến mãi)</th>
+            <th>Giá (đã trừ đi khuyến mãi)</th>
         </tr>
     </thead>
     <tbody>
