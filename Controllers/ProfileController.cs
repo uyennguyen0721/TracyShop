@@ -109,7 +109,6 @@ namespace TracyShop.Controllers
         {
             var qr = _context.Address.ToList();
             var address = qr.Where(d => d.UserId == _userManager.GetUserId(HttpContext.User)).ToList();
-            //ViewBag.Cities = new SelectList(_context.Cities, "Id", "Name");
             if (address.Count() == 0)
             {
                 return View();

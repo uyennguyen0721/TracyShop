@@ -4,6 +4,7 @@
 
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
+@inject TracyShop.Data.AppDbContext _context
 
 @inject SignInManager<AppUser> SignInManager
 @{
@@ -73,21 +74,24 @@
                 Quản lý
             </div>
 
-            <!-- Nav Item - Pages Quản lý Nhân viên Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmployees"
-                   aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-address-book"></i>
-                    <span>Quản lý nhân viên</span>
-                </a>
-                <div id="collapseEmployees" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Quản lý nhân viên:</h6>
-                        <a class="collapse-item" asp-area="Admin" asp-controller="Employee" asp-action="Index">Danh sách nhân viên</a>
-                        <a class="collapse-item" asp-area="Admin" asp-controller="Employee" asp-action="Create">Thêm nhân viên</a>
+            @if (_context.UserRoles.Where(r => r.UserId == UserManager.GetUserAsync(User).Result.Id).First().RoleId == "1")
+            {
+                <!-- Nav Item - Pages Quản lý Nhân viên Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEmployees"
+                       aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-address-book"></i>
+                        <span>Quản lý nhân viên</span>
+                    </a>
+                    <div id="collapseEmployees" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Quản lý nhân viên:</h6>
+                            <a class="collapse-item" asp-area="Admin" asp-controller="Employee" asp-action="Index">Danh sách nhân viên</a>
+                            <a class="collapse-item" asp-area="Admin" asp-controller="Employee" asp-action="Create">Thêm nhân viên</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            }
 
             <!-- Nav Item - Pages Quản lý sản phẩm Menu -->
             <li class="nav-item">
@@ -102,7 +106,6 @@
                         <h6 class="collapse-header">Quản lý sản phẩm:</h6>
                         <a class="collapse-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Danh mục sản phẩm</a>
                         <a class="collapse-item" asp-area="Admin" asp-controller="Products" asp-action="Index">Sản phẩm</a>
-                        <a class="collapse-item" href="utilities-animation.html">Áp dụng khuyến mãi</a>
                     </div>
                 </div>
             </li>
@@ -119,7 +122,11 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản lý khuyến mãi:</h6>
                         <a class="collapse-item" asp-area="Admin" asp-controller="Promotions" asp-action="Index">Chương trình khuyến mãi</a>
-                        <a class="collapse-item" asp-area="Admin" asp-controller="Promotions" asp-action="Create">Thêm khuyến mãi mới</a>
+                        @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
+                        {
+                            <a class="collapse-item" asp-area="Admin" asp-controller="Promotions" asp-action="Create">Thêm khuyến mãi mới</a>
+                        }
+
                     </div>
                 </div>
             </li>
@@ -176,7 +183,10 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Thông tin đặt hàng:</h6>
                         <a class="collapse-item" asp-area="Admin" asp-controller="Order" asp-action="Index">Danh sách đơn hàng</a>
-                        <a class="collapse-item" asp-area="Admin" asp-controller="Order" asp-action="CheckedOrder">Đơn hàng chưa duyệt</a>
+                        <a class="collapse-item" asp-area="Admin" asp-controller="Order" asp-action="CheckedOrder">
+                            Đơn hàng chưa duyệt
+                            <sup>@_context.Orders.Where(o => o.Is_check == false).ToList().Count</sup>
+                        </a>
                     </div>
                 </div>
             </li>
@@ -189,21 +199,24 @@
                 </a>
             </li>
 
-            <!-- Nav Item - Pages Thống kê Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStatistic"
-                   aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Thống kê</span>
-                </a>
-                <div id="collapseStatistic" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Thống kê:</h6>
-                        <a class="collapse-item" href="login.html">Thống kê theo tháng</a>
-                        <a class="collapse-item" href="register.html">Thống kê theo năm</a>
+            @if (_context.UserRoles.Where(r => r.UserId == UserManager.GetUserAsync(User).Result.Id).First().RoleId == "1")
+            {
+                <!-- Nav Item - Pages Thống kê Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStatistic"
+                       aria-expanded="true" aria-controls="collapsePages">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Thống kê</span>
+                    </a>
+                    <div id="collapseStatistic" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Thống kê:</h6>
+                            <a class="collapse-item" href="login.html">Thống kê theo tháng</a>
+                            <a class="collapse-item" href="register.html">Thống kê theo năm</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            }
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -231,16 +244,16 @@
 
                     <!-- Topbar Search -->
                     @*<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Tìm kiếm ..."
-                                   aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Tìm kiếm ..."
+                                       aria-label="Search" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>*@
+                        </form>*@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -401,20 +414,26 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">@UserManager.GetUserName(User)</span>
-                                <img class="img-profile rounded-circle"
-                                     src="img/undraw_profile.svg">
+                                @if (User.FindFirst("Avatar").Value == "")
+                                {
+                                    <img class="img-profile rounded-circle" src="~/Client/img/default-user.jpg" alt="">
+                                }
+                                else
+                                {
+                                    <img class="img-profile rounded-circle" src="@User.FindFirst("Avatar").Value" alt="">
+                                }
+
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" asp-page="/Account/Manage/Index">
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Profiles" asp-action="Profiles">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Hồ sơ
                                 </a>
                                 <div class="dropdown-divider"></div>
 
-                                <a class="dropdown-item"
-                                   asp-area="Identity" asp-page="/Account/Logout"
-                                   asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                <a class="dropdown-item" asp-action="Logout" asp-controller="Login"
+                                   asp-route-returnUrl="@Url.Action("Index","Home",new {Area="Admin"})">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Đăng xuất
                                 </a>
@@ -490,6 +509,80 @@
     <!-- Page level custom scripts -->
     <script src="~/Admin/js/demo/chart-area-demo.js"></script>
     <script src="~/Admin/js/demo/chart-pie-demo.js"></script>
+
+    <!-- Address -->
+    <script src="~/js/districts.min.js"></script>
+    <script>
+        //<![CDATA[
+        if (address_2 = localStorage.getItem('address_2_saved')) {
+            $('select[name="District"] option').each(function () {
+                if ($(this).text() == address_2) {
+                    $(this).attr('selected', '')
+                }
+            })
+            $('input.billing_address_2').attr('value', address_2)
+        }
+        if (district = localStorage.getItem('district')) {
+            $('select[name="District"]').html(district)
+            $('select[name="District"]').on('change', function () {
+                var target = $(this).children('option:selected')
+                target.attr('selected', '')
+                $('select[name="District"] option').not(target).removeAttr('selected')
+                address_2 = target.text()
+                $('input.billing_address_2').attr('value', address_2)
+                district = $('select[name="District"]').html()
+                localStorage.setItem('district', district)
+                localStorage.setItem('address_2_saved', address_2)
+            })
+        }
+        $('select[name="City"]').each(function () {
+            var $this = $(this),
+                stc = ''
+            c.forEach(function (i, e) {
+                e += +1
+                stc += '<option value="' + i + '">' + i + '</option>'
+                $this.html('<option value="">Chọn tỉnh/thành phố</option>' + stc)
+                if (address_1 = localStorage.getItem('address_1_saved')) {
+                    $('select[name="City"] option').each(function () {
+                        if ($(this).text() == address_1) {
+                            $(this).attr('selected', '')
+                        }
+                    })
+                    $('input.billing_address_1').attr('value', address_1)
+                }
+                $this.on('change', function (i) {
+                    i = $this.children('option:selected').index() - 1
+                    var str = '',
+                        r = $this.val()
+                    if (r != '') {
+                        arr[i].forEach(function (el) {
+                            str += '<option value="' + el + '">' + el + '</option>'
+                            $('select[name="District"]').html('<option value="">Chọn quận / huyện</option>' + str)
+                        })
+                        var address_1 = $this.children('option:selected').text()
+                        var district = $('select[name="District"]').html()
+                        localStorage.setItem('address_1_saved', address_1)
+                        localStorage.setItem('district', district)
+                        $('select[name="District"]').on('change', function () {
+                            var target = $(this).children('option:selected')
+                            target.attr('selected', '')
+                            $('select[name="District"] option').not(target).removeAttr('selected')
+                            var address_2 = target.text()
+                            $('input.billing_address_2').attr('value', address_2)
+                            district = $('select[name="District"]').html()
+                            localStorage.setItem('district', district)
+                            localStorage.setItem('address_2_saved', address_2)
+                        })
+                    } else {
+                        $('select[name="District"]').html('<option value="">Chọn quận / huyện</option>')
+                        district = $('select[name="District"]').html()
+                        localStorage.setItem('district', district)
+                        localStorage.removeItem('address_1_saved', address_1)
+                    }
+                })
+            })
+        })
+            //]]></script>
 
     @RenderSection("Scripts", required: false)
 

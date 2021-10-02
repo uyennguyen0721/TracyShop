@@ -158,6 +158,18 @@ sup {
   top: -.5em;
 }
 
+#sup {
+    position: relative;
+    font-size: 75%;
+    line-height: 0;
+    vertical-align: baseline;
+    top: -.5em;
+    background-color: red;
+    color: white !important;
+    padding: 0 4px;
+    border-radius: 10px;
+}
+
 a {
   color: #4e73df;
   text-decoration: none;

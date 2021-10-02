@@ -5,11 +5,18 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
+@inject TracyShop.Data.AppDbContext _context
+
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Danh sách ưu đãi</h1>
-    <a asp-area="Admin" asp-controller="Promotions" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fas fa-plus-circle text-white-50"></i> Thêm ưu đãi
-    </a>
+
+    @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
+    {
+        <a asp-area="Admin" asp-controller="Promotions" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus-circle text-white-50"></i> Thêm ưu đãi
+        </a>
+    }
+
 </div>
 <table class="table">
     <thead>
@@ -44,10 +51,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
-            <td>
-                <a asp-area="Admin" asp-controller="Promotions" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
-                <a asp-area="Admin" asp-controller="Promotions" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a> |
-            </td>
+            @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
+            {
+                <td>
+                    <a asp-area="Admin" asp-controller="Promotions" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
+                    <a asp-area="Admin" asp-controller="Promotions" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a> |
+                </td>
+            }
+            else
+            {
+                <td></td>
+            }
+
         </tr>
 }
     </tbody>

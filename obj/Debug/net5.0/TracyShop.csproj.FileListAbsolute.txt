@@ -268,7 +268,6 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Shared\_
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\_ViewImports.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\_ViewStart.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Category\Create.cshtml.g.cs
-D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Category\Details.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Category\Edit.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Category\Index.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Home\Index.cshtml.g.cs
@@ -571,7 +570,6 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Products
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Employee\Delete.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Images\Create.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Images\Delete.cshtml.g.cs
-D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Images\Details.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Images\Index.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\ProductSizes\Create.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\ProductSizes\Delete.cshtml.g.cs
@@ -590,7 +588,6 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\Search.cshtm
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\Details.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\AddCart.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Cart\Cart.cshtml.g.cs
-D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\TracyShop.csproj.AssemblyReference.cache
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Reviews\Create.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Order\Order.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Order\Payment.cshtml.g.cs
@@ -603,3 +600,9 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Order\In
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Order\Details.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Order\CheckedOrder.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Reviews\Index.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\EntityFramework.SqlServer.dll
+D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\EntityFramework.dll
+D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\Microsoft.AspNet.Identity.Core.dll
+D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Employee\AddAddress.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Profiles\Profiles.cshtml.g.cs

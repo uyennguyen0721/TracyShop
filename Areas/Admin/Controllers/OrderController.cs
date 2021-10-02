@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace TracyShop.Areas.Admin.Controllers
         {
             _context = context;
         }
+
+        [Authorize(Roles = "Admin, Employee")]
         public IActionResult Index()
         {
             if(_context.Orders.ToList().Count == 0)
@@ -31,6 +34,7 @@ namespace TracyShop.Areas.Admin.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Employee")]
         public IActionResult Details(int id)
         {
             var orderDetail = _context.OrderDetail.Where(o => o.OrderId == id).ToList();
@@ -38,6 +42,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin, Employee")]
         public IActionResult CheckedOrder()
         {
             if (_context.Orders.Where(p => p.Is_check == false).ToList().Count == 0)
@@ -54,6 +59,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Employee")]
         public async Task<IActionResult> CheckedOrder(int id)
         {
             var order = _context.Orders.Where(p => p.Id == id).First();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace TracyShop.Areas.Admin.Controllers
         {
             _context = context;
         }
+
+        [Authorize(Roles = "Admin, Employee")]
         public IActionResult Index(int? id)
         {
             if(id == null)

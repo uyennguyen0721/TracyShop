@@ -4,11 +4,17 @@
     ViewData["Title"] = "Category";
 }
 
+@inject TracyShop.Data.AppDbContext _context
+
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Danh mục sản phẩm</h1>
-    <a asp-area="Admin" asp-controller="Category" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fas fa-plus-circle"></i> Thêm danh mục
-    </a>
+    @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
+    {
+        <a asp-area="Admin" asp-controller="Category" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus-circle"></i> Thêm danh mục
+        </a>
+    }
+
 </div>
 <table class="table">
     <thead>
@@ -33,11 +39,14 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    <a asp-area="Admin" asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
-                    <a asp-area="Admin" asp-controller="Category" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a> |
+                    @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
+                    {
+                        <a asp-area="Admin" asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a>
+                    }
+                     | 
                     <a asp-area="Admin" asp-controller="Products" asp-action="Index" asp-route-id="@item.Id">Xem sản phẩm</a>
                 </td>
             </tr>
-         }
+        }
     </tbody>
 </table>

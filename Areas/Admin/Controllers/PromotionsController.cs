@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Promotions
+        [Authorize(Roles = "Admin, Employee")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Promotion.ToListAsync());
@@ -28,6 +30,7 @@ namespace TracyShop.Areas.Admin.Controllers
 
 
         // GET: Admin/Promotions/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -38,6 +41,7 @@ namespace TracyShop.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,percent,StartedDate,EndDate")] Promotion promotion)
         {
             if (ModelState.IsValid)
@@ -50,6 +54,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Promotions/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -68,6 +73,7 @@ namespace TracyShop.Areas.Admin.Controllers
         // POST: Admin/Promotions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,percent,StartedDate,EndDate")] Promotion promotion)
@@ -101,6 +107,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Promotions/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -119,6 +126,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // POST: Admin/Promotions/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

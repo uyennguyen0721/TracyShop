@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/ProductSizes
+        [Authorize(Roles = "Admin, Employee")]
         public async Task<IActionResult> Index(int id)
         {
             var appDbContext = _context.ProductSize.Include(p => p.Product).Include(p => p.Size);
@@ -29,6 +31,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/ProductSizes/Details/5
+        [Authorize(Roles = "Admin, Employee")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,6 +52,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/ProductSizes/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ProductSizeModel productSize = new ProductSizeModel();
@@ -60,6 +64,7 @@ namespace TracyShop.Areas.Admin.Controllers
         // POST: Admin/ProductSizes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductSizeModel productSize)
@@ -87,6 +92,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/ProductSizes/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -114,6 +120,7 @@ namespace TracyShop.Areas.Admin.Controllers
         // POST: Admin/ProductSizes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ProductId,SizeId,Quantity")] ProductSize productSize)
@@ -149,6 +156,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/ProductSizes/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -169,6 +177,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // POST: Admin/ProductSizes/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -3,7 +3,7 @@
 @{ 
     ViewData["title"] = "Employee"; 
 }
-
+@inject TracyShop.Data.AppDbContext _context
 
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -19,6 +19,7 @@
             <th>Họ và tên</th>
             <th>Giới tính</th>
             <th>Ngày sinh</th>
+            <th>Địa chỉ</th>
             <th>Đang làm việc</th>
             <th></th>
         </tr>
@@ -37,11 +38,23 @@
                     @Html.DisplayFor(modelItem => item.Birthday)
                 </td>
                 <td>
+                    @{ 
+                        var address = "";
+                        if(_context.Address.Where(a => a.UserId.Contains(item.Id)).ToList().Count != 0)
+                        {
+                            var model = _context.Address.Where(a => a.UserId.Contains(item.Id)).First();
+                            address = model.SpecificAddress + ", " + model.District + ", " + model.City;
+                        }
+                    }
+                    @address
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Is_active)
                 <td>
                     <a asp-area="Admin" asp-controller="Employee" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
                     <a asp-area="Admin" asp-controller="Employee" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a> |
-                    @if(item.Is_active != false)
+                    <a asp-area="Admin" asp-controller="Employee" asp-action="AddAddress" asp-route-id="@item.Id">Thêm địa chỉ</a> |
+                    @if (item.Is_active != false)
                     {
                         <a asp-area="Admin" asp-controller="Employee" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
                     }

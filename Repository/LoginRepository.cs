@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TracyShop.Models;
 using TracyShop.ViewModels;
 using TracyShop.Services;
+using TracyShop.Data;
 
 namespace TracyShop.Repository
 {
@@ -18,13 +19,15 @@ namespace TracyShop.Repository
         private readonly IUserService _userService;
         private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
+        private readonly AppDbContext _context;
 
         public LoginRepository(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
             //RoleManager<IdentityRole> roleManager,
             IUserService userService,
             IEmailService emailService,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            AppDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -32,6 +35,7 @@ namespace TracyShop.Repository
             _userService = userService;
             _emailService = emailService;
             _configuration = configuration;
+            _context = context;
         }
 
         public async Task<AppUser> GetUserByEmailAsync(string email)
@@ -46,13 +50,21 @@ namespace TracyShop.Repository
                 Name = userModel.Name,
                 UserName = userModel.Email,
                 PhoneNumber = userModel.PhoneNumber,
-                Email = userModel.Email,
-                UserRoleId = userModel.UserRoleId
-
+                Email = userModel.Email
             };
             var result = await _userManager.CreateAsync(user, userModel.Password);
             if (result.Succeeded)
             {
+                var users = _context.Users.ToList().OrderByDescending(u => u.Joined_date).First();
+                var role = _context.Roles.Where(r => r.Id.Contains("3")).First();
+
+                _context.UserRoles.Add(new IdentityUserRole<string>
+                {
+                    RoleId = role.Id,
+                    UserId = user.Id
+                });
+                await _context.SaveChangesAsync();
+                Task.Delay(1000).Wait();
                 await GenerateEmailConfirmationTokenAsync(user);
             }
             return result;

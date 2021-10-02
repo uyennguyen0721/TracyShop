@@ -1,0 +1,66 @@
+﻿@model TracyShop.ViewModels.ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Hồ sơ - Trang cá nhân</h1>
+</div>
+
+<form asp-area="Admin" asp-controller="Profiles" asp-action="Profiles" enctype="multipart/form-data" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label class="control-label">Tên đăng nhập</label>
+        <input asp-for="UserName" class="form-control" type="text" disabled />
+    </div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label">Họ và tên</label>
+        <input asp-for="Name" class="form-control" type="text" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label">Email</label>
+        <input asp-for="Email" class="form-control" type="email" disabled />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber" class="control-label">Số điện thoại</label>
+        <input asp-for="PhoneNumber" class="form-control" type="tel" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Gender" class="control-label" style="margin-right: 5%;">Giới tính</label>
+        <input asp-for="Gender" value="Nam" type="radio" />
+        <label asp-for="Gender" for="Male" style="margin-right: 5%;">Nam</label>
+        <input asp-for="Gender" value="Nữ" type="radio" />
+        <label asp-for="Gender" for="Female" style="margin-right: 5%;">Nữ</label>
+        <input asp-for="Gender" value="Khác" type="radio" />
+        <label asp-for="Gender" for="Orther">Khác</label>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Birthday" class="control-label">Ngày sinh</label>
+        <input asp-for="Birthday" class="form-control" type="date" maxlength="255" />
+        <span asp-validation-for="Birthday" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AvatarPath" class="control-label" style="margin-right: 5%;">Chọn ảnh đại diện</label>
+        <input asp-for="AvatarPath" type="file" />
+        <span asp-validation-for="AvatarPath" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Lưu thay đổi" class="btn btn-primary" />
+    </div>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+        window.onload = function () {
+            alert("@ViewBag.Message");
+        };
+        </script>
+    }
+
+</form>
+

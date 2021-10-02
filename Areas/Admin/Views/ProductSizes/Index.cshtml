@@ -5,11 +5,18 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
+@inject TracyShop.Data.AppDbContext _context
+
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Số lượng sản phẩm theo size</h1>
-    <a asp-area="Admin" asp-controller="ProductSizes" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fas fa-plus-circle text-white-50"></i> Thêm size/số lượng
-    </a>
+
+    @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
+    {
+        <a asp-area="Admin" asp-controller="ProductSizes" asp-action="Create" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus-circle text-white-50"></i> Thêm size/số lượng
+        </a>
+    }
+
     <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
         <i class="fas fa-arrow-alt-circle-left text-white-50"></i> Quay lại
     </a>
@@ -43,9 +50,18 @@
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
-                    <a asp-area="Admin" asp-controller="ProductSizes" asp-action="Edit" asp-route-id="@item.ProductId"><i class="fas fa-edit"></i></a> |
+                    @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
+                    {
+                        <a asp-area="Admin" asp-controller="ProductSizes" asp-action="Edit" asp-route-id="@item.ProductId"><i class="fas fa-edit"></i></a>
+                    } |
+
                     <a asp-area="Admin" asp-controller="ProductSizes" asp-action="Details" asp-route-id="@item.ProductId"><i class="fas fa-info-circle"></i></a> |
-                    <a asp-area="Admin" asp-controller="ProductSizes" asp-action="Delete" asp-route-id="@item.ProductId"><i class="fas fa-trash-alt"></i></a>
+
+                    @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
+                    {
+                        <a asp-area="Admin" asp-controller="ProductSizes" asp-action="Delete" asp-route-id="@item.ProductId"><i class="fas fa-trash-alt"></i></a>
+                    }
+
                 </td>
             </tr>
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,30 +28,14 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Images
+        [Authorize(Roles = "Admin, Employee")]
         public async Task<IActionResult> Index(int id)
         {
             return View(await _context.Image.Where(p => p.ProductId == id).ToListAsync());
         }
 
-        // GET: Admin/Images/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var image = await _context.Image
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (image == null)
-            {
-                return NotFound();
-            }
-
-            return View(image);
-        }
-
         // GET: Images/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             UploadImagesOfProduct uploadImages = new UploadImagesOfProduct();
@@ -61,7 +46,9 @@ namespace TracyShop.Areas.Admin.Controllers
         // POST: Images/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(UploadImagesOfProduct uploadImages)
         {
@@ -105,6 +92,7 @@ namespace TracyShop.Areas.Admin.Controllers
 
 
         // GET: Admin/Images/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -121,6 +109,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Images/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace TracyShop.Areas.Admin.Controllers
             _logger = logger;
         }
 
+        [Authorize(Roles = "Admin, Employee")]
         public IActionResult Index()
         {
             return View();

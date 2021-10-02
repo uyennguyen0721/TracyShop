@@ -10,6 +10,7 @@ using TracyShop.ViewModels;
 using TracyShop.Repository;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using TracyShop.Data;
 
 namespace TracyShop.Controllers
 {
@@ -20,16 +21,19 @@ namespace TracyShop.Controllers
         private readonly UserManager<AppUser> userManager;
         private readonly SignInManager<AppUser> signInManager;
         private readonly ILogger<LoginController> logger;
+        private readonly AppDbContext context;
 
         public LoginController(ILoginRepository loginRepository,
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            ILogger<LoginController> logger)
+            ILogger<LoginController> logger,
+            AppDbContext context)
         {
             _loginRepository = loginRepository;
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
+            this.context = context;
         }
 
         [Route("register")]
@@ -51,7 +55,6 @@ namespace TracyShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                userModel.UserRoleId = 3;
                 // write your code
                 var result = await _loginRepository.CreateUserAsync(userModel);
                 if (!result.Succeeded)
@@ -304,19 +307,34 @@ namespace TracyShop.Controllers
                             Email = info.Principal.FindFirstValue(ClaimTypes.Email),
                             EmailConfirmed = true,
                             Avatar = info.Principal.FindFirstValue("image"),
-                            Gender = info.Principal.FindFirstValue(ClaimTypes.Gender),
-                            UserRoleId = 3
+                            Gender = info.Principal.FindFirstValue(ClaimTypes.Gender)
                         };
 
+
                         await userManager.CreateAsync(user);
+                        Task.Delay(1000).Wait();
 
                         //var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
 
                         //var confirmationLink = Url.Action("ConfirmEmail", "Login",
                         //                new { userId = user.Id, token = token }, Request.Scheme);
 
+                        
+
                         await userManager.AddLoginAsync(user, info);
                         await signInManager.SignInAsync(user, isPersistent: false);
+
+                        Task.Delay(2000).Wait();
+                        var users = context.Users.ToList().OrderByDescending(u => u.Joined_date).First();
+                        var role = context.Roles.Where(r => r.Name.Contains("Customer")).First();
+
+                        context.UserRoles.Add(new IdentityUserRole<string>
+                        {
+                            RoleId = role.Id,
+                            UserId = user.Id
+                        });
+                        await context.SaveChangesAsync();
+                        Task.Delay(1000).Wait();
 
                         return LocalRedirect(returnUrl);
 

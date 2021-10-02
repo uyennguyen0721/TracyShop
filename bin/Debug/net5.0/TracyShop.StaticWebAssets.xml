@@ -1,4 +1,4 @@
 ﻿<StaticWebAssets Version="1.0">
-  <ContentRoot BasePath="/Identity" Path="C:\Users\uyenn\.nuget\packages\microsoft.aspnetcore.identity.ui\5.0.9\staticwebassets\V4\" />
-  <ContentRoot BasePath="_content/CoreAdmin" Path="C:\Users\uyenn\.nuget\packages\coreadmin\1.5.0\build\..\staticwebassets\" />
+  <ContentRoot BasePath="/Identity" Path="C:\Users\uyenn\.nuget\packages\microsoft.aspnetcore.identity.ui\5.0.10\staticwebassets\V4\" />
+  <ContentRoot BasePath="_content/CoreAdmin" Path="C:\Users\uyenn\.nuget\packages\coreadmin\1.8.0\build\..\staticwebassets\" />
 </StaticWebAssets>

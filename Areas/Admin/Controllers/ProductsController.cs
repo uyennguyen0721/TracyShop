@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace TracyShop.Areas.Admin.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Admin, Employee")]
         // GET: Admin/Products
         public async Task<IActionResult> Index(int? id)
         {
@@ -32,6 +34,7 @@ namespace TracyShop.Areas.Admin.Controllers
             return View(await _context.Product.Where(p => p.CategoryId == id).ToListAsync());
         }
 
+        [Authorize(Roles = "Admin, Employee")]
         [HttpGet]
         public async Task<IActionResult> Index(string searchString)
         {
@@ -48,6 +51,7 @@ namespace TracyShop.Areas.Admin.Controllers
             return View(await query.AsNoTracking().ToListAsync());
         }
 
+        [Authorize(Roles = "Admin, Employee")]
         // GET: Admin/Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -67,6 +71,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Products/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ProductManageModel productManage = new ProductManageModel();
@@ -78,6 +83,7 @@ namespace TracyShop.Areas.Admin.Controllers
         // POST: Admin/Products/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductManageModel productManage)
@@ -102,6 +108,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Products/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             
@@ -137,6 +144,7 @@ namespace TracyShop.Areas.Admin.Controllers
         // POST: Admin/Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ProductManageModel productManage)
@@ -181,6 +189,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // GET: Admin/Products/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -199,6 +208,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         // POST: Admin/Products/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -209,6 +219,7 @@ namespace TracyShop.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin, Employee")]
         public IActionResult ProductSizeDetail(Product product)
         {
             if (product == null)
