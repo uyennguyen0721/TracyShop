@@ -32,7 +32,11 @@
     </div>
 </form>
 
-@if (Model.ExternalLogins.Count > 0)
+@if (Model.ExternalLogins == null)
+{
+    <div></div>
+}
+else
 {
     <p style="text-align:center">Hoặc đăng nhập bằng</p>
     <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">

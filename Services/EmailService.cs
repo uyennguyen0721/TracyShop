@@ -43,6 +43,15 @@ namespace TracyShop.Services
             await SendEmail(userEmailOptions);
         }
 
+        public async Task SendEmailPayment(UserEmailOptions userEmailOptions)
+        {
+            userEmailOptions.Subject = UpdatePlaceHolders("Hello {{UserName}}, payment confirmation.", userEmailOptions.PlaceHolders);
+
+            userEmailOptions.Body = UpdatePlaceHolders(GetEmailBody("Payment"), userEmailOptions.PlaceHolders);
+
+            await SendEmail(userEmailOptions);
+        }
+
         public EmailService(IOptions<SMTPConfigModel> smtpConfig)
         {
             _smtpConfig = smtpConfig.Value;

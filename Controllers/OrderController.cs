@@ -108,7 +108,7 @@ namespace TracyShop.Controllers
                 _context.Add(order);
                 await _context.SaveChangesAsync();
 
-                Task.Delay(3000).Wait();
+                Task.Delay(1000).Wait();
 
                 var cart = _context.Carts.Where(c => c.UserId == order.UserId && c.IsBuy == false).ToList();
                 foreach (var item in cart)
@@ -138,7 +138,7 @@ namespace TracyShop.Controllers
                 }
                 await _context.SaveChangesAsync();
 
-                Task.Delay(3000).Wait();
+                Task.Delay(1000).Wait();
 
                 ViewBag.Content = "Mua hàng";
                 ViewBag.News = true;

@@ -23,9 +23,6 @@ namespace TracyShop.Models
         public bool Is_active { set; get; } = true;
 
         public DateTime Joined_date { set; get; } = DateTime.Now;
-        //public int UserRoleId { set; get; }
-
-        //public virtual UserRole UserRole { set; get; }
 
         public virtual ICollection<Address> Addresses { set; get; }
         public virtual ICollection<Reviews> Reviews { set; get; }

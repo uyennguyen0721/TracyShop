@@ -1,0 +1,46 @@
+﻿@model IEnumerable<TracyShop.Models.StockReceivedDetail>
+@{
+    ViewData["Title"] = "StockReceivedItemInfo";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@inject TracyShop.Data.AppDbContext _context
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Chi tiết nhập kho</h1>
+    <a asp-area="Admin" asp-controller="Stock" asp-action="StockReceivedInfo" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-arrow-alt-circle-left text-white-50"></i> Quay lại
+    </a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá nhập</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @_context.Product.Where(p => p.Id == item.ProductId).First().Name
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit_price)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

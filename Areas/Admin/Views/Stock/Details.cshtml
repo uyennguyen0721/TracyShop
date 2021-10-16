@@ -1,0 +1,48 @@
+﻿@model IEnumerable<TracyShop.Models.ProductSize>
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@inject TracyShop.Data.AppDbContext _context
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Sản phẩm trong kho</h1>
+    <a asp-area="Admin" asp-controller="Stock" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-arrow-alt-circle-left text-white-50"></i> Quay lại
+    </a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên sản phẩm</th>
+            <th>Kích thước</th>
+            <th>Số lượng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var id = 0;
+            foreach (var item in Model)
+            {
+                id++;
+                <tr>
+                    <td>
+                        @id
+                    </td>
+                    <td>
+                        @_context.Product.Where(p => p.Id == item.ProductId).First().Name
+                    </td>
+                    <td>
+                        @_context.Sizes.Where(s => s.Id == item.SizeId).First().Name
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

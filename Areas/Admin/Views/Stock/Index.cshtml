@@ -1,0 +1,46 @@
+﻿@model IEnumerable<TracyShop.ViewModels.StockViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Sản phẩm trong kho</h1>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Tên sản phẩm
+            </th>
+            <th>
+                Số lượng tồn
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalQuantity)
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-controller="Stock" asp-action="Details" asp-route-id="@item.ProductId"><i class="fas fa-info-circle"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

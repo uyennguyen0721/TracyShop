@@ -1,6 +1,7 @@
 ﻿# TracyShop
 - Đồ án ngành Công nghệ thông tin
-- Sử dụng ASP.NET Core MVC
+- Sử dụng công nghệ ASP.NET Core MVC
+- Server: SQL Server
 - Tình trạng: đang triển khai
 
 ### Các phương thức sử dụng:

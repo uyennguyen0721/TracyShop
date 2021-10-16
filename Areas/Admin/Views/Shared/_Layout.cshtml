@@ -158,8 +158,9 @@
                      data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Quản lý kho:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Số lượng hàng tồn</a>
-                        <a class="collapse-item" href="utilities-color.html">Nhập kho</a>
+                        <a class="collapse-item" asp-area="Admin" asp-action="Index" asp-controller="Stock">Số lượng hàng tồn</a>
+                        <a class="collapse-item" asp-area="Admin" asp-action="StockReceived" asp-controller="Stock">Nhập kho</a>
+                        <a class="collapse-item" asp-area="Admin" asp-action="StockReceivedInfo" asp-controller="Stock">Lịch sử nhập kho</a>
                     </div>
                 </div>
             </li>

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<TracyShop.Models.StockReceived>
+@{
+    ViewData["Title"] = "StockReceivedInfo";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@inject TracyShop.Data.AppDbContext _context
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Lịch sử nhập kho</h1>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã nhập kho</th>
+            <th>Người nhập kho</th>
+            <th>Ngày nhập</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @_context.Users.Where(u => u.Id.Contains(item.UserId)).First().Name
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-controller="Stock" asp-action="StockReceivedItemInfo" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

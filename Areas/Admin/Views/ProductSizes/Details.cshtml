@@ -8,7 +8,7 @@
 @inject TracyShop.Data.AppDbContext _context
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Thông tin số lượng sản phẩm theo size</h1>
+    <h1 class="h3 mb-0 text-gray-800">Số lượng sản phẩm theo size</h1>
 
     @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
     {

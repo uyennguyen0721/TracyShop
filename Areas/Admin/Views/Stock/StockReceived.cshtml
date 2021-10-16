@@ -1,0 +1,45 @@
+﻿@model TracyShop.ViewModels.ProductStockItem
+@{
+    ViewData["Title"] = "StockReceived";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Nhập kho</h1>
+    <a asp-area="Admin" asp-controller="Stock" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-arrow-alt-circle-left text-white-50"></i> Quay lại
+    </a>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="StockReceived" asp-controller="Stock" asp-area="Admin">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SelectedPro" class="control-label">Chọn sản phẩm</label>
+                <select asp-for="SelectedPro" class="form-control" asp-items="@(new SelectList(Model.Products, "Id", "Name"))">
+                    <option value="0">Chọn sản phẩm</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedSize" class="control-label">Chọn size</label>
+                <select asp-for="SelectedSize" class="form-control" asp-items="@(new SelectList(Model.Sizes, "Id", "Name"))">
+                    <option value="0">Chọn size</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label">Số lượng</label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnitPrice" class="control-label">Giá</label>
+                <input asp-for="UnitPrice" class="form-control" />
+                <span asp-validation-for="UnitPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Nhập kho" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

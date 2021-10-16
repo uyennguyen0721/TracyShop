@@ -606,3 +606,9 @@ D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\Microsoft.AspNet.Identity.Core.d
 D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\Microsoft.AspNet.Identity.EntityFramework.dll
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Employee\AddAddress.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Profiles\Profiles.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\TracyShop.csproj.AssemblyReference.cache
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Stock\Index.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Stock\Details.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Stock\StockReceived.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Stock\StockReceivedInfo.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Stock\StockReceivedItemInfo.cshtml.g.cs
