@@ -74,7 +74,7 @@ namespace TracyShop.Areas.Admin.Controllers
             {
                 product.ProductId = productSize.SelectedPro;
                 product.SizeId = productSize.SelectedSize;
-                product.Quantity = productSize.Quantity;
+                product.Quantity = 0;
                 var pro = _context.ProductSize.Where(p => p.ProductId == product.ProductId && p.SizeId == product.SizeId).FirstOrDefault();
 
                 if(pro == null){

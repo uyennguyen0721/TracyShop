@@ -100,6 +100,7 @@ namespace TracyShop.Areas.Admin.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
+        [Route("/admin/add-address", Name ="add-address")]
         public IActionResult AddAddress(string? id)
         {
             ViewBag.UserId = id;
@@ -119,6 +120,7 @@ namespace TracyShop.Areas.Admin.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("/admin/add-address", Name = "add-address")]
         public async Task<IActionResult> AddAddress(string id, Address address)
         {
             var model = _context.Address.ToList().Where(a => a.UserId.Contains(id)).ToList();

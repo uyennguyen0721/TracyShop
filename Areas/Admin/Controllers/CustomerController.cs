@@ -21,7 +21,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         [Authorize(Roles = "Admin, Employee")]
-        [Route("/customer")]
+        [Route("/admin/customer")]
         public async Task<IActionResult> Index()
         {
             var userRole = _context.UserRoles.Where(u => u.RoleId.Contains("3")).ToList();
@@ -53,6 +53,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         [Authorize(Roles = "Admin, Employee")]
+        [Route("/admin/order-view", Name = "order-view")]
         public IActionResult OrderView(string id)
         {
             if (id == null)

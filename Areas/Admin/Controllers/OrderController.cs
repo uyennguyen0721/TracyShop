@@ -43,6 +43,7 @@ namespace TracyShop.Areas.Admin.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin, Employee")]
+        [Route("/admin/checked-order", Name = "checked-order")]
         public IActionResult CheckedOrder()
         {
             if (_context.Orders.Where(p => p.Is_check == false).ToList().Count == 0)
@@ -59,6 +60,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Route("/admin/checked-order", Name = "checked-order")]
         [Authorize(Roles = "Admin, Employee")]
         public async Task<IActionResult> CheckedOrder(int id)
         {

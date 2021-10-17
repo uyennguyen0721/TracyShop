@@ -55,6 +55,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         [Authorize(Roles = "Admin, Employee")]
+        [Route("/admin/stock-received-info", Name = "stock-received-info")]
         public IActionResult StockReceivedInfo()
         {
             List<StockReceived> stockReceived = _context.StockReceived.ToList();
@@ -62,6 +63,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         [Authorize(Roles = "Admin, Employee")]
+        [Route("/admin/stock-received-item-info", Name= "stock-received-item-info")]
         public IActionResult StockReceivedItemInfo(int id)
         {
             var stockReceivedItem = _context.StockReceivedDetail.Where(s => s.StockReceivedId == id).ToList();
@@ -70,6 +72,7 @@ namespace TracyShop.Areas.Admin.Controllers
 
         [Authorize(Roles = "Admin, Employee")]
         [HttpGet]
+        [Route("/admin/stock-received", Name ="stock-received")]
         public IActionResult StockReceived()
         {
             ProductStockItem productStock = new ProductStockItem();
@@ -79,6 +82,7 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         [Authorize(Roles = "Admin, Employee")]
+        [Route("/admin/stock-received", Name = "stock-received")]
         [HttpPost]
         public async Task<IActionResult> StockReceived(ProductStockItem productStock)
         {

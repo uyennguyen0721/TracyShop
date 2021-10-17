@@ -186,7 +186,15 @@
                         <a class="collapse-item" asp-area="Admin" asp-controller="Order" asp-action="Index">Danh sách đơn hàng</a>
                         <a class="collapse-item" asp-area="Admin" asp-controller="Order" asp-action="CheckedOrder">
                             Đơn hàng chưa duyệt
-                            <sup>@_context.Orders.Where(o => o.Is_check == false).ToList().Count</sup>
+                            @if (_context.Orders.Where(o => o.Is_check == false).ToList().Count != 0)
+                            {
+                                <sup>
+                                    <span class="badge badge-danger badge-counter">
+                                        @_context.Orders.Where(o => o.Is_check == false).ToList().Count
+                                    </span>
+                                </sup>
+                            }
+
                         </a>
                     </div>
                 </div>
@@ -212,8 +220,8 @@
                     <div id="collapseStatistic" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Thống kê:</h6>
-                            <a class="collapse-item" href="login.html">Thống kê theo tháng</a>
-                            <a class="collapse-item" href="register.html">Thống kê theo năm</a>
+                            <a class="collapse-item" asp-action="ReportByMonth" asp-controller="Report" asp-area="Admin">Thống kê theo tháng</a>
+                            <a class="collapse-item" asp-action="ReportByYear" asp-controller="Report" asp-area="Admin">Thống kê theo năm</a>
                         </div>
                     </div>
                 </li>
@@ -458,7 +466,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; TRACY SHOP 2021</span>
+                        <span>Copyright &copy; TRACY SHOP @DateTime.Now.Year</span>
                     </div>
                 </div>
             </footer>
@@ -504,12 +512,12 @@
     <!-- Custom scripts for all pages-->
     <script src="~/Admin/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
+    <!--Page level plugin-->
     <script src="~/Admin/vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="~/Admin/js/demo/chart-area-demo.js"></script>
-    <script src="~/Admin/js/demo/chart-pie-demo.js"></script>
+    <!--Page level custom scripts-->
+    @*<script src="~/Admin/js/demo/chart-area-demo.js"></script>
+    <script src="~/Admin/js/demo/chart-pie-demo.js"></script>*@
 
     <!-- Address -->
     <script src="~/js/districts.min.js"></script>
@@ -583,7 +591,7 @@
                 })
             })
         })
-            //]]></script>
+                    //]]></script>
 
     @RenderSection("Scripts", required: false)
 
