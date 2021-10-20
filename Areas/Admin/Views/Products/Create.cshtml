@@ -14,7 +14,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" asp-controller="Products" asp-area="Admin" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label">Tên sản phẩm</label>
@@ -50,18 +50,6 @@
                 <input asp-for="Year_SX" class="form-control" />
                 <span asp-validation-for="Year_SX" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-            <label asp-for="Sizes" class="control-label">Chọn kích thước</label>
-            <select asp-for="Sizes" asp-items="@ViewBag.sizes" class="form-control">
-                <option value="0">Chọn kích thước</option>
-            </select>
-            <span asp-validation-for="Sizes" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Quantity" class="control-label">Số lượng</label>
-            <input asp-for="Quantity" class="form-control" />
-            <span asp-validation-for="Quantity" class="text-danger"></span>
-        </div>*@
             <div class="form-group">
                 <label asp-for="Trandemark" class="control-label">Thương hiệu</label>
                 <input asp-for="Trandemark" class="form-control" />

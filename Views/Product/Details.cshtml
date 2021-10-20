@@ -135,13 +135,42 @@
                         <div class="row">
                             <div class="col-md-6 col-xs-12 d-flex">
                                 <h5 style="margin-right: 3%;">@_context.Users.Where(u => u.Id == item.UserId).First().Name</h5>
-                                <span class="local-datetime"
+                                @{
+                                    TimeSpan time = item.CreatedDate - DateTime.Now;
+                                    if (time.TotalDays > 1)
+                                    {
+                                        <span class="local-datetime">@item.CreatedDate.ToString("dd/MM/yyyy")</span>
+                                    }
+                                    else if (time.TotalDays == 1)
+                                    {
+                                        <span class="local-datetime">1 ngày trước</span>
+                                    }
+                                    else
+                                    {
+                                        if (time.TotalHours < 1)
+                                        {
+                                            if (time.TotalMinutes < 1)
+                                            {
+                                                <span class="local-datetime">Vừa xong</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="local-datetime">@time.TotalMinutes phút trước</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="local-datetime">@time.TotalHours giờ trước</span>
+                                        }
+                                    }
+                                }
+                                @*<span class="local-datetime"
                                       title="@(item.CreatedDate.ToString("dd-MM-yyyy HH:mm")) UTC"
                                       data-utc="@(item.CreatedDate.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds)">
 
                                     @(item.CreatedDate.ToString("dd-MM-yyyy HH:mm"))
 
-                                </span>
+                                </span>*@
                             </div>
                             <div class="col-md-6 col-xs-12">
                                 <div class="rating">

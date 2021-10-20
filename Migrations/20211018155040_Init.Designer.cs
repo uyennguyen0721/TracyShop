@@ -10,7 +10,7 @@ using TracyShop.Data;
 namespace TracyShop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20211002071747_Init")]
+    [Migration("20211018155040_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace TracyShop.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -355,9 +355,6 @@ namespace TracyShop.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Is_check")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Is_pay")
                         .HasColumnType("bit");
 
                     b.Property<int>("PaymentMenthodId")

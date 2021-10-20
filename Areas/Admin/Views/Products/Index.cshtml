@@ -51,9 +51,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
-                <td>
-                    @_context.StockReceivedDetail.Where(p => p.ProductId == item.Id).OrderBy(p => p.StockReceivedId).Last().Unit_price
-                </td>
+                @if(_context.StockReceivedDetail.Where(p => p.ProductId == item.Id).ToList().Count != 0)
+                {
+                    <td>
+                        @_context.StockReceivedDetail.Where(p => p.ProductId == item.Id).OrderBy(p => p.StockReceivedId).Last().Unit_price
+                    </td>
+                }
+                else
+                {
+                    <td>0</td>
+                }
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>

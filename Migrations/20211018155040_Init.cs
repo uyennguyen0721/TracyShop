@@ -191,7 +191,6 @@ namespace TracyShop.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Created_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Is_check = table.Column<bool>(type: "bit", nullable: false),
-                    Is_pay = table.Column<bool>(type: "bit", nullable: false),
                     ShoppingFee = table.Column<double>(type: "float", nullable: false),
                     PaymentMenthodId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)

@@ -12,7 +12,6 @@ namespace TracyShop.Models
         public int Id { set; get; }
         public DateTime Created_date { set; get; } = DateTime.Now;
         public bool Is_check { set; get; } = false;
-        public bool Is_pay { set; get; } = false;
 
         public double ShoppingFee { set; get; }
         public int PaymentMenthodId { set; get; }

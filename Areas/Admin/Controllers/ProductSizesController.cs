@@ -108,11 +108,6 @@ namespace TracyShop.Areas.Admin.Controllers
             }
             else
             {
-                //model.Products = productSize.Product;
-                //model.Sizes = productSize.Size;
-                //model.Quantity = productSize.Quantity;
-                //ViewBag.products = new SelectList(_context.Product.ToList(), "Id", "Name", productSize.Product);
-                //ViewBag.sizes = new SelectList(_context.Sizes, "Id", "Name", productSize.Size);
                 return View(productSize);
             }
         }
