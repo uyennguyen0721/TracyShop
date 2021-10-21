@@ -211,6 +211,15 @@ namespace TracyShop.Controllers
             // Lấy comment và rating
             var reviews = _context.Reviews.Where(r => r.ProductId == id).ToList();
 
+            if(reviews.Count == 0)
+            {
+                ViewBag.Review = 0;
+            }
+            else
+            {
+                ViewBag.Review = 1;
+            }
+
             //Hiển thị lên view
             ViewBag.Categories = _context.Category.ToList();
             ViewBag.CountImages = images.Count;

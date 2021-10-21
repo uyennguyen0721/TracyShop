@@ -117,89 +117,99 @@
         </div>
     </div>
 
-    <div class="row" style="margin-top: 2%;">
-        <div class="col-md-12">
+    @if (ViewBag.Review == 0)
+    {
+        <div class="text-center" style="margin-top: 12%; margin-bottom: 2% ">
+            <img src="~/Client/img/review-blank.png" style="width: 10%;" />
+        </div>
+        <div class="text-center" style="margin-bottom: 2%">Chưa có đánh giá.</div>
+    }
+    else
+    {
+        <div class="row" style="margin-top: 2%;">
+            <div class="col-md-12">
 
-            @foreach (var item in Model.Reviews)
-            {
-                <div class="media mt-4">
-                    @if (_context.Users.Where(u => u.Id == item.UserId).First().Avatar != null) 
-                    { 
-                        <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="@_context.Users.Where(u => u.Id == item.UserId).First().Avatar" />
-                    }
-                    else
-                    {
-                        <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="~/Client/img/default-user.jpg" />
-                    }
-                    <div class="media-body">
-                        <div class="row">
-                            <div class="col-md-6 col-xs-12 d-flex">
-                                <h5 style="margin-right: 3%;">@_context.Users.Where(u => u.Id == item.UserId).First().Name</h5>
-                                @{
-                                    TimeSpan time = item.CreatedDate - DateTime.Now;
-                                    if (time.TotalDays > 1)
-                                    {
-                                        <span class="local-datetime">@item.CreatedDate.ToString("dd/MM/yyyy")</span>
-                                    }
-                                    else if (time.TotalDays == 1)
-                                    {
-                                        <span class="local-datetime">1 ngày trước</span>
-                                    }
-                                    else
-                                    {
-                                        if (time.TotalHours < 1)
+                @foreach (var item in Model.Reviews)
+                {
+                    <div class="media mt-4">
+                        @if (_context.Users.Where(u => u.Id == item.UserId).First().Avatar != null)
+                        {
+                            <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="@_context.Users.Where(u => u.Id == item.UserId).First().Avatar" />
+                        }
+                        else
+                        {
+                            <img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="~/Client/img/default-user.jpg" />
+                        }
+                        <div class="media-body">
+                            <div class="row">
+                                <div class="col-md-6 col-xs-12 d-flex">
+                                    <h5 style="margin-right: 3%;">@_context.Users.Where(u => u.Id == item.UserId).First().Name</h5>
+                                    @{
+                                        TimeSpan time = item.CreatedDate - DateTime.Now;
+                                        if (time.TotalDays > 1)
                                         {
-                                            if (time.TotalMinutes < 1)
-                                            {
-                                                <span class="local-datetime">Vừa xong</span>
-                                            }
-                                            else
-                                            {
-                                                <span class="local-datetime">@time.TotalMinutes phút trước</span>
-                                            }
+                                            <span class="local-datetime">@item.CreatedDate.ToString("dd/MM/yyyy")</span>
+                                        }
+                                        else if (time.TotalDays == 1)
+                                        {
+                                            <span class="local-datetime">1 ngày trước</span>
                                         }
                                         else
                                         {
-                                            <span class="local-datetime">@time.TotalHours giờ trước</span>
+                                            if (time.TotalHours < 1)
+                                            {
+                                                if (time.TotalMinutes < 1)
+                                                {
+                                                    <span class="local-datetime">Vừa xong</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="local-datetime">@time.TotalMinutes phút trước</span>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <span class="local-datetime">@time.TotalHours giờ trước</span>
+                                            }
                                         }
                                     }
-                                }
-                                @*<span class="local-datetime"
-                                      title="@(item.CreatedDate.ToString("dd-MM-yyyy HH:mm")) UTC"
-                                      data-utc="@(item.CreatedDate.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds)">
+                                    @*<span class="local-datetime"
+                                              title="@(item.CreatedDate.ToString("dd-MM-yyyy HH:mm")) UTC"
+                                              data-utc="@(item.CreatedDate.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds)">
 
-                                    @(item.CreatedDate.ToString("dd-MM-yyyy HH:mm"))
+                                            @(item.CreatedDate.ToString("dd-MM-yyyy HH:mm"))
 
-                                </span>*@
-                            </div>
-                            <div class="col-md-6 col-xs-12">
-                                <div class="rating">
-                                    <input asp-for="@item.Rate" type="radio" value="5" id="5">
-                                    <label asp-for="@item.Rate" for="5">☆</label>
-                                    <input asp-for="@item.Rate" type="radio" value="4" id="4">
-                                    <label asp-for="@item.Rate" for="4">☆</label>
-                                    <input asp-for="@item.Rate" type="radio" value="3" id="3">
-                                    <label asp-for="@item.Rate" for="3">☆</label>
-                                    <input asp-for="@item.Rate" type="radio" value="2" id="2">
-                                    <label asp-for="@item.Rate" for="2">☆</label>
-                                    <input asp-for="@item.Rate" type="radio" value="1" id="1">
-                                    <label asp-for="@item.Rate" for="1">☆</label>
+                                        </span>*@
                                 </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="rating">
+                                        <input asp-for="@item.Rate" type="radio" value="5" id="5">
+                                        <label asp-for="@item.Rate" for="5">☆</label>
+                                        <input asp-for="@item.Rate" type="radio" value="4" id="4">
+                                        <label asp-for="@item.Rate" for="4">☆</label>
+                                        <input asp-for="@item.Rate" type="radio" value="3" id="3">
+                                        <label asp-for="@item.Rate" for="3">☆</label>
+                                        <input asp-for="@item.Rate" type="radio" value="2" id="2">
+                                        <label asp-for="@item.Rate" for="2">☆</label>
+                                        <input asp-for="@item.Rate" type="radio" value="1" id="1">
+                                        <label asp-for="@item.Rate" for="1">☆</label>
+                                    </div>
 
+                                </div>
                             </div>
+                            @item.Content
+                            @if (item.Image != null)
+                            {
+                                <div class="container row" style="margin-top: 2%;">
+                                    <img src="@item.Image" alt="images" width="200" />
+                                </div>
+                            }
                         </div>
-                        @item.Content
-                        @if (item.Image != null)
-                        {
-                            <div class="container row" style="margin-top: 2%;">
-                                <img src="@item.Image" alt="images" width="200" />
-                            </div>
-                        }
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
-    </div>
+    }
 
 </div>
 

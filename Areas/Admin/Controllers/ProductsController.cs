@@ -25,18 +25,21 @@ namespace TracyShop.Areas.Admin.Controllers
 
         [Authorize(Roles = "Admin, Employee")]
         // GET: Admin/Products
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index(int id)
         {
-            if(id == null)
+            if(id <= 0)
             {
                 return View(await _context.Product.ToListAsync());
             }
-            return View(await _context.Product.Where(p => p.CategoryId == id).ToListAsync());
+            else
+            {
+                return View(await _context.Product.Where(p => p.CategoryId == id).ToListAsync());
+            }
         }
 
         [Authorize(Roles = "Admin, Employee")]
         [HttpGet]
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Search(string searchString)
         {
             ViewData["GetProduct"] = searchString;
             var query = from x in _context.Product select x;
@@ -109,6 +112,7 @@ namespace TracyShop.Areas.Admin.Controllers
 
         // GET: Admin/Products/Edit/5
         [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             

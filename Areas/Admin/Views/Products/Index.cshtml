@@ -9,7 +9,7 @@
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
-    <form asp-controller="Products" asp-action="Index" method="get">
+    <form asp-controller="Products" asp-action="Search" method="get">
         <p>
             <input type="search" placeholder="Tìm kiếm ..." value="@ViewData["GetProduct"]" name="searchString" style="width:400px" />
             <button type="submit" class="btn btn-primary">

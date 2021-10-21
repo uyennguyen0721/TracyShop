@@ -12,7 +12,7 @@
 
     @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
     {
-        <a asp-area="Admin" asp-controller="Products" asp-action="Edit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a asp-area="Admin" asp-controller="Products" asp-action="Edit" asp-route-id="@Model.Id" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-edit text-white-50"></i> Chỉnh sửa thông tin
         </a>
     }
