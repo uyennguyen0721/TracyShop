@@ -50,7 +50,8 @@ namespace TracyShop.Areas.Admin.Controllers
                 var orderdetails = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
                 foreach (var i in orderdetails)
                 {
-                    report.Revenue += _context.OrderDetail.Where(d => d.Id == i.Id).First().Price;
+                    var price = _context.OrderDetail.Where(d => d.Id == i.Id).First();
+                    report.Revenue += (price.Price * price.Quantity);
                 }
             }
 
@@ -62,7 +63,8 @@ namespace TracyShop.Areas.Admin.Controllers
                 var stockdetails = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
                 foreach (var temp in stockdetails)
                 {
-                    report.CostPrice += _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First().Unit_price;
+                    var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
+                    report.CostPrice += detail.Unit_price * detail.Quantity;
                 }
             }
 
@@ -101,7 +103,8 @@ namespace TracyShop.Areas.Admin.Controllers
                 var orderdetails = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
                 foreach (var i in orderdetails)
                 {
-                    report.Revenue += _context.OrderDetail.Where(d => d.Id == i.Id).First().Price;
+                    var price = _context.OrderDetail.Where(d => d.Id == i.Id).First();
+                    report.Revenue += price.Price * price.Quantity;
                 }
             }
 
@@ -113,7 +116,8 @@ namespace TracyShop.Areas.Admin.Controllers
                 var stockdetails = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
                 foreach (var temp in stockdetails)
                 {
-                    report.CostPrice += _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First().Unit_price;
+                    var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
+                    report.CostPrice += detail.Unit_price * detail.Quantity;
                 }
             }
 
@@ -154,7 +158,8 @@ namespace TracyShop.Areas.Admin.Controllers
                     var odt = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
                     foreach (var j in odt)
                     {
-                        revenue += _context.OrderDetail.Where(d => d.Id == j.Id).First().Price;
+                        var price = _context.OrderDetail.Where(d => d.Id == j.Id).First();
+                        revenue += price.Price * price.Quantity;
                     }
                 }
 
@@ -166,7 +171,8 @@ namespace TracyShop.Areas.Admin.Controllers
                     var std = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
                     foreach (var temp in std)
                     {
-                        costPrice += _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First().Unit_price;
+                        var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
+                        costPrice += detail.Unit_price * detail.Quantity;
                     }
                 }
 
@@ -186,7 +192,8 @@ namespace TracyShop.Areas.Admin.Controllers
                 var orderdetails = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
                 foreach (var i in orderdetails)
                 {
-                    report.Revenue += _context.OrderDetail.Where(d => d.Id == i.Id).First().Price;
+                    var price = _context.OrderDetail.Where(d => d.Id == i.Id).First();
+                    report.Revenue += price.Price * price.Quantity;
                 }
             }
 
@@ -198,7 +205,8 @@ namespace TracyShop.Areas.Admin.Controllers
                 var stockdetails = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
                 foreach (var temp in stockdetails)
                 {
-                    report.CostPrice += _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First().Unit_price;
+                    var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
+                    report.CostPrice += detail.Unit_price * detail.Quantity;
                 }
             }
 
@@ -236,7 +244,8 @@ namespace TracyShop.Areas.Admin.Controllers
                     var odt = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
                     foreach (var j in odt)
                     {
-                        revenue += _context.OrderDetail.Where(d => d.Id == j.Id).First().Price;
+                        var price = _context.OrderDetail.Where(d => d.Id == j.Id).First();
+                        revenue += price.Price * price.Quantity;
                     }
                 }
 
@@ -248,7 +257,8 @@ namespace TracyShop.Areas.Admin.Controllers
                     var std = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
                     foreach (var temp in std)
                     {
-                        costPrice += _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First().Unit_price;
+                        var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
+                        costPrice += detail.Unit_price * detail.Quantity;
                     }
                 }
 
@@ -268,7 +278,8 @@ namespace TracyShop.Areas.Admin.Controllers
                 var orderdetails = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
                 foreach (var i in orderdetails)
                 {
-                    report.Revenue += _context.OrderDetail.Where(d => d.Id == i.Id).First().Price;
+                    var price = _context.OrderDetail.Where(d => d.Id == i.Id).First();
+                    report.Revenue += price.Price * price.Quantity;
                 }
             }
 
@@ -280,7 +291,8 @@ namespace TracyShop.Areas.Admin.Controllers
                 var stockdetails = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
                 foreach (var temp in stockdetails)
                 {
-                    report.CostPrice += _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First().Unit_price;
+                    var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
+                    report.CostPrice += detail.Unit_price * detail.Quantity;
                 }
             }
 

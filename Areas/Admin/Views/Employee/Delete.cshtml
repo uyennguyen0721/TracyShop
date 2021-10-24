@@ -15,7 +15,7 @@
         <dt class="col-sm-2">
             Tên nhân viên
         </dt>
-        <dd class="col-sm-10"
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
@@ -35,7 +35,7 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Xóa" class="btn btn-danger" /> &nbsp
-        <a asp-area="Admin" asp-controller="Products" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a asp-area="Admin" asp-controller="Employee" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-arrow-alt-circle-left text-white-50"></i> Quay lại
         </a>
     </form>

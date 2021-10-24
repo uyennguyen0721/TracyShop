@@ -101,7 +101,7 @@ namespace TracyShop.Areas.Admin.Controllers
                     var stockDetail = _context.StockReceivedDetail.OrderBy(s => s.Id).Last();
                     var stock = _context.StockReceived.Where(s => s.Id == stockDetail.StockReceivedId).First();
 
-                    if (productStock.SelectedPro == stockDetail.ProductId && (stock.Date.Date == DateTime.Now.Date && stock.Date.Hour == DateTime.Now.Hour))
+                    if (productStock.SelectedPro == stockDetail.ProductId && (stock.Date.Date == DateTime.Now.Date))
                     {
                         stockDetail.Quantity += productStock.Quantity;
                         _context.Update(stockDetail);

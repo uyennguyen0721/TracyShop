@@ -574,7 +574,6 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Images\I
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\ProductSizes\Create.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\ProductSizes\Delete.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\ProductSizes\Details.cshtml.g.cs
-D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\ProductSizes\Edit.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\ProductSizes\Index.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Promotions\Create.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Promotions\Delete.cshtml.g.cs
@@ -615,3 +614,4 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Report\R
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Report\ReportByYear.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\TracyShop.csproj.AssemblyReference.cache
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Products\Search.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\BuyNow.cshtml.g.cs

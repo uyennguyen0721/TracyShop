@@ -1,7 +1,9 @@
-﻿@{
+﻿@model IEnumerable<TracyShop.ViewModels.ProductsListViewModel>
+@{
     Layout = "_Layout";
     ViewData["Title"] = "Home";
 }
+
 <!-- Carousel Start -->
 <div class="carousel header">
     <div class="container-fluid">
@@ -110,86 +112,49 @@
             <h2>Một số sản phẩm nổi bật</h2>
         </div>
         <div class="row wow zoomIn" data-wow-offset="140">
-            <div class="col-lg-3 col-md-6">
-                <div class="team-item">
-                    <div class="team-img">
-                        <img src="~/Client/img/sanpham-1.jpg" alt="Image">
-                        <div class="team-social">
-                            <a href="">Xem</a>
-                            <a href="">Mua ngay</a>
-                        </div>
-                    </div>
-                    <div class="team-text">
-                        <h2>Đầm hoa phối cổ yếm</h2>
-                        <div class="content-product-deltals">
-                            <div class="price">
-                                <span class="money">400000đ</span>
+
+            @foreach (var pro in ViewBag.ProductList)
+            {
+                <div class="col-lg-3 col-md-6">
+                    <div class="team-item" style="margin:0 1% 5% 1%">
+                        <div class="team-img">
+
+                            @if (pro.ImageDefault == "")
+                            {
+                                <img src="~/Client/img/default-product.jpg" alt="Image">
+                            }
+                            else
+                            {
+                                <img src="@pro.ImageDefault" alt="Image">
+                            }
+
+                            <div class="team-social">
+                                <a asp-controller="Product" asp-action="Details" asp-route-id="@pro.Id">Xem</a>
+                                @if(pro.Count > 0)
+                                {
+                                    <a asp-controller="Product" asp-action="BuyNow" asp-route-id="@pro.Id">Mua ngay</a>
+                                }
                             </div>
-                            <button type="button" class="btn btn-cart">Thêm Vào Giỏ</button>
+                        </div>
+                        <div class="team-text">
+                            <h2>@pro.Name</h2>
+                            <div class="content-product-deltals">
+                                <div class="price">
+                                    <span class="money">@pro.Price</span>
+                                </div>
+                                @if (pro.Count > 0)
+                                {
+                                    <a asp-action="AddCart" asp-controller="Product" asp-route-id="@pro.Id" type="button" class="btn btn-cart">Thêm Vào Giỏ</a>
+                                }
+                                else
+                                {
+                                    <a style="margin-top: 4%;"><i>Hết hàng</i></a>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="team-item">
-                    <div class="team-img">
-                        <img src="~/Client/img/sanpham-2.jpg" alt="Image">
-                        <div class="team-social">
-                            <a href="">Xem</a>
-                            <a href="">Mua ngay</a>
-                        </div>
-                    </div>
-                    <div class="team-text">
-                        <h2>Áo sơ mi Hàn Quốc tay dài</h2>
-                        <div class="content-product-deltals">
-                            <div class="price">
-                                <span class="money">250000đ</span>
-                            </div>
-                            <button type="button" class="btn btn-cart">Thêm Vào Giỏ</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="team-item">
-                    <div class="team-img">
-                        <img src="~/Client/img/sanpham-3.jpg" alt="Image">
-                        <div class="team-social">
-                            <a href="">Xem</a>
-                            <a href="">Mua ngay</a>
-                        </div>
-                    </div>
-                    <div class="team-text">
-                        <h2>Set áo Gile sọc ngang và sơ mi trắng</h2>
-                        <div class="content-product-deltals">
-                            <div class="price">
-                                <span class="money">350000đ</span>
-                            </div>
-                            <button type="button" class="btn btn-cart">Thêm Vào Giỏ</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="team-item">
-                    <div class="team-img">
-                        <img src="~/Client/img/sanpham-4.jpg" alt="Image">
-                        <div class="team-social">
-                            <a href="">Xem</a>
-                            <a href="">Mua ngay</a>
-                        </div>
-                    </div>
-                    <div class="team-text">
-                        <h2>Chân váy xòe phối ren</h2>
-                        <div class="content-product-deltals">
-                            <div class="price">
-                                <span class="money">135000đ</span>
-                            </div>
-                            <button type="button" class="btn btn-cart">Thêm Vào Giỏ</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </div>
@@ -312,7 +277,7 @@
 </div>
 <!-- Testimonial End -->
 <!-- Contact Start -->
-<div class="contact">
+<div class="contact" id="1">
     <div class="container">
         <div class="section-header text-center">
             <p>Liên hệ</p>
@@ -388,28 +353,7 @@
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.935728531272!2d106.67562481474924!3d10.816230592294513!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528e195f816b7%3A0xfb5c0101490d8870!2zMzcxIE5ndXnhu4VuIEtp4buHbSwgUGjGsOG7nW5nIDMsIEfDsiBW4bqlcCwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1565344428425!5m2!1svi!2s" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
             </div>
             <div class="col-md-6">
-                <div id="success"></div>
-                <form name="sentMessage" id="contactForm" novalidate="novalidate">
-                    <div class="control-group">
-                        <input type="text" class="form-control" id="name" placeholder="Your Name" required="required" data-validation-required-message="Please enter your name" />
-                        <p class="help-block text-danger"></p>
-                    </div>
-                    <div class="control-group">
-                        <input type="email" class="form-control" id="email" placeholder="Your Email" required="required" data-validation-required-message="Please enter your email" />
-                        <p class="help-block text-danger"></p>
-                    </div>
-                    <div class="control-group">
-                        <input type="text" class="form-control" id="subject" placeholder="Subject" required="required" data-validation-required-message="Please enter a subject" />
-                        <p class="help-block text-danger"></p>
-                    </div>
-                    <div class="control-group">
-                        <textarea class="form-control" id="message" placeholder="Message" required="required" data-validation-required-message="Please enter your message"></textarea>
-                        <p class="help-block text-danger"></p>
-                    </div>
-                    <div>
-                        <button class="btn custom-btn" type="submit" id="sendMessageButton">Send Message</button>
-                    </div>
-                </form>
+                <div class="fb-page" data-href="https://www.facebook.com/profile.php?id=100073948878568" data-tabs="timeline" data-width="500" data-height="550" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/profile.php?id=100073948878568" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/profile.php?id=100073948878568">TracyShop</a></blockquote></div>
             </div>
         </div>
     </div>

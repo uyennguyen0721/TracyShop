@@ -9,13 +9,6 @@
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Số lượng sản phẩm theo size</h1>
-
-    @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
-    {
-        <a asp-area="Admin" asp-controller="ProductSize" asp-action="Edit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-edit text-white-50"></i> Chỉnh sửa
-        </a>
-    }
 </div>
 
 <div>

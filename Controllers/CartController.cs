@@ -63,7 +63,7 @@ namespace TracyShop.Controllers
             List<Size> sizes = new List<Size>();
             // Lấy danh sách sizes và descriptionSize
             var qr1 = _context.Sizes.ToList();
-            var qr3 = _context.ProductSize.Where(p => p.ProductId == cart.ProductId).ToList();
+            var qr3 = _context.ProductSize.Where(p => p.ProductId == cart.ProductId && p.Quantity > 0).ToList();
             foreach (var pr in qr3)
             {
                 sizes.Add(qr1.Where(d => d.Id == pr.SizeId).First());

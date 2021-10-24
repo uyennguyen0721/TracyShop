@@ -79,11 +79,10 @@ namespace TracyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.UserName = user.Email;
+                user.EmailConfirmed = true;
                 await _userManager.CreateAsync(user, user.PasswordHash);
                 Task.Delay(500).Wait();
-                _context.Add(user);
-                await _context.SaveChangesAsync();
-                Task.Delay(1000).Wait();
                 var role = _context.Roles.Where(r => r.Id.Contains("2")).First();
 
                 _context.UserRoles.Add(new IdentityUserRole<string>
@@ -92,7 +91,7 @@ namespace TracyShop.Areas.Admin.Controllers
                     UserId = user.Id
                 });
                 await _context.SaveChangesAsync();
-                Task.Delay(1000).Wait();
+                Task.Delay(100).Wait();
                 return RedirectToAction(nameof(Index));
             }
             return View(user);

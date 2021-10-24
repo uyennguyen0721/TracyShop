@@ -45,7 +45,8 @@ namespace TracyShop.Areas.Admin.Controllers
                     var odt = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
                     foreach (var j in odt)
                     {
-                        revenue += _context.OrderDetail.Where(d => d.Id == j.Id).First().Price;
+                        var price = _context.OrderDetail.Where(d => d.Id == j.Id).First();
+                        revenue += price.Price * price.Quantity;
                     }
                 }
 
@@ -57,7 +58,8 @@ namespace TracyShop.Areas.Admin.Controllers
                     var std = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
                     foreach (var temp in std)
                     {
-                        costPrice += _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First().Unit_price;
+                        var price = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
+                        costPrice += price.Unit_price * price.Quantity;
                     }
                 }
 
@@ -77,7 +79,8 @@ namespace TracyShop.Areas.Admin.Controllers
                 var orderdetails = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
                 foreach (var i in orderdetails)
                 {
-                    report.Revenue += _context.OrderDetail.Where(d => d.Id == i.Id).First().Price;
+                    var price = _context.OrderDetail.Where(d => d.Id == i.Id).First();
+                    report.Revenue += price.Price * price.Quantity;
                 }
             }
 
@@ -89,7 +92,8 @@ namespace TracyShop.Areas.Admin.Controllers
                 var stockdetails = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
                 foreach (var temp in stockdetails)
                 {
-                    report.CostPrice += _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First().Unit_price;
+                    var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
+                    report.CostPrice += detail.Unit_price * detail.Quantity;
                 }
             }
 
@@ -123,7 +127,8 @@ namespace TracyShop.Areas.Admin.Controllers
             }
             else
             {
-                ViewBag.Stock = totalStock / totalReceived * 100;
+                int stock = (int)((float)(totalStock * 100 / totalReceived));
+                ViewBag.Stock = stock;
             }
 
             // Tính số lượng phản hồi đánh giá
@@ -148,11 +153,11 @@ namespace TracyShop.Areas.Admin.Controllers
                     else if (item.Rate == 5)
                         fiveStar++;
                 }
-                ViewBag.OneStar = oneStar / star.Count * 100;
-                ViewBag.TwoStar = twoStar / star.Count * 100;
-                ViewBag.ThreeStar = threeStar / star.Count * 100;
-                ViewBag.FourStar = fourStar / star.Count * 100;
-                ViewBag.FiveStar = fiveStar / star.Count * 100;
+                ViewBag.OneStar = (int)((float)(oneStar * 100 / star.Count));
+                ViewBag.TwoStar = (int)((float)(twoStar * 100 / star.Count));
+                ViewBag.ThreeStar = (int)((float)(threeStar * 100 / star.Count));
+                ViewBag.FourStar = (int)((float)(fourStar * 100 / star.Count));
+                ViewBag.FiveStar = (int)((float)(fiveStar * 100 / star.Count));
             }
             else
             {

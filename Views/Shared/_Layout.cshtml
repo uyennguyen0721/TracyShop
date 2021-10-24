@@ -27,10 +27,13 @@
 
     <!-- Template Stylesheet -->
     <link href="~/Client/css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
+    <!-- Plugin Trang Facebook -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v12.0&appId=534483551121734&autoLogAppEvents=1" nonce="dApvqMup"></script>
+
     <!-- Nav Bar Start -->
     <div class="navbar navbar-expand-lg bg-light navbar-light">
         <div class="container-fluid">
@@ -45,7 +48,7 @@
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav ml-auto">
-                    <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Trang chủ</a>
+                    <a asp-controller="Home" asp-action="Index" class="nav-item nav-link">Trang chủ</a>
                     <a asp-controller="About" asp-action="About" class="nav-item nav-link">Về chúng tôi</a>
                     <a asp-controller="Product" asp-action="Product" class="nav-item nav-link">Sản phẩm</a>
                     <partial name="_LoginPartial" />
@@ -103,7 +106,14 @@
                 </div>
             </div>
         </div>
+
     </div>
+
+    <!-- Messenger Plugin chat Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Plugin chat code -->
+    <div id="fb-customer-chat" class="fb-customerchat"></div>
 
     <!-- Footer Start -->
     <div class="footer">
@@ -155,7 +165,7 @@
                                 <a asp-controller="Home" asp-action="Index">Trang chủ</a>
                                 <a asp-controller="About" asp-action="About">Về chúng tôi</a>
                                 <a asp-controller="Product" asp-action="Product">Sản phẩm</a>
-                                <a href="">Liên hệ</a>
+                                <a href="#1">Liên hệ</a>
                             </div>
                         </div>
                     </div>
@@ -187,6 +197,28 @@
     <script src="~/Client/lib/wow/wow.min.js"></script>
     <script>
         new WOW().init();
+    </script>
+
+    <!-- Plugin Messenger -->
+    <script>
+        var chatbox = document.getElementById('fb-customer-chat');
+        chatbox.setAttribute("page_id", "101701408982171");
+        chatbox.setAttribute("attribution", "biz_inbox");
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                xfbml: true,
+                version: 'v12.0'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
     </script>
 
     <!-- Contact Javascript File -->

@@ -91,64 +91,6 @@ namespace TracyShop.Areas.Admin.Controllers
             return View(productSize);
         }
 
-        // GET: Admin/ProductSizes/Edit/5
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var productSize = await _context.ProductSize.FindAsync(id);
-            ProductSizeModel model = new ProductSizeModel();
-            if (productSize == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return View(productSize);
-            }
-        }
-
-        // POST: Admin/ProductSizes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,SizeId,Quantity")] ProductSize productSize)
-        {
-            if (id != productSize.ProductId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(productSize);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductSizeExists(productSize.ProductId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ProductId"] = new SelectList(_context.Product, "Id", "Id", productSize.ProductId);
-            ViewData["SizeId"] = new SelectList(_context.Sizes, "Id", "Id", productSize.SizeId);
-            return View(productSize);
-        }
 
         // GET: Admin/ProductSizes/Delete/5
         [Authorize(Roles = "Admin")]

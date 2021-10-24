@@ -24,7 +24,12 @@
 
                         <div class="team-social">
                             <a asp-controller="Product" asp-action="Details" asp-route-id="@pro.Id">Xem</a>
-                            <a asp-controller="Product" asp-action="BuyNow" asp-route-id="@pro.Id">Mua ngay</a>
+
+                            @if(pro.Count > 0)
+                            {
+                                <a asp-controller="Product" asp-action="BuyNow" asp-route-id="@pro.Id">Mua ngay</a>
+                            }
+
                         </div>
                     </div>
                     <div class="team-text">
@@ -33,7 +38,16 @@
                             <div class="price">
                                 <span class="money">@pro.Price Đ</span>
                             </div>
-                            <a asp-action="AddCart" asp-controller="Product" asp-route-id="@pro.Id" type="button" class="btn btn-cart">Thêm Vào Giỏ</a>
+
+                            @if (pro.Count > 0)
+                            {
+                                <a asp-action="AddCart" asp-controller="Product" asp-route-id="@pro.Id" type="button" class="btn btn-cart">Thêm Vào Giỏ</a>
+                            }
+                            else
+                            {
+                                <a style="margin-top: 4%;"><i>Hết hàng</i></a>
+                            }
+
                         </div>
                     </div>
                 </div>

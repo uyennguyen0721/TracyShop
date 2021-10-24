@@ -326,31 +326,36 @@
                                             </div>
                                             <div>
                                                 @{
-                                                    TimeSpan time = item.Created_date - DateTime.Now;
-                                                    if (time.TotalDays > 1)
+                                                    TimeSpan time = DateTime.Now - item.Created_date;
+                                                    int totalDays = (int) time.TotalDays;
+                                                    if (totalDays > 1)
                                                     {
                                                         <div class="small text-gray-500">@item.Created_date.ToString("dd/MM/yyyy")</div>
                                                     }
-                                                    else if (time.TotalDays == 1)
+                                                    else if (totalDays == 1)
                                                     {
                                                         <div class="small text-gray-500">1 ngày trước</div>
                                                     }
                                                     else
                                                     {
-                                                        if (time.TotalHours < 1)
+                                                        int totalHours = (int)time.TotalHours;
+                                                        if (totalHours < 1)
                                                         {
-                                                            if (time.TotalMinutes < 1)
+                                                            int totalMinutes = (int)time.TotalMinutes;
+                                                            if (totalMinutes < 1)
                                                             {
                                                                 <div class="small text-gray-500">Vừa xong</div>
                                                             }
                                                             else
                                                             {
-                                                                <div class="small text-gray-500">@time.TotalMinutes phút trước</div>
+                                                                
+                                                                <div class="small text-gray-500">@totalMinutes phút trước</div>
                                                             }
                                                         }
                                                         else
                                                         {
-                                                            <div class="small text-gray-500">@time.TotalHours giờ trước</div>
+                                                            
+                                                            <div class="small text-gray-500">@totalHours giờ trước</div>
                                                         }
                                                     }
                                                 }
