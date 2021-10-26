@@ -65,49 +65,43 @@ namespace TracyShop.Controllers
         [Route("reviews", Name = "reviews")]
         public async Task<ActionResult> Create(int id, ReviewsViewModel reviewsModel)
         {
-            try
+            string fileName = "";
+            if(reviewsModel.Image != null)
             {
-                string fileName = null;
-                try
-                {
-                    string wwwRootPath = _hostingEnvironment.WebRootPath;
-                    fileName = Path.GetFileNameWithoutExtension(reviewsModel.Image.FileName);
-                    string extension = Path.GetExtension(reviewsModel.Image.FileName);
-                    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-                    string filePath = Path.Combine(wwwRootPath + "/img/reviews/", fileName);
+                string wwwRootPath = _hostingEnvironment.WebRootPath;
+                fileName = Path.GetFileNameWithoutExtension(reviewsModel.Image.FileName);
+                string extension = Path.GetExtension(reviewsModel.Image.FileName);
+                fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                string filePath = Path.Combine(wwwRootPath + "/img/reviews/", fileName);
 
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await reviewsModel.Image.CopyToAsync(fileStream);
-                    }
-                }
-                catch
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    fileName = null;
+                    await reviewsModel.Image.CopyToAsync(fileStream);
                 }
-                var userid = _userManager.GetUserId(HttpContext.User);
-                var reviews = new Reviews();
-                reviews.Rate = reviewsModel.Rate;
-                reviews.Content = reviewsModel.Content;
-                if(fileName == null)
-                {
-                    reviews.Image = fileName;
-                }
-                else
-                {
-                    reviews.Image = "/img/reviews/" + fileName;
-                }
-                reviews.ProductId = id;
-                reviews.UserId = userid;
-                _context.Add(reviews);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction("Product", "Product");
             }
-            catch
+            else
             {
-                return View(reviewsModel);
+                fileName = "";
             }
+            var userid = _userManager.GetUserId(HttpContext.User);
+            var reviews = new Reviews();
+            reviews.Rate = reviewsModel.Rate;
+            reviews.Content = reviewsModel.Content;
+            reviews.SelectedSize = reviewsModel.Size;
+            if (fileName == "")
+            {
+                reviews.Image = fileName;
+            }
+            else
+            {
+                reviews.Image = "/img/reviews/" + fileName;
+            }
+            reviews.ProductId = id;
+            reviews.UserId = userid;
+            _context.Add(reviews);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Product", "Product");
         }
     }
 }

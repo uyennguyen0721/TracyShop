@@ -28,13 +28,13 @@
                 <h2 style="color: #fbaf32; margin-bottom: 5%;">@Model.ProductName</h2>
                 <div class="form-group row">
                     <div class="col-md-3 col-xs-12">
-                        <label asp-for="SelectedSize" class="control-label">Phân loại hàng</label>
+                        <label asp-for="Size" class="control-label">Phân loại hàng</label>
                     </div>
                     <div class="col-md-9 col-xs-12">
-                        <select asp-for="SelectedSize" asp-items="@(new SelectList(Model.Sizes, "Id", "Name", "Description"))" class="form-control">
+                        <select asp-for="Size" asp-items="@(new SelectList(Model.Sizes, "Id", "Name", "Description"))" class="form-control">
                             <option value="0">Chọn phân loại hàng</option>
                         </select>
-                        <span asp-validation-for="SelectedSize" class="text-danger"></span>
+                        <span asp-validation-for="Size" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row">

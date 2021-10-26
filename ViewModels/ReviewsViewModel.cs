@@ -20,6 +20,7 @@ namespace TracyShop.ViewModels
         public string ImageProduct { set; get; }
         public string ProductName { set; get; }
         public string SelectedSize { set; get; }
+        public int Size { set; get; }
         public List<Size> Sizes { set; get; }
 
         public int ProductId { set; get; }

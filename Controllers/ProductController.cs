@@ -87,7 +87,7 @@ namespace TracyShop.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Category(int? id)
+        public IActionResult Category(int? id)
         {
             List<ProductsListViewModel> products = new List<ProductsListViewModel>();
             List<Image> images = new List<Image>();
@@ -137,7 +137,7 @@ namespace TracyShop.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Search(string search)
+        public IActionResult Search(string search)
         {
             List<ProductsListViewModel> products = new List<ProductsListViewModel>();
             List<Image> images = new List<Image>();
@@ -207,7 +207,7 @@ namespace TracyShop.Controllers
 
             // Lấy danh sách sizes và descriptionSize
             var qr1 = _context.Sizes.ToList();
-            var qr3 = _context.ProductSize.Where(p => p.ProductId == id).ToList();
+            var qr3 = _context.ProductSize.Where(p => p.ProductId == id && p.Quantity > 0).ToList();
             foreach (var pr in qr3)
             {
                 sizes.Add(qr1.Where(d => d.Id == pr.SizeId).First());

@@ -533,6 +533,9 @@ namespace TracyShop.Migrations
                     b.Property<int>("Rate")
                         .HasColumnType("int");
 
+                    b.Property<int>("SelectedSize")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 

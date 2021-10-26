@@ -14,6 +14,7 @@ namespace TracyShop.Models
 
         [MaxLength(255)]
         public string Content { set; get; }
+        public int SelectedSize { set; get; }
 
         [MaxLength(100)]
         public string Image { set; get; }

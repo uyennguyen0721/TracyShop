@@ -69,23 +69,39 @@ namespace TracyShop.Controllers
             var userid = _userManager.GetUserId(HttpContext.User);
             AppUser user = _userManager.FindByIdAsync(userid).Result;
 
-            string wwwRootPath = _hostingEnvironment.WebRootPath;
-            string fileName = Path.GetFileNameWithoutExtension(userdetails.AvatarPath.FileName);
-            string extension = Path.GetExtension(userdetails.AvatarPath.FileName);
-            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            string filePath = Path.Combine(wwwRootPath + "/img/avatar/", fileName);
-
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            string fileName = "";
+            if(userdetails.AvatarPath != null)
             {
-                await userdetails.AvatarPath.CopyToAsync(fileStream);
-            }
+                string wwwRootPath = _hostingEnvironment.WebRootPath;
+                fileName = Path.GetFileNameWithoutExtension(userdetails.AvatarPath.FileName);
+                string extension = Path.GetExtension(userdetails.AvatarPath.FileName);
+                fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                string filePath = Path.Combine(wwwRootPath + "/img/avatar/", fileName);
 
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await userdetails.AvatarPath.CopyToAsync(fileStream);
+                }
+            }
+            else
+            {
+                fileName = "";
+            }
+            
             user.Name = userdetails.Name;
             user.PhoneNumber = userdetails.PhoneNumber;
             user.Gender = userdetails.Gender;
             user.Birthday = userdetails.Birthday;
-            user.Avatar = "/img/avatar/" + fileName;
-
+            
+            if(fileName == "")
+            {
+                user.Avatar = fileName;
+            }
+            else
+            {
+                user.Avatar = "/img/avatar/" + fileName;
+            }
+            
             userdetails.Email = user.Email;
             userdetails.UserName = user.UserName;
             IdentityResult x = await _userManager.UpdateAsync(user);
