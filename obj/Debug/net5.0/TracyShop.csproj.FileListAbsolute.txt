@@ -615,3 +615,7 @@ D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Report\R
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\TracyShop.csproj.AssemblyReference.cache
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Products\Search.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Product\BuyNow.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\BraintreeHttp-Dotnet.dll
+D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\Source.dll
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Order\CheckoutFail.cshtml.g.cs
+D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Order\CheckoutSuccess.cshtml.g.cs

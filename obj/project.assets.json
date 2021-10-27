@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net5.0": {
+      "BraintreeHttp-Dotnet/0.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/BraintreeHttp-Dotnet.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/BraintreeHttp-Dotnet.dll": {}
+        }
+      },
       "CoreAdmin/1.8.0": {
         "type": "package",
         "dependencies": {
@@ -2081,6 +2090,18 @@
           "lib/netstandard2.0/Mvc.Grid.Core.dll": {}
         }
       },
+      "PayPal/2.0.0-rc2": {
+        "type": "package",
+        "dependencies": {
+          "BraintreeHttp-Dotnet": "0.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Source.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Source.dll": {}
+        }
+      },
       "Portable.BouncyCastle/1.8.10": {
         "type": "package",
         "compile": {
@@ -4005,6 +4026,18 @@
     }
   },
   "libraries": {
+    "BraintreeHttp-Dotnet/0.3.0": {
+      "sha512": "ARHcstlJ2uRxqJVAxhJ7PJbzsDD9us+docpKHuay6psUVpQJo4cH0negfo8rv/iEakGhx0Rxgp/HUu6ZLa+lsA==",
+      "type": "package",
+      "path": "braintreehttp-dotnet/0.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "braintreehttp-dotnet.0.3.0.nupkg.sha512",
+        "braintreehttp-dotnet.nuspec",
+        "lib/netstandard2.0/BraintreeHttp-Dotnet.dll"
+      ]
+    },
     "CoreAdmin/1.8.0": {
       "sha512": "1/Tdedw9IaPhmq7XgIoJtN8I2u6Um5ARpudZ33qXXRSwTxAV/W5EtzD4K5w/4lIyzAvMN8gcgfiJtuQclWtwVg==",
       "type": "package",
@@ -6932,6 +6965,18 @@
         "lib/netstandard2.0/Mvc.Grid.Core.dll",
         "nonfactors.grid.core.mvc6.6.2.3.nupkg.sha512",
         "nonfactors.grid.core.mvc6.nuspec"
+      ]
+    },
+    "PayPal/2.0.0-rc2": {
+      "sha512": "QmsC08dT2Bp4zxsWAXYnnYDL3x870LbC81Hodlmm3Df/WGUOVkcyMSFcTdZ8l0Xw823WW6WgZVl2ZIx7phWuCw==",
+      "type": "package",
+      "path": "paypal/2.0.0-rc2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Source.dll",
+        "paypal.2.0.0-rc2.nupkg.sha512",
+        "paypal.nuspec"
       ]
     },
     "Portable.BouncyCastle/1.8.10": {
@@ -11979,6 +12024,7 @@
       "Moment.js >= 2.29.1",
       "NETCore.MailKit >= 2.0.3",
       "Newtonsoft.Json >= 13.0.1",
+      "PayPal >= 2.0.0-rc2",
       "System.Data.SqlClient >= 4.8.3"
     ]
   },
@@ -12168,6 +12214,10 @@
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.1, )"
+          },
+          "PayPal": {
+            "target": "Package",
+            "version": "[2.0.0-rc2, )"
           },
           "System.Data.SqlClient": {
             "target": "Package",

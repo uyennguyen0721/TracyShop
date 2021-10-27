@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Messages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page Header Start -->
+<div class="cart-header mb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="wow fadeInDown" data-wow-delay="0.5s">Thanh toán</h2>
+            </div>
+            <div class="col-12 wow fadeInUp" data-wow-delay="0.5s">
+                <a asp-controller="Home" asp-action="Index">Home</a>
+                <a asp-controller="Product" asp-action="Product">Order</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+<div class="container" style="margin-top: 5%; margin-bottom: 10%;">
+    <div class="card">
+        <div class="alert alert-danger" role="alert">
+            <p>
+                Thanh toán thất bại
+            </p>
+
+        </div>
+        <div class="text text-center" style="margin: 1%;">
+            <p>Rất tiếc vì sự cố trên, bạn vui lòng thử lại hoặc chọn hình thức thanh toán khác nhé!</p>
+        </div>
+    </div>
+</div>
+
+

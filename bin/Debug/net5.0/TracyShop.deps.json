@@ -67,6 +67,7 @@
           "Moment.js": "2.29.1",
           "NETCore.MailKit": "2.0.3",
           "Newtonsoft.Json": "13.0.1",
+          "PayPal": "2.0.0-rc2",
           "System.Data.SqlClient": "4.8.3",
           "Microsoft.AspNetCore.Antiforgery.Reference": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions.Reference": "5.0.0.0",
@@ -350,6 +351,17 @@
         },
         "compile": {
           "TracyShop.dll": {}
+        }
+      },
+      "BraintreeHttp-Dotnet/0.3.0": {
+        "runtime": {
+          "lib/netstandard2.0/BraintreeHttp-Dotnet.dll": {
+            "assemblyVersion": "0.3.0.0",
+            "fileVersion": "0.3.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/BraintreeHttp-Dotnet.dll": {}
         }
       },
       "CoreAdmin/1.8.0": {
@@ -1972,6 +1984,20 @@
         },
         "compile": {
           "lib/netstandard2.0/Mvc.Grid.Core.dll": {}
+        }
+      },
+      "PayPal/2.0.0-rc2": {
+        "dependencies": {
+          "BraintreeHttp-Dotnet": "0.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Source.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Source.dll": {}
         }
       },
       "Portable.BouncyCastle/1.8.10": {
@@ -4761,6 +4787,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "BraintreeHttp-Dotnet/0.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ARHcstlJ2uRxqJVAxhJ7PJbzsDD9us+docpKHuay6psUVpQJo4cH0negfo8rv/iEakGhx0Rxgp/HUu6ZLa+lsA==",
+      "path": "braintreehttp-dotnet/0.3.0",
+      "hashPath": "braintreehttp-dotnet.0.3.0.nupkg.sha512"
+    },
     "CoreAdmin/1.8.0": {
       "type": "package",
       "serviceable": true,
@@ -5705,6 +5738,13 @@
       "sha512": "sha512-84eT4h+m3/hLTmSbzS6uU6/UfIMUbbFvII0ypU2NMNItWVduVKPkxcQqrF88VQIQ+Jv/9FLCKs4jWvlQ2J/+wg==",
       "path": "nonfactors.grid.core.mvc6/6.2.3",
       "hashPath": "nonfactors.grid.core.mvc6.6.2.3.nupkg.sha512"
+    },
+    "PayPal/2.0.0-rc2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QmsC08dT2Bp4zxsWAXYnnYDL3x870LbC81Hodlmm3Df/WGUOVkcyMSFcTdZ8l0Xw823WW6WgZVl2ZIx7phWuCw==",
+      "path": "paypal/2.0.0-rc2",
+      "hashPath": "paypal.2.0.0-rc2.nupkg.sha512"
     },
     "Portable.BouncyCastle/1.8.10": {
       "type": "package",
