@@ -274,8 +274,6 @@ namespace TracyShop.Controllers
         [Route("/order/checkout-fail")]
         public IActionResult CheckoutFail()
         {
-            //Tạo đơn hàng trong database với trạng thái thanh toán là "Chưa thanh toán"
-            //Xóa session
             return View();
         }
 
