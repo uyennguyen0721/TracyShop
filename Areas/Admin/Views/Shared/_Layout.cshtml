@@ -37,6 +37,9 @@
     <!-- Custom styles for this template-->
     <link href="~/Admin/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Paging -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css" />
+
 </head>
 
 <body id="page-top">
@@ -327,7 +330,7 @@
                                             <div>
                                                 @{
                                                     TimeSpan time = DateTime.Now - item.Created_date;
-                                                    int totalDays = (int) time.TotalDays;
+                                                    int totalDays = (int)time.TotalDays;
                                                     if (totalDays > 1)
                                                     {
                                                         <div class="small text-gray-500">@item.Created_date.ToString("dd/MM/yyyy")</div>
@@ -348,13 +351,13 @@
                                                             }
                                                             else
                                                             {
-                                                                
+
                                                                 <div class="small text-gray-500">@totalMinutes phút trước</div>
                                                             }
                                                         }
                                                         else
                                                         {
-                                                            
+
                                                             <div class="small text-gray-500">@totalHours giờ trước</div>
                                                         }
                                                     }
@@ -376,7 +379,7 @@
                                         Chưa có thông báo mới.
                                     </div>
                                 </div>
-                                    
+
                             }
                         </li>
                         <div class="topbar-divider d-none d-sm-block"></div>
@@ -485,9 +488,21 @@
     <!--Page level plugin-->
     <script src="~/Admin/vendor/chart.js/Chart.min.js"></script>
 
+    <!-- Paging -->
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(function () {
+            $('.table').DataTable();
+        });
+    </script>
+
+    <!-- Alert -->
+    <script src="~/lib/sweetalert/sweetalert.min.js"></script>
+
     <!--Page level custom scripts-->
     @*<script src="~/Admin/js/demo/chart-area-demo.js"></script>
-    <script src="~/Admin/js/demo/chart-pie-demo.js"></script>*@
+        <script src="~/Admin/js/demo/chart-pie-demo.js"></script>*@
 
     <!-- Address -->
     <script src="~/js/districts.min.js"></script>
@@ -561,7 +576,7 @@
                 })
             })
         })
-                    //]]></script>
+                                    //]]></script>
 
     @RenderSection("Scripts", required: false)
 

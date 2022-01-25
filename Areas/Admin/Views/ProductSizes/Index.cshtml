@@ -54,7 +54,7 @@
 
                     @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
                     {
-                        <a asp-area="Admin" asp-controller="ProductSizes" asp-action="Delete" asp-route-id="@item.ProductId"><i class="fas fa-trash-alt"></i></a>
+                        <button data-id="@item.ProductId" class="btn deleteSize" type="button"> <i class="far fa-trash-alt"></i></button>
                     }
 
                 </td>
@@ -62,3 +62,30 @@
         }
     </tbody>
 </table>
+
+<form id="deleteSize" asp-action="Delete">
+    <input type="hidden" id="sizeId" name="Id" />
+</form>
+
+@section Scripts{
+    <script>
+        $(function(){
+            $('.deleteSize').click(function(e) {
+                swal({
+                    title: "Bạn chắc chắn?",
+                    text: "Bạn chắc chắn muốn xóa size này?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((confirm) => {
+                        if(confirm){
+                            var btn = $(this);
+                            var id = btn.data("id");
+                            $('#sizeId').val(id);
+                            $('#deleteSize').submit();
+                        }
+                    });
+            });
+        });
+    </script>
+}

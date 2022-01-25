@@ -106,25 +106,6 @@ namespace TracyShop.Areas.Admin.Controllers
             return View(promotion);
         }
 
-        // GET: Admin/Promotions/Delete/5
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var promotion = await _context.Promotion
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (promotion == null)
-            {
-                return NotFound();
-            }
-
-            return View(promotion);
-        }
-
         // POST: Admin/Promotions/Delete/5
         [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]

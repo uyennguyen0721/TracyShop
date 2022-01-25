@@ -199,26 +199,6 @@ namespace TracyShop.Areas.Admin.Controllers
             return View(user);
         }
 
-        // GET: Admin/Employee/Delete/5
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(string? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var employee = await _context.Users
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (employee == null)
-            {
-                return NotFound();
-            }
-
-            return View(employee);
-        }
-
         // POST: Admin/Employee/Delete/5
         [HttpPost, ActionName("Delete")]
         [Authorize(Roles = "Admin")]

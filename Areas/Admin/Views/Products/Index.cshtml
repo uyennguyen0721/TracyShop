@@ -9,17 +9,6 @@
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Danh sách sản phẩm</h1>
-    <form asp-controller="Products" asp-action="Search" method="get">
-        <p>
-            <input type="search" placeholder="Tìm kiếm ..." value="@ViewData["GetProduct"]" name="searchString" style="width:400px" />
-            <button type="submit" class="btn btn-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                </svg>
-            </button>
-        </p>
-
-    </form>
 
     @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
     {
@@ -51,7 +40,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
-                @if(_context.StockReceivedDetail.Where(p => p.ProductId == item.Id).ToList().Count != 0)
+                @if (_context.StockReceivedDetail.Where(p => p.ProductId == item.Id).ToList().Count != 0)
                 {
                     <td>
                         @_context.StockReceivedDetail.Where(p => p.ProductId == item.Id).OrderBy(p => p.StockReceivedId).Last().Unit_price
@@ -78,8 +67,8 @@
 
                     @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
                     {
-                        <a asp-area="Admin" asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
-                    } | 
+                        <button data-id="@item.Id" class="btn deletePro" type="button"> <i class="far fa-trash-alt"></i></button>
+                    } |
 
                     <a asp-area="Admin" asp-controller="ProductSizes" asp-action="Index" asp-route-id="@item.Id">Xem số lượng</a> |
                     <a asp-area="Admin" asp-controller="Images" asp-action="Index" asp-route-id="@item.Id">Xem ảnh</a> |
@@ -89,3 +78,30 @@
         }
     </tbody>
 </table>
+
+<form id="deletePro" asp-action="Delete">
+    <input type="hidden" id="proId" name="Id" />
+</form>
+
+@section Scripts{
+    <script>
+        $(function(){
+            $('.deletePro').click(function(e) {
+                swal({
+                    title: "Bạn chắc chắn?",
+                    text: "Bạn chắc chắn muốn xóa sản phẩm này?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((confirm) => {
+                        if(confirm){
+                            var btn = $(this);
+                            var id = btn.data("id");
+                            $('#proId').val(id);
+                            $('#deletePro').submit();
+                        }
+                    });
+            });
+        });
+    </script>
+}

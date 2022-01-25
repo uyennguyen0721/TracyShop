@@ -37,33 +37,61 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.percent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
-            {
+        @foreach (var item in Model)
+        {
+            <tr>
                 <td>
-                    <a asp-area="Admin" asp-controller="Promotions" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
-                    <a asp-area="Admin" asp-controller="Promotions" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a> |
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
-            }
-            else
-            {
-                <td></td>
-            }
+                <td>
+                    @Html.DisplayFor(modelItem => item.percent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
+                {
+                    <td>
+                        <a asp-area="Admin" asp-controller="Promotions" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
+                        <button data-id="@item.Id" class="btn deletePromotion" type="button"> <i class="far fa-trash-alt"></i></button> |
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                }
 
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>
+
+<form id="deletePromotion" asp-action="Delete">
+    <input type="hidden" id="promotionId" name="Id" />
+</form>
+
+@section Scripts{
+    <script>
+        $(function(){
+            $('.deletePromotion').click(function(e) {
+                swal({
+                    title: "Bạn chắc chắn?",
+                    text: "Bạn chắc chắn muốn xóa chương trình khuyến mãi này?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((confirm) => {
+                        if(confirm){
+                            var btn = $(this);
+                            var id = btn.data("id");
+                            $('#promotionId').val(id);
+                            $('#deletePromotion').submit();
+                        }
+                    });
+            });
+        });
+    </script>
+}

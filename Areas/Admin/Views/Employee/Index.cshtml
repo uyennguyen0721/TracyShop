@@ -1,10 +1,9 @@
 ﻿@model IEnumerable<TracyShop.Models.AppUser>
 
-@{ 
-    ViewData["title"] = "Employee"; 
+@{
+    ViewData["title"] = "Employee";
 }
 @inject TracyShop.Data.AppDbContext _context
-
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Quản lý nhân viên</h1>
@@ -38,9 +37,9 @@
                     @Html.DisplayFor(modelItem => item.Birthday)
                 </td>
                 <td>
-                    @{ 
+                    @{
                         var address = "";
-                        if(_context.Address.Where(a => a.UserId.Contains(item.Id)).ToList().Count != 0)
+                        if (_context.Address.Where(a => a.UserId.Contains(item.Id)).ToList().Count != 0)
                         {
                             var model = _context.Address.Where(a => a.UserId.Contains(item.Id)).First();
                             address = model.SpecificAddress + ", " + model.District + ", " + model.City;
@@ -56,10 +55,37 @@
                     <a asp-area="Admin" asp-controller="Employee" asp-action="AddAddress" asp-route-id="@item.Id">Thêm địa chỉ</a> |
                     @if (item.Is_active != false)
                     {
-                        <a asp-area="Admin" asp-controller="Employee" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+                        <button data-id="@item.Id" class="btn deleteEmp" type="button"> <i class="far fa-trash-alt"></i></button>
                     }
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<form id="deleteEmp" asp-action="Delete">
+    <input type="hidden" id="empId" name="Id" />
+</form>
+
+@section Scripts{
+    <script>
+        $(function(){
+            $('.deleteEmp').click(function(e) {
+                swal({
+                    title: "Bạn chắc chắn?",
+                    text: "Bạn chắc chắn muốn xóa nhân viên này?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((confirm) => {
+                        if(confirm){
+                            var btn = $(this);
+                            var id = btn.data("id");
+                            $('#empId').val(id);
+                            $('#deleteEmp').submit();
+                        }
+                    });
+            });
+        });
+    </script>
+}

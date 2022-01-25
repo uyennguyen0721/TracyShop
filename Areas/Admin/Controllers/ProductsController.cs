@@ -38,23 +38,6 @@ namespace TracyShop.Areas.Admin.Controllers
         }
 
         [Authorize(Roles = "Admin, Employee")]
-        [HttpGet]
-        public async Task<IActionResult> Search(string searchString)
-        {
-            ViewData["GetProduct"] = searchString;
-            var query = from x in _context.Product select x;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                query = query.Where(p =>
-                p.Name.ToLower().Contains(searchString) ||
-                p.Category.Name.ToLower().Contains(searchString) ||
-                p.Trandemark.ToLower().Contains(searchString) ||
-                p.Origin.Contains(searchString));
-            }
-            return View(await query.AsNoTracking().ToListAsync());
-        }
-
-        [Authorize(Roles = "Admin, Employee")]
         // GET: Admin/Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -189,25 +172,6 @@ namespace TracyShop.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
-        }
-
-        // GET: Admin/Products/Delete/5
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
             return View(product);
         }
 

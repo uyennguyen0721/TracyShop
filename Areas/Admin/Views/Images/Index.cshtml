@@ -43,9 +43,36 @@
                     <img src="@Html.DisplayFor(modelItem => item.Path)" alt="Img" style="width: 10%" />
                 </td>
                 <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+                    <button data-id="@item.Id" class="btn deleteImg" type="button"> <i class="far fa-trash-alt"></i></button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<form id="deleteImg" asp-action="Delete">
+    <input type="hidden" id="imgId" name="Id" />
+</form>
+
+@section Scripts{
+    <script>
+        $(function(){
+            $('.deleteImg').click(function(e) {
+                swal({
+                    title: "Bạn chắc chắn?",
+                    text: "Bạn chắc chắn muốn xóa ảnh này?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((confirm) => {
+                        if(confirm){
+                            var btn = $(this);
+                            var id = btn.data("id");
+                            $('#imgId').val(id);
+                            $('#deleteImg').submit();
+                        }
+                    });
+            });
+        });
+    </script>
+}

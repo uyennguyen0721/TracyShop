@@ -91,28 +91,6 @@ namespace TracyShop.Areas.Admin.Controllers
             return View(productSize);
         }
 
-
-        // GET: Admin/ProductSizes/Delete/5
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var productSize = await _context.ProductSize
-                .Include(p => p.Product)
-                .Include(p => p.Size)
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (productSize == null)
-            {
-                return NotFound();
-            }
-
-            return View(productSize);
-        }
-
         // POST: Admin/ProductSizes/Delete/5
         [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
