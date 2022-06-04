@@ -110,6 +110,21 @@ namespace TracyShop.Data
                         .WithMany(r => r.StockReceivedDetails)
                         .HasForeignKey(s => s.StockReceivedId);
 
+            builder.Entity<Chat>()
+                        .HasOne<AppUser>(c => c.User)
+                        .WithMany(u => u.Chats)
+                        .HasForeignKey(c => c.UserId);
+
+            builder.Entity<Chat>()
+                        .HasOne<Message>(c => c.Message)
+                        .WithMany(m => m.Chats)
+                        .HasForeignKey(c => c.MessageId);
+
+            builder.Entity<ResponseMessage>()
+                        .HasOne<Chat>(r => r.Chat)
+                        .WithMany(c => c.ResponseMessages)
+                        .HasForeignKey(r => r.ChatId);
+
 
             // Bỏ tiền tố AspNet của các bảng: mặc định các bảng trong IdentityDbContext có
             // tên với tiền tố AspNet như: AspNetUserRoles, AspNetUser ...
@@ -139,5 +154,8 @@ namespace TracyShop.Data
         public DbSet<OrderDetail> OrderDetail { set; get; }
         public DbSet<StockReceivedDetail> StockReceivedDetail { set; get; }
         public DbSet<StockReceived> StockReceived { set; get; }
+        public DbSet<Message> Messages { set; get; }
+        public DbSet<Chat> Chats { set; get; }
+        public DbSet<ResponseMessage> ResponseMessages { set; get; }
     }
 }

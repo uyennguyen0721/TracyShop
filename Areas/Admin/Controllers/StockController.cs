@@ -91,10 +91,26 @@ namespace TracyShop.Areas.Admin.Controllers
             StockReceivedDetail receivedDetail = new StockReceivedDetail();
             if (ModelState.IsValid)
             {
-                // Cập nhật số lượng vào ProductSize
-                product = _context.ProductSize.Where(p => p.ProductId == productStock.SelectedPro && p.SizeId == productStock.SelectedSize).First();
-                product.Quantity += productStock.Quantity;
-                _context.Update(product);
+                product = _context.ProductSize.FirstOrDefault(p => p.ProductId == productStock.SelectedPro && p.SizeId == productStock.SelectedSize);
+
+                if(product == default)
+                {
+                    // Thêm mới số lượng vào ProductSize
+                    var productSize = new ProductSize
+                    {
+                        ProductId = productStock.SelectedPro,
+                        SizeId = productStock.SelectedSize,
+                        Quantity = productStock.Quantity
+                    };
+                    _context.ProductSize.Add(productSize);
+
+                }
+                else
+                {
+                    // Cập nhật số lượng vào ProductSize
+                    product.Quantity += productStock.Quantity;
+                    _context.Update(product);
+                }
 
                 if(_context.StockReceivedDetail.ToList().Count != 0)
                 {
@@ -123,7 +139,7 @@ namespace TracyShop.Areas.Admin.Controllers
                         _context.Add(receivedDetail);
                     }
                     await _context.SaveChangesAsync();
-                    Task.Delay(500).Wait();
+                    Task.Delay(100).Wait();
                 }
                 else
                 {
@@ -142,7 +158,7 @@ namespace TracyShop.Areas.Admin.Controllers
                     _context.Add(receivedDetail);
 
                     await _context.SaveChangesAsync();
-                    Task.Delay(500).Wait();
+                    Task.Delay(100).Wait();
                 }
             }
             return RedirectToAction("Index", "Stock");

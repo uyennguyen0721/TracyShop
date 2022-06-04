@@ -1,0 +1,88 @@
+﻿@model IEnumerable<TracyShop.Models.Message>
+
+@{
+    ViewData["Title"] = "Messages";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@inject TracyShop.Data.AppDbContext _context
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">MessageBots</h1>
+
+    @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
+    {
+        <p>
+            <a asp-area="Admin" asp-controller="Messages" asp-action="CreateMessageBot" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <i class="fas fa-plus-circle text-white-50"></i> Thêm mới
+            </a>
+        </p>
+    }
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Request Message</th>
+            <th>Response Message</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestMessage)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResponseMessage)
+                </td>
+                <td>
+
+                    @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
+                    {
+                        <a asp-area="Admin" asp-controller="Messages" asp-action="EditMessageBot" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a>
+                    } |
+
+                    <a asp-area="Admin" asp-controller="Messages" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a> |
+
+                    @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
+                    {
+                        <button data-id="@item.Id" class="btn deleteMess" type="button"> <i class="far fa-trash-alt"></i></button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form id="deleteMess" asp-action="Delete">
+    <input type="hidden" id="messId" name="Id" />
+</form>
+
+@section Scripts{
+    <script>
+        $(function(){
+            $('.deleteMess').click(function(e) {
+                swal({
+                    title: "Bạn chắc chắn?",
+                    text: "Bạn chắc chắn muốn xóa message này?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((confirm) => {
+                        if(confirm){
+                            var btn = $(this);
+                            var id = btn.data("id");
+                            $('#messId').val(id);
+                            $('#deleteMess').submit();
+                        }
+                    });
+            });
+        });
+    </script>
+}

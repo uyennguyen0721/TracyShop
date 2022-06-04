@@ -155,9 +155,12 @@ namespace TracyShop
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, AppUserClaimsPrincipalFactory>();
             services.AddScoped<IAvatarSevice, AvatarService>();
-                                
+
+
             services.Configure<SMTPConfigModel>(Configuration.GetSection("SMTPConfig")); // đăng ký để Inject 
-                                              // Configuration.GetSection("SMTPConfig") : đọc config 
+                                                                                         // Configuration.GetSection("SMTPConfig") : đọc config 
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -188,6 +191,7 @@ namespace TracyShop
 
             app.UseEndpoints(endpoints =>
             {
+
                 endpoints.MapControllerRoute(
                   name: "Admin",
                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"

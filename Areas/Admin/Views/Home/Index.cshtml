@@ -1,5 +1,8 @@
 ﻿@model TracyShop.ViewModels.ReportViewModel
-@{ ViewData["title"] = "Home"; }
+@{
+    ViewData["title"] = "Home";
+    Layout = "_Layout";
+}
 @inject Microsoft.AspNetCore.Identity.SignInManager<AppUser> SignInManager
 @inject Microsoft.AspNetCore.Identity.UserManager<AppUser> UserManager
 @inject TracyShop.Data.AppDbContext _context
@@ -341,7 +344,7 @@
                     yAxes: [{
                         ticks: {
                             min: 0,
-                            max: 10000000,
+                            max: 20000000,
                             maxTicksLimit: 5,
                             padding: 10,
                             // Include a dollar sign in the ticks

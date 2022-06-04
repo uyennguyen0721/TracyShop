@@ -168,6 +168,26 @@
                 </div>
             </li>
 
+            @if (_context.UserRoles.Where(r => r.UserId == UserManager.GetUserAsync(User).Result.Id).First().RoleId == "1")
+            {
+                <!-- Nav Item - Pages Quản lý MessageBot Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMessageBot"
+                       aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-warehouse"></i>
+                        <span>Quản lý MessageBot</span>
+                    </a>
+                    <div id="collapseMessageBot" class="collapse" aria-labelledby="headingUtilities"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Quản lý MessageBot:</h6>
+                            <a class="collapse-item" asp-area="Admin" asp-action="Index" asp-controller="Messages">Danh sách message bot</a>
+                            <a class="collapse-item" asp-area="Admin" asp-action="CreateMessageBot" asp-controller="Messages">Tạo message bot</a>
+                        </div>
+                    </div>
+                </li>
+            }
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -218,6 +238,14 @@
                 <a class="nav-link" asp-area="Admin" asp-controller="Reviews" asp-action="Index">
                     <i class="fas fa-comments"></i>
                     <span>Phản hồi</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Chat -->
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="Messages" asp-action="Chat" asp-route-userId=@null>
+                    <i class="fas fa-comments"></i>
+                    <span>Chat</span>
                 </a>
             </li>
 

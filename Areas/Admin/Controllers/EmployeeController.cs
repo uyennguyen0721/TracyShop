@@ -169,9 +169,15 @@ namespace TracyShop.Areas.Admin.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name")] AppUser user)
+        public async Task<IActionResult> Edit(string id, AppUser updateUserData)
         {
-            if (id != user.Id)
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
@@ -180,12 +186,12 @@ namespace TracyShop.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
+                    user.Name = string.IsNullOrEmpty(updateUserData.Name) ? user.Name : updateUserData.Name;
+                    var result = await _userManager.UpdateAsync(user);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception ex)
                 {
-                    if (!EmployeeExists(user.Id))
+                    if (!EmployeeExists(updateUserData.Id))
                     {
                         return NotFound();
                     }

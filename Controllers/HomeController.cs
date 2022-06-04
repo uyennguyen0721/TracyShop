@@ -38,7 +38,7 @@ namespace TracyShop.Controllers
                 if (p.Active == true)
                 {
                     var pro = new ProductsListViewModel();
-                    if (images.Where(img => img.ProductId == p.Id) == null)
+                    if (images.Where(img => img.ProductId == p.Id).Count() <= 0)
                     {
                         pro.ImageDefault = "";
                     }

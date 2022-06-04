@@ -29,6 +29,7 @@ namespace TracyShop.Models
         public virtual ICollection<StockReceived> StockReceiveds { set; get; }
         public virtual ICollection<Cart> Carts { set; get; }
         public virtual ICollection<Order> Orders { set; get; }
+        public virtual ICollection<Chat> Chats { set; get; }
 
     }
 }

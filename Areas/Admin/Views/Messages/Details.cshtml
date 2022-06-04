@@ -1,0 +1,43 @@
+﻿@model TracyShop.Models.Message
+
+@{
+    ViewData["Title"] = "Details Message";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@inject TracyShop.Data.AppDbContext _context
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Thông tin message</h1>
+
+    @if (_context.UserRoles.Where(r => r.UserId.Contains(User.FindFirst("Id").Value)).First().RoleId == "1")
+    {
+        <a asp-area="Admin" asp-controller="Messages" asp-action="EditMessageBot" asp-route-id="@Model.Id" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-edit text-white-50"></i> Chỉnh sửa thông tin
+        </a>
+    }
+
+</div>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Request Message
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RequestMessage)
+        </dd>
+        <dt class="col-sm-2">
+            Response Message
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ResponseMessage)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-area="Admin" asp-controller="Messages" asp-action="Index" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-arrow-alt-circle-left text-white-50"></i> Quay lại
+    </a>
+</div>

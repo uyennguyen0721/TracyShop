@@ -27,6 +27,7 @@
 
     <!-- Template Stylesheet -->
     <link href="~/Client/css/style.css" rel="stylesheet">
+    <link href="~/css/chat.css" />
 </head>
 
 <body>
@@ -51,6 +52,7 @@
                     <a asp-controller="Home" asp-action="Index" class="nav-item nav-link">Trang chủ</a>
                     <a asp-controller="About" asp-action="About" class="nav-item nav-link">Về chúng tôi</a>
                     <a asp-controller="Product" asp-action="Product" class="nav-item nav-link">Sản phẩm</a>
+                    <a asp-controller="Chat" asp-action="Chat" class="nav-item nav-link">Chat</a>
                     <partial name="_LoginPartial" />
                 </div>
                 <form asp-controller="Product" asp-action="Search" method="get" role="search">

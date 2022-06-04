@@ -1,27 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ASP.NET  Projects\\TracyShop\\TracyShop.csproj": {}
+    "D:\\ASP.NET  Projects\\Graduation Essay\\TracyShop\\TracyShop.csproj": {}
   },
   "projects": {
-    "D:\\ASP.NET  Projects\\TracyShop\\TracyShop.csproj": {
+    "D:\\ASP.NET  Projects\\Graduation Essay\\TracyShop\\TracyShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ASP.NET  Projects\\TracyShop\\TracyShop.csproj",
+        "projectUniqueName": "D:\\ASP.NET  Projects\\Graduation Essay\\TracyShop\\TracyShop.csproj",
         "projectName": "TracyShop",
-        "projectPath": "D:\\ASP.NET  Projects\\TracyShop\\TracyShop.csproj",
-        "packagesPath": "C:\\Users\\uyenn\\.nuget\\packages\\",
-        "outputPath": "D:\\ASP.NET  Projects\\TracyShop\\obj\\",
+        "projectPath": "D:\\ASP.NET  Projects\\Graduation Essay\\TracyShop\\TracyShop.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "D:\\ASP.NET  Projects\\Graduation Essay\\TracyShop\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\uyenn\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -53,10 +47,6 @@
             "MailKit": {
               "target": "Package",
               "version": "[2.15.0, )"
-            },
-            "Microsoft.AspNet.Identity.EntityFramework": {
-              "target": "Package",
-              "version": "[2.2.3, )"
             },
             "Microsoft.AspNetCore.Authentication": {
               "target": "Package",
@@ -124,7 +114,7 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.11, )"
+              "version": "[5.0.15, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -213,7 +203,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.405\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -101,7 +101,7 @@ namespace TracyShop.Controllers
             _context.Add(reviews);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Product", "Product");
+            return RedirectToAction("Details", "Product", new { id = reviews.ProductId });
         }
     }
 }
