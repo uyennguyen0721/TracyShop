@@ -35,13 +35,13 @@
         <div class="price-product">
             @if (Model.Promotion == 0)
             {
-                <div class="text text-danger" style="font-size: 20px; font-weight: bold;">@Model.Price VNĐ</div>
+                <div class="text text-danger" style="font-size: 20px; font-weight: bold;">@String.Format("{0:0,0}", Model.Price) VNĐ</div>
             }
             else
             {
                 <div class="prices">
-                    <div class="price-origin">@Model.Price VNĐ</div>
-                    <div class="price-discount text text-danger" style="font-size: 20px; font-weight: bold;">@Model.PriceDiscounted VNĐ</div>
+                    <div class="price-origin">@String.Format("{0:0,0}", Model.Price) VNĐ</div>
+                    <div class="price-discount text text-danger" style="font-size: 20px; font-weight: bold;">@String.Format("{0:0,0}", Model.PriceDiscounted) VNĐ</div>
                     <div class="discount">Giảm @Model.Promotion%</div>
                 </div>
             }
@@ -113,14 +113,7 @@
     <p>- Mô tả: @Model.Description</p>
 </div>
 <div class="product-detail">
-    <div class="row">
-        <div class="col-md-9 col-xs-12">
-            <h3>Đánh giá sản phẩm</h3>
-        </div>
-        <div class="col-md-3 col-xs-12">
-            <a asp-controller="Reviews" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-success">Thêm đánh giá</a>
-        </div>
-    </div>
+    <h3>Đánh giá sản phẩm</h3>
 
     @if (ViewBag.Review == 0)
     {
@@ -184,12 +177,12 @@
                                         }
                                     }
                                     @*<span class="local-datetime"
-                                          title="@(item.CreatedDate.ToString("dd-MM-yyyy HH:mm")) UTC"
-                                          data-utc="@(item.CreatedDate.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds)">
+                                              title="@(item.CreatedDate.ToString("dd-MM-yyyy HH:mm")) UTC"
+                                              data-utc="@(item.CreatedDate.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds)">
 
-                                        @(item.CreatedDate.ToString("dd-MM-yyyy HH:mm"))
+                                            @(item.CreatedDate.ToString("dd-MM-yyyy HH:mm"))
 
-                                    </span>*@
+                                        </span>*@
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     @for (int i = 0; i < item.Rate; i++)
@@ -238,5 +231,4 @@
     .reply a {
         text-decoration: none
     }
-
 </style>

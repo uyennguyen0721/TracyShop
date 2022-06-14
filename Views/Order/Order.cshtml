@@ -108,16 +108,16 @@
                                     <div class="unit-price">
                                         @if (item.Promotion != 0)
                                         {
-                                            <div class="unit-price-origin" style="font-size: 12px; text-decoration: line-through;">@item.UnitPrice</div>
+                                            <div class="unit-price-origin" style="font-size: 12px; text-decoration: line-through;">@String.Format("{0:0,0}", item.UnitPrice)</div>
                                         }
-                                        <div class="unit-price-discount text text-danger" style="font-size: 15px; font-weight: bold;">@(item.UnitPrice*(1 - item.Promotion))</div>
+                                        <div class="unit-price-discount text text-danger" style="font-size: 15px; font-weight: bold;">@String.Format("{0:0,0}", (item.UnitPrice*(1 - item.Promotion)))</div>
                                     </div>
                                 </td>
                                 <td>
                                     <input asp-for="@item.Quantity" name="@item.Quantity" id="@item.Id" type="number" min="1" max="50" value="@item.Quantity" disabled>
                                 </td>
                                 <td>
-                                    @(item.UnitPrice * (1 - item.Promotion) * item.Quantity)
+                                    @String.Format("{0:0,0}", (item.UnitPrice * (1 - item.Promotion) * item.Quantity))
                                 </td>
 
                             </tr>
@@ -131,12 +131,12 @@
                         <div class="col-md-5 col-xs-12">
                             <div class="row">
                                 <div class="col-md-6">Phí vận chuyển:</div>
-                                <div class="col-md-6">@Model.ShoppingFee</div>
+                                <div class="col-md-6">@String.Format("{0:0,0}", Model.ShoppingFee)</div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">Tổng số tiền (@Model.CountQuantity sản phẩm):</div>
                                 <div class="col-md-6">
-                                    <h5 class="text text-danger">@(Model.TotalPrice + Model.ShoppingFee) VNĐ</h5>
+                                    <h5 class="text text-danger">@String.Format("{0:0,0}", (Model.TotalPrice + Model.ShoppingFee)) VNĐ</h5>
                                 </div>
                             </div>
                         </div>
@@ -167,15 +167,15 @@
                         <div class="col-md-5 col-xs-12">
                             <div class="row">
                                 <div class="col-md-6">Tổng tiền hàng</div>
-                                <div class="col-md-6">@Model.TotalPrice VNĐ</div>
+                                <div class="col-md-6">@String.Format("{0:0,0}", Model.TotalPrice) VNĐ</div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">Phí vận chuyển</div>
-                                <div class="col-md-6">@Model.ShoppingFee VNĐ</div>
+                                <div class="col-md-6">@String.Format("{0:0,0}", Model.ShoppingFee) VNĐ</div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">Tổng thanh toán</div>
-                                <div class="col-md-6"><h5 class="text text-danger">@(Model.TotalPrice + Model.ShoppingFee) VNĐ</h5></div>
+                                <div class="col-md-6"><h5 class="text text-danger">@String.Format("{0:0,0}", (Model.TotalPrice + Model.ShoppingFee)) VNĐ</h5></div>
                             </div>
                         </div>
                     </div>

@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TracyShop.Data;
 using TracyShop.ViewModels;
 
@@ -43,30 +41,12 @@ namespace TracyShop.Areas.Admin.Controllers
             report.SelectedYear = now.Year;
 
             // Tính doanh thu
-            var orders = _context.Orders.Where(o => o.Created_date.Month == now.Month && o.Created_date.Year == now.Year).ToList();
-            report.Revenue = 0;
-            foreach (var item in orders)
-            {
-                var orderdetails = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
-                foreach (var i in orderdetails)
-                {
-                    var price = _context.OrderDetail.Where(d => d.Id == i.Id).First();
-                    report.Revenue += (price.Price * price.Quantity);
-                }
-            }
+
+            report.Revenue = RevenueByMonth(now.Month, now.Year);
 
             // Tính giá vốn
-            var stocks = _context.StockReceived.Where(s => s.Date.Month == now.Month && s.Date.Year == now.Year).ToList();
-            report.CostPrice = 0;
-            foreach (var item in stocks)
-            {
-                var stockdetails = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
-                foreach (var temp in stockdetails)
-                {
-                    var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
-                    report.CostPrice += detail.Unit_price * detail.Quantity;
-                }
-            }
+
+            report.CostPrice = CostPriceByMonth(now.Month, now.Year);
 
             // Tính lợi nhuận
             report.Profit = report.Revenue - report.CostPrice;
@@ -96,30 +76,12 @@ namespace TracyShop.Areas.Admin.Controllers
             report.SelectedYear = reportView.SelectedYear;
 
             // Tính doanh thu
-            var orders = _context.Orders.Where(o => o.Created_date.Month == reportView.SelectedMonth && o.Created_date.Year == reportView.SelectedYear).ToList();
-            report.Revenue = 0;
-            foreach (var item in orders)
-            {
-                var orderdetails = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
-                foreach (var i in orderdetails)
-                {
-                    var price = _context.OrderDetail.Where(d => d.Id == i.Id).First();
-                    report.Revenue += price.Price * price.Quantity;
-                }
-            }
+
+            report.Revenue = RevenueByMonth(reportView.SelectedMonth, reportView.SelectedYear);
 
             // Tính giá vốn
-            var stocks = _context.StockReceived.Where(s => s.Date.Month == report.SelectedMonth && s.Date.Year == report.SelectedYear).ToList();
-            report.CostPrice = 0;
-            foreach (var item in stocks)
-            {
-                var stockdetails = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
-                foreach (var temp in stockdetails)
-                {
-                    var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
-                    report.CostPrice += detail.Unit_price * detail.Quantity;
-                }
-            }
+
+            report.CostPrice = CostPriceByMonth(report.SelectedMonth, report.SelectedYear);
 
             // Tính lợi nhuận
             report.Profit = (report.Revenue - report.CostPrice);
@@ -151,30 +113,12 @@ namespace TracyShop.Areas.Admin.Controllers
             for(int i = 1; i <= 12; i++)
             {
                 // Doanh thu tháng thứ i
-                var od = _context.Orders.Where(o => o.Created_date.Month == i && o.Created_date.Year == now.Year).ToList();
-                float revenue = 0;
-                foreach(var item in od)
-                {
-                    var odt = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
-                    foreach (var j in odt)
-                    {
-                        var price = _context.OrderDetail.Where(d => d.Id == j.Id).First();
-                        revenue += price.Price * price.Quantity;
-                    }
-                }
+
+                var revenue = RevenueByMonth(i, now.Year);
 
                 // Vốn tháng thứ i
-                var st = _context.StockReceived.Where(s => s.Date.Month == i && s.Date.Year == now.Year).ToList();
-                float costPrice = 0;
-                foreach (var item in st)
-                {
-                    var std = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
-                    foreach (var temp in std)
-                    {
-                        var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
-                        costPrice += detail.Unit_price * detail.Quantity;
-                    }
-                }
+
+                var costPrice = CostPriceByMonth(i, now.Year);
 
                 // Lợi nhuận tháng thứ i
                 var profit = revenue - costPrice;
@@ -185,30 +129,12 @@ namespace TracyShop.Areas.Admin.Controllers
             }
 
             // Tính doanh thu
-            var orders = _context.Orders.Where(o => o.Created_date.Year == now.Year).ToList();
-            report.Revenue = 0;
-            foreach (var item in orders)
-            {
-                var orderdetails = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
-                foreach (var i in orderdetails)
-                {
-                    var price = _context.OrderDetail.Where(d => d.Id == i.Id).First();
-                    report.Revenue += price.Price * price.Quantity;
-                }
-            }
+
+            report.Revenue = RevenueByMonth(0, now.Year);
 
             // Tính giá vốn
-            var stocks = _context.StockReceived.Where(s => s.Date.Year == now.Year).ToList();
-            report.CostPrice = 0;
-            foreach (var item in stocks)
-            {
-                var stockdetails = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
-                foreach (var temp in stockdetails)
-                {
-                    var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
-                    report.CostPrice += detail.Unit_price * detail.Quantity;
-                }
-            }
+
+            report.CostPrice = CostPriceByMonth(0, now.Year);
 
             // Tính lợi nhuận
             report.Profit = report.Revenue - report.CostPrice;
@@ -237,30 +163,12 @@ namespace TracyShop.Areas.Admin.Controllers
             for (int i = 1; i <= 12; i++)
             {
                 // Doanh thu tháng thứ i
-                var od = _context.Orders.Where(o => o.Created_date.Month == i && o.Created_date.Year == reportView.SelectedYear).ToList();
-                float revenue = 0;
-                foreach (var item in od)
-                {
-                    var odt = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
-                    foreach (var j in odt)
-                    {
-                        var price = _context.OrderDetail.Where(d => d.Id == j.Id).First();
-                        revenue += price.Price * price.Quantity;
-                    }
-                }
+
+                var revenue = RevenueByMonth(i, reportView.SelectedYear);
 
                 // Vốn tháng thứ i
-                var st = _context.StockReceived.Where(s => s.Date.Month == i && s.Date.Year == reportView.SelectedYear).ToList();
-                float costPrice = 0;
-                foreach (var item in st)
-                {
-                    var std = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
-                    foreach (var temp in std)
-                    {
-                        var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
-                        costPrice += detail.Unit_price * detail.Quantity;
-                    }
-                }
+
+                var costPrice = CostPriceByMonth(i, reportView.SelectedYear);
 
                 // Lợi nhuận tháng thứ i
                 var profit = revenue - costPrice;
@@ -271,35 +179,55 @@ namespace TracyShop.Areas.Admin.Controllers
             }
 
             // Tính doanh thu
-            var orders = _context.Orders.Where(o => o.Created_date.Year == reportView.SelectedYear).ToList();
-            report.Revenue = 0;
-            foreach (var item in orders)
-            {
-                var orderdetails = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
-                foreach (var i in orderdetails)
-                {
-                    var price = _context.OrderDetail.Where(d => d.Id == i.Id).First();
-                    report.Revenue += price.Price * price.Quantity;
-                }
-            }
+
+            report.Revenue = RevenueByMonth(0, reportView.SelectedYear);
 
             // Tính giá vốn
-            var stocks = _context.StockReceived.Where(s => s.Date.Year == report.SelectedYear).ToList();
-            report.CostPrice = 0;
-            foreach (var item in stocks)
-            {
-                var stockdetails = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
-                foreach (var temp in stockdetails)
-                {
-                    var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
-                    report.CostPrice += detail.Unit_price * detail.Quantity;
-                }
-            }
+
+            report.CostPrice = CostPriceByMonth(0, report.SelectedYear);
 
             // Tính lợi nhuận
             report.Profit = (report.Revenue - report.CostPrice);
 
             return View(report);
         }
+
+#region Helper
+
+        private float RevenueByMonth(int month, int year)
+        {
+            var orders = month > 0 ? _context.Orders.Where(o => o.Created_date.Month == month && o.Created_date.Year == year && (o.Status < 4 && o.Status > 0)).ToList()
+                                    : _context.Orders.Where(o => o.Created_date.Year == year && (o.Status < 4 && o.Status > 0)).ToList();
+            float revenue = 0;
+            foreach (var item in orders)
+            {
+                var orderdetails = _context.OrderDetail.Where(d => d.OrderId == item.Id).ToList();
+                foreach (var i in orderdetails)
+                {
+                    var price = _context.OrderDetail.Where(d => d.Id == i.Id).First();
+                    revenue += price.Price * price.Quantity;
+                }
+            }
+            return revenue;
+        }
+
+        private float CostPriceByMonth(int month, int year)
+        {
+            var stocks = month > 0 ? _context.StockReceived.Where(s => s.Date.Month == month && s.Date.Year == year).ToList()
+                                    : _context.StockReceived.Where(s => s.Date.Year == year).ToList();
+            float costPrice = 0;
+            foreach (var item in stocks)
+            {
+                var stockdetails = _context.StockReceivedDetail.Where(s => s.StockReceivedId == item.Id).ToList();
+                foreach (var temp in stockdetails)
+                {
+                    var detail = _context.StockReceivedDetail.Where(r => r.Id == temp.Id).First();
+                    costPrice += detail.Unit_price * detail.Quantity;
+                }
+            }
+            return costPrice;
+        }
+
+#endregion
     }
 }

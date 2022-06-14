@@ -48,7 +48,7 @@
                                 price += detail.Price;
                             }
                         }
-                        @price VNĐ
+                        @String.Format("{0:0,0}", price) VNĐ
                     </td>
                     <td>
                         <a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>

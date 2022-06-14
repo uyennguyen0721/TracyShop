@@ -1,0 +1,269 @@
+﻿@model IEnumerable<TracyShop.Models.Order>
+@inject TracyShop.Data.AppDbContext _context
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Trang thái đơn hàng</h1>
+</div>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="btn nav-link active" id="waiting-get-tab" data-bs-toggle="tab" data-bs-target="#get" type="button" role="tab" aria-controls="get" aria-selected="true"><b>Chờ lấy hàng</b></button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="btn nav-link" id="delivering-tab" data-bs-toggle="tab" data-bs-target="#delivering" type="button" role="tab" aria-controls="delivering" aria-selected="false"><b>Đang giao</b></button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="btn nav-link" id="received-tab" data-bs-toggle="tab" data-bs-target="#received" type="button" role="tab" aria-controls="received" aria-selected="false"><b>Đã giao</b></button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="btn nav-link" id="detroyed-tab" data-bs-toggle="tab" data-bs-target="#detroyed" type="button" role="tab" aria-controls="detroyed" aria-selected="false"><b>Đã hủy</b></button>
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent" style="margin-top: 3%">
+    <div class="tab-pane fade show active" id="get" role="tabpanel" aria-labelledby="waiting-get-tab">
+        @if (ViewBag.Message == "" && ViewBag.WaitingForGetting > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ngày mua</th>
+                        <th>Tên khách hàng</th>
+                        <th>Giá trị đơn hàng</th>
+                        <th>Phương thức thanh toán</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(p => p.Status == 1))
+                    {
+                        <tr>
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.Created_date
+                            </td>
+                            <td>
+                                @_context.Users.Where(u => u.Id.Contains(item.UserId)).First().Name
+                            </td>
+                            <td>
+                                @(_context.PaymentMenthod.Where(p => p.Id == item.PaymentMenthodId).First().Name)
+                            </td>
+                            <td>
+                                @{
+                                    float price = 0;
+                                    var orderDetail = _context.OrderDetail.Where(o => o.OrderId == item.Id).ToList();
+                                    foreach (var detail in orderDetail)
+                                    {
+                                        price += detail.Price;
+                                    }
+                                }
+                                @String.Format("{0:0,0}", price) VNĐ
+                            </td>
+                            <td>
+                                <a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
+                            </td>
+                            <td>
+                                <form asp-action="UpdateStatus" asp-controller="Order" asp-area="Admin" method="post" asp-route-id="@item.Id">
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                        </svg>
+                                        Đang giao
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text text-center" style="margin-top: 2%;">@ViewBag.Message</div>
+        }
+    </div>
+    <div class="tab-pane fade" id="delivering" role="tabpanel" aria-labelledby="delivering-tab">
+        @if (ViewBag.Message == "" && ViewBag.Delivering > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ngày mua</th>
+                        <th>Tên khách hàng</th>
+                        <th>Giá trị đơn hàng</th>
+                        <th>Phương thức thanh toán</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(p => p.Status == 2))
+                    {
+                        <tr>
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.Created_date
+                            </td>
+                            <td>
+                                @_context.Users.Where(u => u.Id.Contains(item.UserId)).First().Name
+                            </td>
+                            <td>
+                                @(_context.PaymentMenthod.Where(p => p.Id == item.PaymentMenthodId).First().Name)
+                            </td>
+                            <td>
+                                @{
+                                    float price = 0;
+                                    var orderDetail = _context.OrderDetail.Where(o => o.OrderId == item.Id).ToList();
+                                    foreach (var detail in orderDetail)
+                                    {
+                                        price += detail.Price;
+                                    }
+                                }
+                                @String.Format("{0:0,0}", price) VNĐ
+                            </td>
+                            <td>
+                                <a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
+                            </td>
+                            <td>
+                                <form asp-action="UpdateStatus" asp-controller="Order" asp-area="Admin" method="post" asp-route-id="@item.Id">
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                        </svg>
+                                        Đã giao
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text text-center" style="margin-top: 2%;">@ViewBag.Message</div>
+        }
+    </div>
+    <div class="tab-pane fade" id="received" role="tabpanel" aria-labelledby="received-tab">
+        @if (ViewBag.Message == "" && ViewBag.Received > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ngày mua</th>
+                        <th>Tên khách hàng</th>
+                        <th>Giá trị đơn hàng</th>
+                        <th>Phương thức thanh toán</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(p => p.Status == 3))
+                    {
+                        <tr>
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.Created_date
+                            </td>
+                            <td>
+                                @_context.Users.Where(u => u.Id.Contains(item.UserId)).First().Name
+                            </td>
+                            <td>
+                                @(_context.PaymentMenthod.Where(p => p.Id == item.PaymentMenthodId).First().Name)
+                            </td>
+                            <td>
+                                @{
+                                    float price = 0;
+                                    var orderDetail = _context.OrderDetail.Where(o => o.OrderId == item.Id).ToList();
+                                    foreach (var detail in orderDetail)
+                                    {
+                                        price += detail.Price;
+                                    }
+                                }
+                                @String.Format("{0:0,0}", price) VNĐ
+                            </td>
+                            <td>
+                                <a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text text-center" style="margin-top: 2%;">@ViewBag.Message</div>
+        }
+    </div>
+    <div class="tab-pane fade" id="detroyed" role="tabpanel" aria-labelledby="detroyed-tab">
+        @if (ViewBag.Message == "" && ViewBag.Detroyed > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ngày mua</th>
+                        <th>Tên khách hàng</th>
+                        <th>Giá trị đơn hàng</th>
+                        <th>Phương thức thanh toán</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Where(p => p.Status == 4))
+                    {
+                        <tr>
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @item.Created_date
+                            </td>
+                            <td>
+                                @_context.Users.Where(u => u.Id.Contains(item.UserId)).First().Name
+                            </td>
+                            <td>
+                                @(_context.PaymentMenthod.Where(p => p.Id == item.PaymentMenthodId).First().Name)
+                            </td>
+                            <td>
+                                @{
+                                    float price = 0;
+                                    var orderDetail = _context.OrderDetail.Where(o => o.OrderId == item.Id).ToList();
+                                    foreach (var detail in orderDetail)
+                                    {
+                                        price += detail.Price;
+                                    }
+                                }
+                                @String.Format("{0:0,0}", price) VNĐ
+                            </td>
+                            <td>
+                                <a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text text-center" style="margin-top: 2%;">@ViewBag.Message</div>
+        }
+    </div>
+</div>
+
+
+
+

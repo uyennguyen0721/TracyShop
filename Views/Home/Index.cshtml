@@ -140,7 +140,7 @@
                             <h2>@pro.Name</h2>
                             <div class="content-product-deltals">
                                 <div class="price">
-                                    <span class="money">@pro.Price</span>
+                                    <span class="money">@String.Format("{0:0,0}", pro.Price)</span>
                                 </div>
                                 @if (pro.Count > 0)
                                 {

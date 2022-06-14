@@ -28,7 +28,7 @@
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Doanh thu tháng @DateTime.Now.Month
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.RevenueList[DateTime.Now.Month - 1] Đ</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@String.Format("{0:0,0}", Model.RevenueList[DateTime.Now.Month - 1]) Đ</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x" style="color: #f6c23e;"></i>
@@ -47,7 +47,7 @@
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Doanh thu năm @DateTime.Now.Year
                             </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Revenue Đ</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@String.Format("{0:0,0}", Model.Revenue) Đ</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x" style="color: #f6c23e;"></i>

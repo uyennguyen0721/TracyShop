@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TracyShop.Data;
@@ -66,9 +64,43 @@ namespace TracyShop.Areas.Admin.Controllers
         {
             var order = _context.Orders.Where(p => p.Id == id).First();
             order.Is_check = true;
+            order.Status += 1;
             _context.Update(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(CheckedOrder));
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin, Employee")]
+        [Route("/admin/order-status", Name = "order-status")]
+        public IActionResult UpdateStatus()
+        {
+            if (_context.Orders.Where(p => p.Is_check == true).ToList().Count == 0)
+            {
+                ViewBag.Message = "Chưa có đơn hàng nào.";
+                return View();
+            }
+            else
+            {
+                ViewBag.Message = "";
+                var orders = _context.Orders;
+                ViewBag.WaitingForGetting = orders.Where(p => p.Status == 1).ToList().Count;
+                ViewBag.Delivering = orders.Where(p => p.Status == 2).ToList().Count;
+                ViewBag.Received = orders.Where(p => p.Status == 3).ToList().Count;
+                ViewBag.Detroyed = orders.Where(p => p.Status == 4).ToList().Count;
+                return View(orders.ToList());
+            }
+        }
+        [HttpPost]
+        [Route("/admin/order-status", Name = "order-status")]
+        [Authorize(Roles = "Admin, Employee")]
+        public async Task<IActionResult> UpdateStatus(int id)
+        {
+            var order = _context.Orders.Where(p => p.Id == id).First();
+            order.Status += 1;
+            _context.Update(order);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("UpdateStatus", "Order");
         }
     }
 }

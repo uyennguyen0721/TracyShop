@@ -1,0 +1,13 @@
+- tiền tệ định dạng => OK
+- trạng thái đơn hàng
+(đã giao, đang xử lý, chưa xử lý, đã hủy, đã giao thành công)
+- KH được hủy đơn hàng nếu chưa có xử lý
+- Chỉ đánh giá sản phẩm mình mua
+- Admin vô hiệu hóa tài khoản khách hàng
+
+
+* báo cáo: không dùng "bạn"
+- việc kinh doanh online qua giao diện web
+- đổ dữ liệu từ form qua controller có nhiều cách (cần bổ sung)
+- Helper nhiều => rút gọn
+- mô tả table data => dạng bảng

@@ -38,9 +38,9 @@
         <tbody>
             <tr>
                 <td>@Model.SelectedYear</td>
-                <td>@Model.Revenue VNĐ</td>
-                <td>@Model.CostPrice VNĐ</td>
-                <td>@Model.Profit VNĐ</td>
+                <td>@String.Format("{0:0,0}", Model.Revenue) VNĐ</td>
+                <td>@String.Format("{0:0,0}", Model.CostPrice) VNĐ</td>
+                <td>@String.Format("{0:0,0}", Model.Profit) VNĐ</td>
             </tr>
         </tbody>
     </table>

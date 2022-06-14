@@ -67,28 +67,26 @@
                             <div class="unit-price">
                                 @if (item.Promotion != 0)
                                 {
-                                    <div class="unit-price-origin" style="font-size: 12px; text-decoration: line-through;">@item.UnitPrice</div>
+                                    <div class="unit-price-origin" style="font-size: 12px; text-decoration: line-through;">@String.Format("{0:0,0}", item.UnitPrice)</div>
                                 }
-                                <div class="unit-price-discount text text-danger" style="font-size: 15px; font-weight: bold;">@(item.UnitPrice*(1 - item.Promotion))</div>
+                                <div class="unit-price-discount text text-danger" style="font-size: 15px; font-weight: bold;">@String.Format("{0:0,0}", (item.UnitPrice * (1 - item.Promotion)))</div>
                             </div>
                         </td>
                         <td>
                             <input asp-for="@item.Quantity" name="@item.Quantity" id="@item.Id" type="number" min="1" max="50" value="@item.Quantity" disabled>
                         </td>
                         <td>
-                            @(item.UnitPrice * (1 - item.Promotion) * item.Quantity)
+                            @String.Format("{0:0,0}", (item.UnitPrice * (1 - item.Promotion) * item.Quantity))
                         </td>
                         <td>
                             <a asp-controller="Cart" asp-action="UpdateCart" asp-route-id="@item.Id" class="btn btn-success">Chỉnh sửa</a>
                         </td>
                         <td>
-                            <form asp-action="DeleteCart" asp-controller="Cart" method="post" asp-route-id="@item.Id">
-                                <button type="submit" class="btn btn-outline-danger">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                    </svg>
-                                </button>
-                            </form>
+                            <button data-id="@item.Id" class="btn btn-outline-danger deleteCart" type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg>
+                            </button>
                         </td>
                     </tr>
                 }
@@ -101,7 +99,7 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row">
                     <div class="col-md-6 col-xs-12">
-                        Tổng thanh toán: @ViewBag.Total VNĐ
+                        Tổng thanh toán: @String.Format("{0:0,0}", ViewBag.Total) VNĐ
                     </div>
                     <div class="col-md-6 col-xs-12">
                         <a asp-controller="Order" asp-action="Order" asp-route-id="@Model." class="btn btn-success">Mua hàng</a>
@@ -121,4 +119,33 @@
         </div>
     }
 </div>
+
 <!-- Table Cart End -->
+
+<form id="deleteCart" asp-action="DeleteCart">
+    <input type="hidden" id="cartId" name="Id" />
+</form>
+
+@section Scripts{
+    <script src="~/Client/js/jquery-3.4.1.min.js"></script>
+    <script>
+        $(function () {
+            $('.deleteCart').click(function (e) {
+                swal({
+                    title: "Bạn chắc chắn?",
+                    text: "Bạn chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((confirm) => {
+                    if (confirm) {
+                        var btn = $(this);
+                        var id = btn.data("id");
+                        $('#cartId').val(id);
+                        $('#deleteCart').submit();
+                    }
+                });
+            });
+        });
+    </script>
+}

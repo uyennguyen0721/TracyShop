@@ -38,7 +38,7 @@
             Giá
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
+            @String.Format("{0:0,0}", Model.Price) VNĐ
         </dd>
         <dt class="col-sm-2">
             Năm sản xuất

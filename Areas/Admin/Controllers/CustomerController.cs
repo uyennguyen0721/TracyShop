@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -73,6 +72,36 @@ namespace TracyShop.Areas.Admin.Controllers
                 ViewBag.Message = "";
                 return View(order);
             }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Disable(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var customer = await _context.Users.FirstOrDefaultAsync(m => m.Id.Contains(id));
+            customer.Is_active = false;
+            _context.Update(customer);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Customer");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AvailableCustomer(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var customer = await _context.Users.FirstOrDefaultAsync(m => m.Id.Contains(id));
+            customer.Is_active = true;
+            _context.Update(customer);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Customer");
         }
     }
 }

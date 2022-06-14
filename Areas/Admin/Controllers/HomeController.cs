@@ -3,11 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using TracyShop.Data;
-using TracyShop.Models;
 using TracyShop.ViewModels;
 
 namespace TracyShop.Areas.Admin.Controllers

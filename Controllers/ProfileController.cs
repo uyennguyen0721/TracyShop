@@ -8,14 +8,9 @@ using TracyShop.Data;
 using TracyShop.Models;
 using TracyShop.Repository;
 using TracyShop.ViewModels;
-using System.Net;
-using Newtonsoft.Json;
-using System.Text;
-using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
 namespace TracyShop.Controllers
@@ -239,11 +234,38 @@ namespace TracyShop.Controllers
                     history.OrderDate = item.Created_date;
                     history.OrderDetails = orderDetail;
                     history.TotalPrice = total;
+                    history.Status = item.Status;
                     histories.Add(history);
                 }
+                ViewBag.WaitingForConfirmation = histories.Where(p => p.Status == 0).ToList().Count;
+                ViewBag.WaitingForGetting = histories.Where(p => p.Status == 1).ToList().Count;
+                ViewBag.Delivering = histories.Where(p => p.Status == 2).ToList().Count;
+                ViewBag.Received = histories.Where(p => p.Status == 3).ToList().Count;
+                ViewBag.Detroyed = histories.Where(p => p.Status == 4).ToList().Count;
             }
             return View(histories);
+        }
 
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CancelOrder(int orderId)
+        {
+            var order = _context.Orders.Where(p => p.Id == orderId && p.Status == 0).FirstOrDefault();
+            order.Status = 4;
+            order.Is_check = true;
+            _context.Update(order);
+
+            // cập nhật số lương sản phẩm trong vào kho
+            var orderDetails = _context.OrderDetail.Where(p => p.OrderId == orderId).ToList();
+            foreach(var item in orderDetails)
+            {
+                var proSize = _context.ProductSize.FirstOrDefault(p => p.ProductId == item.ProductId && p.SizeId == item.SelectedSize);
+                proSize.Quantity += item.Quantity;
+                _context.Update(proSize);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("PurchaseHistory", "Profile");
         }
     }
 }

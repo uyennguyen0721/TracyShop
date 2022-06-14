@@ -613,15 +613,6 @@ D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\BraintreeHttp-Dotnet.dll
 D:\ASP.NET  Projects\TracyShop\bin\Debug\net5.0\Source.dll
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Order\CheckoutFail.cshtml.g.cs
 D:\ASP.NET  Projects\TracyShop\obj\Debug\net5.0\Razor\Views\Order\CheckoutSuccess.cshtml.g.cs
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.csproj.AssemblyReference.cache
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.GeneratedMSBuildEditorConfig.editorconfig
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.AssemblyInfoInputs.cache
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.AssemblyInfo.cs
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.csproj.CoreCompileInputs.cache
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.MvcApplicationPartsAssemblyInfo.cs
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.MvcApplicationPartsAssemblyInfo.cache
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.RazorAssemblyInfo.cache
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.RazorAssemblyInfo.cs
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\bin\Debug\net5.0\appsettings.Development.json
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\bin\Debug\net5.0\appsettings.json
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\bin\Debug\net5.0\Data\Json\District.json
@@ -1055,6 +1046,15 @@ D:\ASP.NET  Projects\Graduation Essay\TracyShop\bin\Debug\net5.0\runtimes\unix\l
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.csproj.AssemblyReference.cache
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.GeneratedMSBuildEditorConfig.editorconfig
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.AssemblyInfoInputs.cache
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.AssemblyInfo.cs
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.csproj.CoreCompileInputs.cache
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.MvcApplicationPartsAssemblyInfo.cs
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.MvcApplicationPartsAssemblyInfo.cache
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.RazorAssemblyInfo.cache
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.RazorAssemblyInfo.cs
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\staticwebassets\TracyShop.StaticWebAssets.Manifest.cache
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\staticwebassets\TracyShop.StaticWebAssets.xml
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\scopedcss\bundle\TracyShop.styles.css
@@ -1075,9 +1075,15 @@ D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Adm
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Home\Index.cshtml.g.cs
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Images\Create.cshtml.g.cs
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Images\Index.cshtml.g.cs
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Messages\Chat.cshtml.g.cs
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Messages\CreateMessageBot.cshtml.g.cs
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Messages\Details.cshtml.g.cs
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Messages\EditMessageBot.cshtml.g.cs
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Messages\Index.cshtml.g.cs
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Order\CheckedOrder.cshtml.g.cs
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Order\Details.cshtml.g.cs
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Order\Index.cshtml.g.cs
+D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Order\UpdateStatus.cshtml.g.cs
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\ProductSizes\Create.cshtml.g.cs
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\ProductSizes\Details.cshtml.g.cs
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\ProductSizes\Index.cshtml.g.cs
@@ -1144,8 +1150,3 @@ D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.dll
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\ref\TracyShop.dll
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.pdb
 D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\TracyShop.genruntimeconfig.cache
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Messages\Chat.cshtml.g.cs
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Messages\CreateMessageBot.cshtml.g.cs
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Messages\Details.cshtml.g.cs
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Messages\EditMessageBot.cshtml.g.cs
-D:\ASP.NET  Projects\Graduation Essay\TracyShop\obj\Debug\net5.0\Razor\Areas\Admin\Views\Messages\Index.cshtml.g.cs

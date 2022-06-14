@@ -47,7 +47,7 @@
                                 price += detail.Price;
                             }
                         }
-                        @price VNĐ
+                        @String.Format("{0:0,0}", price) VNĐ
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Is_check)

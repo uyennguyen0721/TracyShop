@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using TracyShop.Data;
 using TracyShop.Models;
 using TracyShop.Repository;
-using TracyShop.ViewModels;
 
 namespace TracyShop.Areas.Admin.Controllers
 {
@@ -82,7 +81,7 @@ namespace TracyShop.Areas.Admin.Controllers
                 user.UserName = user.Email;
                 user.EmailConfirmed = true;
                 await _userManager.CreateAsync(user, user.PasswordHash);
-                Task.Delay(500).Wait();
+                Task.Delay(200).Wait();
                 var role = _context.Roles.Where(r => r.Id.Contains("2")).First();
 
                 _context.UserRoles.Add(new IdentityUserRole<string>

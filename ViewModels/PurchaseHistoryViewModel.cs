@@ -12,6 +12,7 @@ namespace TracyShop.ViewModels
         public DateTime OrderDate { set; get; }
         public string UserId { set; get; }
         public float TotalPrice { set; get; }
+        public int Status { set; get; }
         public List<OrderDetail> OrderDetails { set; get; }
     }
 }
