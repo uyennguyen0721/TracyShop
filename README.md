@@ -2,7 +2,7 @@
 - Đồ án ngành và khóa luận tốt nghiệp ngành Công nghệ thông tin trường Đại học Mở TPHCM
 - Sử dụng công nghệ ASP.NET Core MVC
 - Server: SQL Server
-- Tình trạng: đang triển khai
+- Tình trạng: hoàn thành
 
 ### Các phương thức sử dụng:
 - Test gửi mail qua Mailtrap.
