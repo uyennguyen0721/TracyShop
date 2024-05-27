@@ -50,58 +50,9 @@ namespace TracyShop.Controllers
         [Route("/orders", Name = "orders")]
         public IActionResult Order()
         {
-            var userid = _userManager.GetUserId(HttpContext.User);
-            AppUser user = _userManager.FindByIdAsync(userid).Result;
-
-            // Lấy địa chỉ
-            Address address = new Address();
-            try
-            {
-                address = _context.Address.Where(a => a.UserId == userid).ToList().First();
-            }
-            catch
-            {
-                address = null;
-            }
-            // Lấy phương thức thanh toán
-            var paymentMenthods = _context.PaymentMenthod.ToList();
-
-            // Lấy tất cả các sản phẩm trong card chưa thanh toán (chưa mua)
-            var carts = _context.Carts.Where(c => c.UserId == userid && c.IsBuy == false).ToList();
-
-            // Hiển thị lên view
-
-            var orderView = new OrderViewModel();
-            orderView.UserId = userid;
-            if(address != null)
-            {
-                orderView.Address = String.Format("{0}, {1}, {2}", address.SpecificAddress, address.District, address.City);
-            }
-            else
-            {
-                orderView.Address = null;
-            }
-            orderView.PhoneNumber = user.PhoneNumber;
-            if(user.PhoneNumber == null)
-            {
-                ViewBag.Message = "Thêm số điện thoại";
-            }
-
-            var products = new List<ProductsListViewModel>();
-            float totalPrice = 0;
-            int countQuantity = 0;
-            foreach (var pr in carts)
-            {
-                totalPrice += pr.UnitPrice * (1 - pr.Promotion) * pr.Quantity;
-                countQuantity += pr.Quantity;
-            }
-            orderView.Carts = carts;
-            orderView.TotalPrice = totalPrice;
-            orderView.CountQuantity = countQuantity;
-            orderView.PaymentMenthods = paymentMenthods;
-            orderView.ShoppingFee = 20000;
-
+            OrderViewModel orderView = GetOrderInformation();
             ViewBag.Content = "";
+            ViewBag.Message = 0;
 
             return View(orderView);
         }
@@ -112,14 +63,25 @@ namespace TracyShop.Controllers
         [Route("/orders", Name = "orders")]
         public async Task<IActionResult> Order(OrderViewModel orderView)
         {
-            if(orderView.PaymentMenthodId == 1)
+            if (string.IsNullOrEmpty(orderView.Address) || string.IsNullOrEmpty(orderView.PhoneNumber))
+            {
+                OrderViewModel orderViewModel = GetOrderInformation();
+
+                ViewBag.Content = "";
+                ViewBag.Message = 1;
+                return View(orderViewModel);
+            }
+
+            if (orderView.PaymentMenthodId == 1)
             {
                 try
                 {
-                    var order = new Order();
-                    order.PaymentMenthodId = orderView.PaymentMenthodId;
-                    order.ShoppingFee = 20000;
-                    order.UserId = _userManager.GetUserId(HttpContext.User);
+                    var order = new Order
+                    {
+                        PaymentMenthodId = orderView.PaymentMenthodId,
+                        ShoppingFee = 20000,
+                        UserId = _userManager.GetUserId(HttpContext.User)
+                    };
                     _context.Add(order);
                     await _context.SaveChangesAsync();
 
@@ -134,13 +96,15 @@ namespace TracyShop.Controllers
 
                     foreach (var item in cart)
                     {
-                        var orderDetail = new OrderDetail();
-                        orderDetail.OrderId = _context.Orders.OrderBy(x => x.Id).Last().Id;
-                        orderDetail.ProductId = item.ProductId;
-                        orderDetail.Quantity = item.Quantity;
-                        orderDetail.SelectedSize = item.SelectedSize;
-                        orderDetail.Price = item.UnitPrice * (1 - item.Promotion);
-                        orderDetail.Promotion = item.Promotion;
+                        var orderDetail = new OrderDetail
+                        {
+                            OrderId = _context.Orders.OrderBy(x => x.Id).Last().Id,
+                            ProductId = item.ProductId,
+                            Quantity = item.Quantity,
+                            SelectedSize = item.SelectedSize,
+                            Price = item.UnitPrice * (1 - item.Promotion),
+                            Promotion = item.Promotion
+                        };
                         _context.Add(orderDetail);
 
                         var query = _context.ProductSize.Where(p => p.ProductId == item.ProductId && p.SizeId == item.SelectedSize).First();
@@ -152,19 +116,15 @@ namespace TracyShop.Controllers
                     Task.Delay(300).Wait();
 
                     ViewBag.Content = "Mua hàng";
-                    ViewBag.News = true;
-                    ViewBag.Class = "alert alert-success";
-                    ViewBag.Message = "Đặt hàng thành công!";
+                    ViewBag.Message = 2;
 
                     return View();
                 }
                 catch
                 {
-                    ViewBag.Content = "Mua hàng";
-                    ViewBag.News = false;
-                    ViewBag.Class = "alert alert-danger";
-                    ViewBag.Message = "Rất tiếc, quá trình đặt hàng của bạn chưa thành công. Vui lòng thử lại!";
-                    return View();
+                    ViewBag.Content = "";
+                    ViewBag.Message = 3;
+                    return View(GetOrderInformation());
                 }
             }
             else
@@ -280,10 +240,12 @@ namespace TracyShop.Controllers
         [Route("/order/checkout-success")]
         public async Task<IActionResult> CheckoutSuccess()
         {
-            var order = new Order();
-            order.PaymentMenthodId = 2;
-            order.ShoppingFee = 20000;
-            order.UserId = _userManager.GetUserId(HttpContext.User);
+            var order = new Order
+            {
+                PaymentMenthodId = 2,
+                ShoppingFee = 20000,
+                UserId = _userManager.GetUserId(HttpContext.User)
+            };
             _context.Add(order);
             await _context.SaveChangesAsync();
 
@@ -298,13 +260,15 @@ namespace TracyShop.Controllers
 
             foreach (var item in cart)
             {
-                var orderDetail = new OrderDetail();
-                orderDetail.OrderId = _context.Orders.OrderBy(x => x.Id).Last().Id;
-                orderDetail.ProductId = item.ProductId;
-                orderDetail.Quantity = item.Quantity;
-                orderDetail.SelectedSize = item.SelectedSize;
-                orderDetail.Price = item.UnitPrice * (1 - item.Promotion);
-                orderDetail.Promotion = item.Promotion;
+                var orderDetail = new OrderDetail
+                {
+                    OrderId = _context.Orders.OrderBy(x => x.Id).Last().Id,
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    SelectedSize = item.SelectedSize,
+                    Price = item.UnitPrice * (1 - item.Promotion),
+                    Promotion = item.Promotion
+                };
                 _context.Add(orderDetail);
 
                 var query = _context.ProductSize.Where(p => p.ProductId == item.ProductId && p.SizeId == item.SelectedSize).First();
@@ -317,5 +281,59 @@ namespace TracyShop.Controllers
 
             return View();
         }
+
+        #region Helper
+
+        private OrderViewModel GetOrderInformation()
+        {
+            var userid = _userManager.GetUserId(HttpContext.User);
+            AppUser user = _userManager.FindByIdAsync(userid).Result;
+
+            // Lấy địa chỉ
+            Address address = new Address();
+            try
+            {
+                address = _context.Address.Where(a => a.UserId == userid).ToList().First();
+            }
+            catch
+            {
+                address = null;
+            }
+            // Lấy phương thức thanh toán
+            var paymentMenthods = _context.PaymentMenthod.ToList();
+
+            // Lấy tất cả các sản phẩm trong card chưa thanh toán (chưa mua)
+            var carts = _context.Carts.Where(c => c.UserId == userid && c.IsBuy == false).ToList();
+
+            // Hiển thị lên view
+
+            var orderView = new OrderViewModel
+            {
+                UserId = userid,
+
+                Address = address != null ? String.Format("{0}, {1}, {2}", address.SpecificAddress, address.District, address.City) : null,
+
+                PhoneNumber = user.PhoneNumber
+            };
+
+            float totalPrice = 0;
+            int countQuantity = 0;
+
+            foreach (var pr in carts)
+            {
+                totalPrice += pr.UnitPrice * (1 - pr.Promotion) * pr.Quantity;
+                countQuantity += pr.Quantity;
+            }
+
+            orderView.Carts = carts;
+            orderView.TotalPrice = totalPrice;
+            orderView.CountQuantity = countQuantity;
+            orderView.PaymentMenthods = paymentMenthods;
+            orderView.ShoppingFee = 20000;
+
+            return orderView;
+        }
+
+        #endregion
     }
 }

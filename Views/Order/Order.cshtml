@@ -6,7 +6,6 @@
 }
 
 @inject TracyShop.Data.AppDbContext _context
-
 <!-- Page Header Start -->
 <div class="cart-header mb-0">
     <div class="container">
@@ -16,7 +15,7 @@
             </div>
             <div class="col-12 wow fadeInUp" data-wow-delay="0.5s">
                 <a asp-controller="Home" asp-action="Index">Home</a>
-                <a asp-controller="Product" asp-action="Product">Order</a>
+                <a asp-controller="Order" asp-action="Order">Order</a>
             </div>
         </div>
     </div>
@@ -40,16 +39,18 @@
                             @if (Model.PhoneNumber != null)
                             {
                                 <p><b>@Model.PhoneNumber</b></p>
+                                <input asp-for="PhoneNumber" value="@Model.PhoneNumber" hidden/>
                             }
                             else
                             {
-                                <a asp-controller="Profile" asp-action="Profile" class="btn btn-outline-success">@ViewBag.Message</a>
+                                <a asp-controller="Profile" asp-action="Profile" class="btn btn-outline-success">Thêm số điện thoại</a>
                             }
                         </div>
                         @if (Model.Address != null)
                         {
                             <div class="col-md-7 col-xs-12">
                                 <p>@Model.Address</p>
+                                <input asp-for="Address" value="@Model.Address" hidden/>
                             </div>
                             <div class="col-md-2 col-xs-12">
                                 <a asp-action="ChangeAddress" asp-controller="Profile" class="btn btn-outline-info">Thay đổi</a>
@@ -110,7 +111,7 @@
                                         {
                                             <div class="unit-price-origin" style="font-size: 12px; text-decoration: line-through;">@String.Format("{0:0,0}", item.UnitPrice)</div>
                                         }
-                                        <div class="unit-price-discount text text-danger" style="font-size: 15px; font-weight: bold;">@String.Format("{0:0,0}", (item.UnitPrice*(1 - item.Promotion)))</div>
+                                        <div class="unit-price-discount text text-danger" style="font-size: 15px; font-weight: bold;">@String.Format("{0:0,0}", (item.UnitPrice * (1 - item.Promotion)))</div>
                                     </div>
                                 </td>
                                 <td>
@@ -152,9 +153,17 @@
                             <div class="form-group">
                                 @foreach (var item in Model.PaymentMenthods)
                                 {
-                                    <input asp-for="PaymentMenthodId" value="@item.Id" type="radio" />
+                                    if (item.Id == 1)
+                                    {
+                                        <input asp-for="PaymentMenthodId" value="@item.Id" type="radio" checked />
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="PaymentMenthodId" value="@item.Id" type="radio" />
+                                    }
                                     <label asp-for="PaymentMenthodId" class="control-label">@item.Name</label>
                                     <br />
+
                                 }
                                 <span asp-validation-for="PaymentMenthodId" class="text-danger"></span>
                             </div>
@@ -187,30 +196,64 @@
                 </div>
             </div>
         }
-        else
-        {
-            <div class="card">
-                <div class="@ViewBag.Class" role="alert">
-                    <p>
-                        @ViewBag.Message
-                    </p>
-
-                </div>
-                @if (ViewBag.News == true)
-                {
-                    <div class="text text-center" style="margin: 1%;">
-                        <p>Cảm ơn bạn đã tin tưởng chúng tôi. Đơn hàng của bạn sẽ được giao trong vòng 3 - 4 ngày. <a asp-action="Product" asp-controller="Product">Tiếp tục mua sắm</a> để thêm nhiều sản phẩm vào Giỏ hàng thôi!</p>
-                    </div>
-                }
-                else
-                {
-                    <div class="text text-center" style="margin: 1%;">
-                        <p><a asp-action="Product" asp-controller="Product">Tiếp tục mua sắm</a> để thêm nhiều sản phẩm vào Giỏ hàng thôi!</p>
-                    </div>
-                }
-            </div>
-
-        }
     </div>
 </form>
+
+@if (ViewBag.Message != 0)
+{
+    <script src="~/Client/js/jquery-3.4.1.min.js"></script>
+    @if (ViewBag.Message == 1)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                swal({
+                    text: "Địa chỉ hoặc số điện thoại của bạn chưa có. Vui lòng nhập thông tin để shop gửi sản phẩm đến tay bạn nhé!",
+                    icon: "warning",
+                    type: "warning",
+                    button: "OK",
+                    showCancelButton: false,
+                    dangerMode: true
+                }
+            );
+        }
+        </script>
+    }
+    else if (ViewBag.Message == 2)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                swal({
+                    title: "Đặt hàng thành công",
+                    text: "Cảm ơn bạn đã tin tưởng chúng tôi. Đơn hàng của bạn sẽ được giao trong vòng 3 - 4 ngày.",
+                    icon: "success",
+                    type: 'success',
+                    button: "OK",
+                    showCancelButton: false,
+                    dangerMode: false
+                }).then(function () {
+                    window.location = "https://localhost:44380/product"
+                });
+            }
+
+            
+            
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                swal({
+                    title: "Đặt hàng thất bại",
+                    text: "Rất tiếc, quá trình đặt hàng của bạn chưa thành công. Vui lòng thử lại!",
+                    icon: "error",
+                    type: "error",
+                    button: "OK",
+                    showCancelButton: false,
+                    dangerMode: true
+                });
+            }
+        </script>
+    }
+}
 <!-- Table Order End-->

@@ -2,13 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using TracyShop.Data;
 using TracyShop.Models;
@@ -40,48 +38,7 @@ namespace TracyShop.Controllers
         [Route("/product", Name = "product")]
         public IActionResult Product()
         {
-            List<ProductsListViewModel> products = new List<ProductsListViewModel>();
-            List<Image> images = new List<Image>();
-            var qr = _context.Image.ToList();
-            foreach(var img in qr)
-            {
-                images.Add(img);
-            }
-
-            foreach (var p in _context.Product.Where(p => p.Active == true).ToList().OrderBy(p => p.Price))
-            {
-                if(p.Active == true)
-                {
-                    var pro = new ProductsListViewModel();
-                    if (images.Where(img => img.ProductId == p.Id).Count() <= 0)
-                    {
-                        pro.ImageDefault = "";
-                    }
-                    else
-                    {
-                        pro.ImageDefault = images.Where(img => img.ProductId == p.Id).First().Path;
-                    }
-
-                    // Kiểm tra số lượng sản phẩm trong kho
-                    var quantity = _context.ProductSize.Where(ps => ps.ProductId == p.Id).ToList();
-                    int totalQuantity = 0;
-                    foreach (var item in quantity)
-                    {
-                        totalQuantity += item.Quantity;
-                    }
-
-                    pro.Id = p.Id;
-                    pro.Name = p.Name;
-                    pro.Count = totalQuantity;
-                    pro.Price = p.Price;
-                    products.Add(pro);
-
-                }
-                else
-                {
-                    continue;
-                }    
-            }
+            List<ProductsListViewModel> products = GetProducts(_context.Product.Where(p => p.Active).OrderBy(p => p.Price).ToList());
             ViewBag.Categories = _context.Category.ToList();
             ViewBag.Products = products;
             return View();
@@ -89,115 +46,45 @@ namespace TracyShop.Controllers
 
         public IActionResult Category(int? id)
         {
-            List<ProductsListViewModel> products = new List<ProductsListViewModel>();
-            List<Image> images = new List<Image>();
-            var qr = _context.Image.ToList();
-            foreach (var img in qr)
+            List<ProductsListViewModel> products = new();
+
+            if(id != null)
             {
-                images.Add(img);
+                products = GetProducts(_context.Product.Where(p => p.Active && p.CategoryId == id).ToList());
             }
+
             ViewBag.Categories = _context.Category.ToList();
-            var query = _context.Product.Where(p => p.Active == true).ToList();
-            if (id != null)
-            {
-                query = query.Where(p => p.CategoryId == id).ToList();
-                foreach (var pro in query)
-                {
-                    if(pro.Active == true)
-                    {
-                        var product = new ProductsListViewModel();
-                        var img = images.Where(i => i.ProductId == pro.Id).First();
-                        if(img == null)
-                        {
-                            product.ImageDefault = "";
-                        }
-                        else
-                        {
-                            product.ImageDefault = img.Path;
-                        }
-
-                        // Kiểm tra số lượng sản phẩm trong kho
-                        var quantity = _context.ProductSize.Where(ps => ps.ProductId == pro.Id).ToList();
-                        int totalQuantity = 0;
-                        foreach (var item in quantity)
-                        {
-                            totalQuantity += item.Quantity;
-                        }
-
-                        product.Id = pro.Id;
-                        product.Name = pro.Name;
-                        product.Count = totalQuantity;
-                        product.Price = pro.Price;
-                        products.Add(product);
-                    }
-                }
-            }
             ViewBag.Products = products;
+
             return View();
         }
 
         [HttpGet]
         public IActionResult Search(string search)
         {
-            List<ProductsListViewModel> products = new List<ProductsListViewModel>();
-            List<Image> images = new List<Image>();
-            var qr = _context.Image.ToList();
-            foreach (var img in qr)
+            List<ProductsListViewModel> products = new();
+
+            if (!string.IsNullOrEmpty(search))
             {
-                images.Add(img);
+                products = GetProducts(_context.Product.Where(p => p.Active == true)
+                                                       .Where(p => p.Name.ToLower().Contains(search) ||
+                                                                   p.Category.Name.ToLower().Contains(search) ||
+                                                                   p.Trandemark.ToLower().Contains(search) ||
+                                                                   p.Origin.Contains(search)).ToList());
             }
+
             ViewBag.Categories = _context.Category.ToList();
-            ViewData["GetProduct"] = search;
-            var query = _context.Product.Where(p => p.Active == true).ToList();
-            if (!String.IsNullOrEmpty(search))
-            {
-                query = query.Where(p =>
-                p.Name.ToLower().Contains(search) ||
-                p.Category.Name.ToLower().Contains(search) ||
-                p.Trandemark.ToLower().Contains(search) ||
-                p.Origin.Contains(search)).ToList();
-
-                foreach(var pro in query)
-                {
-                    if(pro.Active == true)
-                    {
-                        var product = new ProductsListViewModel();
-                        var img = images.Where(i => i.ProductId == pro.Id).First();
-                        if (img == null)
-                        {
-                            product.ImageDefault = "";
-                        }
-                        else
-                        {
-                            product.ImageDefault = img.Path;
-                        }
-
-                        // Kiểm tra số lượng sản phẩm trong kho
-                        var quantity = _context.ProductSize.Where(ps => ps.ProductId == pro.Id).ToList();
-                        int totalQuantity = 0;
-                        foreach (var item in quantity)
-                        {
-                            totalQuantity += item.Quantity;
-                        }
-
-                        product.Id = pro.Id;
-                        product.Name = pro.Name;
-                        product.Count = totalQuantity;
-                        product.Price = pro.Price;
-                        products.Add(product);
-                    }
-                }
-            }
             ViewBag.Products = products;
+            ViewData["GetProduct"] = search;
             return View();
         }
 
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
-            ProductsListViewModel product = new ProductsListViewModel();
-            List<Size> sizes = new List<Size>();
-            List<Image> images = new List<Image>();
+            ProductsListViewModel product = new();
+            List<Size> sizes = new();
+            List<Image> images = new();
             // Lấy sản phẩm
             var query = _context.Product.Where(p => p.Id == id).First();
 
@@ -208,6 +95,7 @@ namespace TracyShop.Controllers
             // Lấy danh sách sizes và descriptionSize
             var qr1 = _context.Sizes.ToList();
             var qr3 = _context.ProductSize.Where(p => p.ProductId == id && p.Quantity > 0).ToList();
+
             foreach (var pr in qr3)
             {
                 sizes.Add(qr1.Where(d => d.Id == pr.SizeId).First());
@@ -465,7 +353,7 @@ namespace TracyShop.Controllers
                 else
                 {
                     var query = carts.Where(c => c.ProductId == id).First();
-                    query.Promotion = promotion.percent;
+                    query.Promotion = promotion is null ? 0 : promotion.percent;
                     query.Quantity = query.Quantity + 1;
                     _context.Update(query);
                     await _context.SaveChangesAsync();
@@ -483,12 +371,39 @@ namespace TracyShop.Controllers
 
         }
 
-
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        #region Helper
+
+        private List<ProductsListViewModel> GetProducts(List<Product> lstProduct)
+        {
+            List<ProductsListViewModel> products = new();
+
+            foreach (var p in lstProduct)
+            {
+                var imgs = _context.Image.Where(img => img.ProductId == p.Id);
+
+                // Kiểm tra số lượng sản phẩm trong kho
+
+                ProductsListViewModel product = new ProductsListViewModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Count = _context.ProductSize.Where(ps => ps.ProductId == p.Id).Sum(ps => ps.Quantity),
+                    Price = p.Price,
+                    ImageDefault = imgs.Any() ? imgs.First().Path : ""
+                };
+
+                products.Add(product);
+            }
+
+            return products;
+        }
+
+        #endregion
     }
 }

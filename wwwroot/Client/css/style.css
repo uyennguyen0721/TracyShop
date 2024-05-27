@@ -55,9 +55,9 @@ a {
         box-shadow: none;
     }
 
-.container-fluid {
+/*.container-fluid {
     max-width: 1366px;
-}
+}*/
 
 .back-to-top {
     position: fixed;
@@ -246,7 +246,6 @@ a {
 /**********************************/
 /*********** Search CSS ***********/
 /**********************************/
-
 .navbar form {
     position: relative;
     margin-left: 10%;
@@ -271,7 +270,7 @@ a {
         border-radius: 15px;
         position: absolute;
         right: 2px;
-        top: 2px;
+        /*top: 2px;*/
         border: none;
         outline: none;
         background: #fff;
@@ -526,6 +525,7 @@ a {
 /*******************************/
 /********** Hero CSS ***********/
 /*******************************/
+
 .carousel.header {
     position: relative;
     width: 100%;
@@ -537,6 +537,7 @@ a {
     .carousel.header .container-fluid {
         padding: 0;
     }
+
 
     .carousel.header .carousel-item {
         position: relative;

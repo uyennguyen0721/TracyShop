@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ASP.NET  Projects\\Graduation Essay\\TracyShop\\TracyShop.csproj": {}
+    "D:\\Projects\\TracyShop\\TracyShop.csproj": {}
   },
   "projects": {
-    "D:\\ASP.NET  Projects\\Graduation Essay\\TracyShop\\TracyShop.csproj": {
+    "D:\\Projects\\TracyShop\\TracyShop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ASP.NET  Projects\\Graduation Essay\\TracyShop\\TracyShop.csproj",
+        "projectUniqueName": "D:\\Projects\\TracyShop\\TracyShop.csproj",
         "projectName": "TracyShop",
-        "projectPath": "D:\\ASP.NET  Projects\\Graduation Essay\\TracyShop\\TracyShop.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\ASP.NET  Projects\\Graduation Essay\\TracyShop\\obj\\",
+        "projectPath": "D:\\Projects\\TracyShop\\TracyShop.csproj",
+        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\TracyShop\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -203,7 +203,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.405\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
         }
       }
     }
