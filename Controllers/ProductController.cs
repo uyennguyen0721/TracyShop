@@ -82,105 +82,47 @@ namespace TracyShop.Controllers
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
-            ProductsListViewModel product = new();
-            List<Size> sizes = new();
-            List<Image> images = new();
             // Lấy sản phẩm
-            var query = _context.Product.Where(p => p.Id == id).First();
+            var query = _context.Product.Where(p => p.Id == id).FirstOrDefault();
 
             // Lấy danh sách ảnh
-            var qr = _context.Image.ToList();
-            images.AddRange(qr.Where(i => i.ProductId == id).ToList());
+            List<Image> images = _context.Image.Where(i => i.ProductId == id).ToList();
 
             // Lấy danh sách sizes và descriptionSize
-            var qr1 = _context.Sizes.ToList();
-            var qr3 = _context.ProductSize.Where(p => p.ProductId == id && p.Quantity > 0).ToList();
-
-            foreach (var pr in qr3)
-            {
-                sizes.Add(qr1.Where(d => d.Id == pr.SizeId).First());
-            }
+            List<Size> sizes = _context.Sizes.Where(s => _context.ProductSize.Where(p => p.ProductId == id && p.Quantity > 0).Select(ps => ps.SizeId).Contains(s.Id)).ToList();
 
             // Lấy tổng số lượng sản phẩm
-            var count = 0;
-            foreach (var sz in sizes)
-            {
-                var q = _context.ProductSize.Where(p => p.ProductId == query.Id && p.SizeId == sz.Id).First();
-                count += q.Quantity;
-            }
+            var count = _context.ProductSize.Where(p => p.ProductId == query.Id && sizes.Select(x => x.Id).Contains(p.SizeId)).Sum(q => q.Quantity);
 
-            if(count > 0)
-            {
-                ViewBag.Bit = true;
-            }
-            else
-            {
-                ViewBag.Bit = false;
-            }
+            ViewBag.Bit = count > 0;
 
             // Lấy khuyến mãi
-            var promotions = _context.Promotion.Where(p => p.StartedDate <= DateTime.Now && p.EndDate >= DateTime.Now).ToList();
-            Promotion promotion = new Promotion();
-            if (promotions.Count == 0)
-            {
-                promotion = null;
-            }
-            else
-            {
-                foreach (var item in promotions)
-                {
-                    if (query.PromotionId == item.Id)
-                    {
-                        promotion = item;
-                        break;
-                    }
-                }
-            }
+            Promotion promotion = _context.Promotion.Where(p => p.StartedDate <= DateTime.Now && p.EndDate >= DateTime.Now && p.Id == query.PromotionId).FirstOrDefault();
 
             // Lấy comment và rating
             var reviews = _context.Reviews.Where(r => r.ProductId == id).ToList();
 
-            if(reviews.Count == 0)
-            {
-                ViewBag.Review = 0;
-            }
-            else
-            {
-                ViewBag.Review = 1;
-            }
+            ViewBag.Review = reviews.Count == 0 ? 0 : 1;
 
             //Hiển thị lên view
             ViewBag.Categories = _context.Category.ToList();
             ViewBag.CountImages = images.Count;
-            product.Id = query.Id;
-            product.Name = query.Name;
-            product.Price = query.Price;
-            if (promotion != null)
+            ProductsListViewModel product = new()
             {
-                product.Promotion = (int)(promotion.percent * 100);
-            }
-            else
-            {
-                product.Promotion = 0;
-            }
-            
-            product.Year_SX = query.Year_SX;
-            if (promotion != null)
-            {
-                product.PriceDiscounted = query.Price * (1 - promotion.percent);
-            }
-            else
-            {
-                product.PriceDiscounted = query.Price;
-            }
-            
-            product.Images = images;
-            product.Sizes = sizes;
-            product.Origin = query.Origin;
-            product.Trandemark = query.Trandemark;
-            product.Description = query.Description;
-            product.Count = count;
-            product.Reviews = reviews;
+                Id = query.Id,
+                Name = query.Name,
+                Price = query.Price,
+                Promotion = promotion != null ? (int)(promotion.percent * 100) : 0,
+                Year_SX = query.Year_SX,
+                PriceDiscounted = promotion != null ? query.Price * (1 - promotion.percent) : query.Price,
+                Images = images,
+                Sizes = sizes,
+                Origin = query.Origin,
+                Trandemark = query.Trandemark,
+                Description = query.Description,
+                Count = count,
+                Reviews = reviews
+            };
 
             return View(product);
         }
@@ -188,187 +130,28 @@ namespace TracyShop.Controllers
         [Authorize]
         public async Task<ActionResult> AddCart(int id)
         {
-            var userid = _userManager.GetUserId(HttpContext.User);
-            AppUser user = _userManager.FindByIdAsync(userid).Result;
-            var product = _context.Product.Where(p => p.Id == id).First();
-
-            // Kiểm tra số lượng sản phẩm trong kho
-            var quantities = _context.ProductSize.Where(p => p.ProductId == product.Id).ToList();
-            int totalQuantity = 0;
-            foreach(var item in quantities)
+            if(UpdateCart(id) == 1)
             {
-                totalQuantity += item.Quantity;
-            }
+                await _context.SaveChangesAsync();
 
-            if(totalQuantity > 0)
-            {
-                // Lấy khuyến mãi
-                var promotions = _context.Promotion.Where(p => p.StartedDate <= DateTime.Now && p.EndDate >= DateTime.Now).ToList();
-                Promotion promotion = new Promotion();
-                if (promotions.Count == 0)
-                {
-                    promotion = null;
-                }
-                else
-                {
-                    foreach (var item in promotions)
-                    {
-                        if (product.PromotionId == item.Id)
-                        {
-                            promotion = item;
-                            break;
-                        }
-                    }
-                }
-
-                // Lấy size
-                var qr1 = _context.Sizes.ToList();
-                var qr3 = _context.ProductSize.Where(p => p.ProductId == id && p.Quantity > 0).First();
-                var size = qr1.Where(s => s.Id == qr3.SizeId).First();
-
-                // Lấy ảnh
-                var qr2 = _context.Image.ToList();
-                var image = qr2.Where(i => i.ProductId == product.Id).First();
-
-                // Kiểm tra sp đã có trong giỏ hàng chưa, nếu có thì tăng số lượng sp trong giỏ, nếu chưa thì thêm sp vào giỏ
-                var carts = _context.Carts.Where(c => c.UserId == userid && c.IsBuy == false && c.SelectedSize == qr3.SizeId).ToList();
-                if (carts.Where(c => c.ProductId == id).ToList().Count == 0)
-                {
-                    var cart = new Cart();
-                    if (ModelState.IsValid)
-                    {
-                        cart.Quantity = 1;
-                        cart.ProductId = product.Id;
-                        cart.UnitPrice = product.Price;
-                        if (promotion != null)
-                        {
-                            cart.Promotion = promotion.percent;
-                        }
-                        else
-                        {
-                            cart.Promotion = 0;
-                        }
-                        cart.SelectedSize = size.Id;
-                        cart.Image = image.Path;
-                        cart.UserId = userid;
-                        _context.Carts.Add(cart);
-                        await _context.SaveChangesAsync();
-                    }
-                }
-                else
-                {
-                    var query = carts.Where(c => c.ProductId == id).First();
-                    if (promotion != null)
-                    {
-                        query.Promotion = promotion.percent;
-                    }
-                    else
-                    {
-                        query.Promotion = 0;
-                    }
-                    query.Quantity = query.Quantity + 1;
-                    _context.Update(query);
-                    await _context.SaveChangesAsync();
-                }
                 ViewBag.News = true;
                 ViewBag.Class = "alert alert-success";
                 ViewBag.Message = "Thêm sản phẩm vào giỏ hàng thành công!";
             }
-            else
-            {
-                ViewBag.News = false;
-                ViewBag.Class = "alert alert-danger";
-                ViewBag.Message = "Hiện tại sản phẩm này không còn trong kho. Bạn chọn sản phẩm khác giúp shop nhé!";
-            }
 
-            
             return View();
-            
         }
 
         [Authorize]
         public async Task<ActionResult> BuyNow(int id)
         {
-            var userid = _userManager.GetUserId(HttpContext.User);
-            AppUser user = _userManager.FindByIdAsync(userid).Result;
-            var product = _context.Product.Where(p => p.Id == id).First();
-
-            // Lấy size
-            var qr1 = _context.Sizes.ToList();
-            var qr3 = _context.ProductSize.Where(p => p.ProductId == id && p.Quantity > 0).ToList();
-
-            // Kiểm tra sản phẩm còn trong kho hay không
-            if(qr3.Count > 0)
+            if (UpdateCart(id) == 1)
             {
-                var size = qr1.Where(s => s.Id == qr3.First().SizeId).First();
-
-                // Lấy khuyến mãi
-                var promotions = _context.Promotion.Where(p => p.StartedDate <= DateTime.Now && p.EndDate >= DateTime.Now).ToList();
-                Promotion promotion = new Promotion();
-                if (promotions.Count == 0)
-                {
-                    promotion = null;
-                }
-                else
-                {
-                    foreach (var item in promotions)
-                    {
-                        if (product.PromotionId == item.Id)
-                        {
-                            promotion = item;
-                            break;
-                        }
-                    }
-                }
-
-                // Lấy ảnh
-                var qr2 = _context.Image.ToList();
-                var image = qr2.Where(i => i.ProductId == product.Id).First();
-
-                // Kiểm tra sp đã có trong giỏ hàng chưa, nếu có thì tăng số lượng sp trong giỏ, nếu chưa thì thêm sp vào giỏ
-                var carts = _context.Carts.Where(c => c.UserId == userid && c.IsBuy == false && c.SelectedSize == size.Id).ToList();
-                if (carts.Where(c => c.ProductId == id).ToList().Count == 0)
-                {
-                    var cart = new Cart();
-                    if (ModelState.IsValid)
-                    {
-                        cart.Quantity = 1;
-                        cart.ProductId = product.Id;
-                        cart.UnitPrice = product.Price;
-                        if (promotion != null)
-                        {
-                            cart.Promotion = promotion.percent;
-                        }
-                        else
-                        {
-                            cart.Promotion = 0;
-                        }
-                        cart.SelectedSize = size.Id;
-                        cart.Image = image.Path;
-                        cart.UserId = userid;
-                        _context.Carts.Add(cart);
-                        await _context.SaveChangesAsync();
-                    }
-                }
-                else
-                {
-                    var query = carts.Where(c => c.ProductId == id).First();
-                    query.Promotion = promotion is null ? 0 : promotion.percent;
-                    query.Quantity = query.Quantity + 1;
-                    _context.Update(query);
-                    await _context.SaveChangesAsync();
-                }
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Cart", "Cart");
             }
-            else
-            {
-                ViewBag.News = false;
-                ViewBag.Class = "alert alert-danger";
-                ViewBag.Message = "Hiện tại sản phẩm này không còn trong kho. Bạn chọn sản phẩm khác giúp shop nhé!";
-                return View();
-            }
-            
 
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -389,7 +172,7 @@ namespace TracyShop.Controllers
 
                 // Kiểm tra số lượng sản phẩm trong kho
 
-                ProductsListViewModel product = new ProductsListViewModel()
+                ProductsListViewModel product = new()
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -402,6 +185,59 @@ namespace TracyShop.Controllers
             }
 
             return products;
+        }
+
+        private int UpdateCart(int id)
+        {
+            var userid = _userManager.GetUserId(HttpContext.User);
+            var product = _context.Product.Where(p => p.Id == id).FirstOrDefault();
+
+            // Kiểm tra số lượng sản phẩm trong kho
+            if (_context.ProductSize.Where(p => p.ProductId == id).Sum(p => p.Quantity) > 0)
+            {
+                // Lấy khuyến mãi 
+                Promotion promotion = _context.Promotion.Where(p => p.StartedDate <= DateTime.Now && p.EndDate >= DateTime.Now && p.Id == product.PromotionId).FirstOrDefault();
+
+                // Lấy size
+                var sizeId = _context.ProductSize.Where(p => p.ProductId == id && p.Quantity > 0).FirstOrDefault().SizeId;
+
+                // Lấy ảnh
+                var image = _context.Image.Where(i => i.ProductId == id).FirstOrDefault();
+
+                // Kiểm tra sp đã có trong giỏ hàng chưa, nếu có thì tăng số lượng sp trong giỏ, nếu chưa thì thêm sp vào giỏ
+                var carts = _context.Carts.Where(c => c.UserId == userid && c.IsBuy == false && c.ProductId == id && c.SelectedSize == sizeId);
+
+                if (carts.ToList().Count == 0 && ModelState.IsValid)
+                {
+                    _context.Carts.Add(new Cart()
+                    {
+                        Quantity = 1,
+                        ProductId = id,
+                        UnitPrice = product.Price,
+                        Promotion = promotion != null ? promotion.percent : 0,
+                        SelectedSize = sizeId,
+                        Image = image != null ? image.Path : "",
+                        UserId = userid
+                    });
+                }
+                else
+                {
+                    var cart = carts.FirstOrDefault();
+                    cart.Promotion = promotion != null ? promotion.percent : 0;
+                    cart.Quantity++;
+                    _context.Update(cart);
+                }
+
+                return 1;
+            }
+            else
+            {
+                ViewBag.News = false;
+                ViewBag.Class = "alert alert-danger";
+                ViewBag.Message = "Hiện tại sản phẩm này không còn trong kho. Bạn chọn sản phẩm khác giúp shop nhé!";
+
+                return 2;
+            }
         }
 
         #endregion
